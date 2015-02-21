@@ -19,12 +19,22 @@
 				<h1>where?</h1>
 			</div>
 			<div class="col-md-6">
-				<span class="btn btn-default" data-bind="click: increment, text: 'Click me: ' + totalCalories()">9000</span>
+				Total Calories: <span data-bind="text: totalCalories">9000</span>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<h3>table goes here</h3>
+				<ul>
+				<!-- ko foreach: foodItems -->
+					<li>
+						<span data-bind="text: source"></span>
+						<span data-bind="text: name"></span>
+						<span data-bind="text: calories"></span>
+					</li>
+				<!-- /ko -->
+				</ul>
+				<span class="btn btn-default" data-bind="click: addRandomFood">Add Another</span>
 			</div>
 		</div>
 		<div class="row">
