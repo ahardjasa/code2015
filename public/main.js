@@ -294,12 +294,10 @@ FoodItem.prototype.parseColumns = function (food) {
 function getAttributeLabel(amount, unit) {
 	if (amount === "tr") {
 		return "(trace)";
-	} else {
-		if (unit === "kcal") {
-			return amount;
-		}
-		return amount + unit;
+	} else if (!unit || unit === "kcal") {
+		return amount;
 	}
+	return amount + unit;
 }
 
 function BasicProfile(portion) {
