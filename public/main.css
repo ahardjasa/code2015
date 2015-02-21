@@ -2,6 +2,14 @@ body {
 	background-color: #fafafa;
 }
 
+.radio-custom label {
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+	margin-right: 15px;
+	font-size: 12px;
+}
+
 #map {
 	height: 8em;
 	transition: height 1s;
@@ -24,7 +32,6 @@ input[type=range][orient=vertical]
 	-o-transform:rotate(270deg);
 	-webkit-transform:rotate(270deg);
 	-ms-transform:rotate(270deg);
-
 }
 
 

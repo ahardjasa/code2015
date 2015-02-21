@@ -14,16 +14,23 @@
 			</div>
 			<div class="col-md-12" align="center" data-bind="with: profile">
 				<div class="starter-template">
-					<h2>How hungry are you? <span data-bind="text: portion"></span></h2>
+					<h3>How hungry are you?
+						<!--<span data-bind="text: portion"></span>-->
+					</h3>
 				</div>
 
-				<form>
-					<input type="radio" name="portion" value="1" data-bind="checked: portion"> 2 Pizza Slices<br>
-					<input type="radio" name="portion" value="2" data-bind="checked: portion"> Half Pizza<br>
-					<input type="radio" name="portion" value="3" data-bind="checked: portion"> Pizza<br>
-					<input type="radio" name="portion" value="4" data-bind="checked: portion"> Multiple Calzones<br>
-					<input type="radio" name="portion" value="5" data-bind="checked: portion"> 9000 CALORIES
-				</form>
+				<div class="radio-custom">
+					<input type="radio" id="radio1" value="1" data-bind="checked: portion">
+					<label for="radio1">2 Pizza Slices</label>
+					<input type="radio" id="radio2" value="2" data-bind="checked: portion">
+					<label for="radio2">Half Pizza</label>
+					<input type="radio" id="radio3" value="3" data-bind="checked: portion">
+					<label for="radio3">Full Pizza</label>
+					<input type="radio" id="radio4" value="4" data-bind="checked: portion">
+					<label for="radio4">Several Calzones</label>
+					<input type="radio" id="radio5" value="5" data-bind="checked: portion">
+					<label for="radio5">9000 CALORIES</label>
+				</div>
 				<br>
 
 				<button type="button" class="btn btn-lg btn-primary">Find Nearby</button>
