@@ -1,3 +1,5 @@
+
+
 function MapModel() {
 	this.init = function () {
 		var center = {lat: 49.2827, lng: -123.1207}; // defaulting to Vancouver
@@ -98,19 +100,23 @@ function getValue(amount, unit) {
 function BasicProfile(portion) {
 	var self = this;
 	self.portion = ko.observable(portion);
+
+
 }
+
 
 function PageModel() {
 	this.profile = new BasicProfile(1);
 	this.map = new MapModel();
-	this.foodItems = ko.observableArray([]);
+	this.preferences = new PreferencesViewModel();
+	this.foodItems = ko.observableArray([
+	]);
 	this.totalCalories = ko.computed(function () {
 		return this.foodItems().reduce(function (total, item) {
 			return total + item.calories;
 		}, 0);
 	}, this);
 }
-
 PageModel.prototype.addRandomFood = function () {
 	// FIXME: uneven weighting
 	var file = everything[Math.floor(Math.random() * everything.length)];
