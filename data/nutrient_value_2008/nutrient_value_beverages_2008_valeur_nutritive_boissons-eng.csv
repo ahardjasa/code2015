@@ -3,7 +3,7 @@
 BEVERAGES,,,,,,,,,,,,,,,,,,,,,,,
 Food name,Measure,Weight ,Energy,Energy,Protein,Carbohydrate,Total Sugar,Total Dietary Fibre,Total Fat,Saturated Fat,Cholesterol,Calcium,Iron,Sodium,Potassium,Magnesium,Phosphorus,Vitamin A,Vitamin C,Alcohol,Caffeine,,
 , ,g,kcal,kJ,g,g,g,g,g,g,mg,mg,mg,mg,mg,mg,mg,RAE,mg,g,mg,,
-"COFFEE, TEA AND SUSTITUTES",,,,,,,,,,,,,,,,,,,,,,,
+"COFFEE, TEA AND SUBSTITUTES",,,,,,,,,,,,,,,,,,,,,,,
 "Chai, latte",250mL,242,149,624,5,26,26,0,3,2.0,13,186,0.1,67,263,19,150,88,tr,0,13,,
 "Coffee, brewed",250mL,250,2.5,10.0,tr,0,0,0,tr,tr,0,5,tr,5,123,8,8,0,0,0,100,,
 "Coffee, brewed, decaffeinated",250mL,251,2.5,10.0,tr,0,0,0,0,0,0,5,0.1,5,135,13,3,0,0,0,3,,
