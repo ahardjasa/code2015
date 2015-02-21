@@ -1,4 +1,18 @@
 body {
+}
+
+.background {
+	z-index: -1;
+	background-image: url(images/f72e2c85.jpeg);
+	background-size: cover;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.container {
 	background-color: #fafafa;
 }
 
@@ -15,8 +29,26 @@ body {
 	transition: height 1s;
 }
 
-#map:hover {
-	height: 20em;
+.food-list {
+
+}
+
+.food-list h4 {
+	display: inline-block;
+}
+
+.food-list .food-list-icon {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.food-list .food-list-icon img {
+	width: 40px;
+	height: 40px;
+}
+
+.food-list .food-list-metric {
+	text-align: right;
 }
 
 .vertProg

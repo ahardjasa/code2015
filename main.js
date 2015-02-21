@@ -286,7 +286,7 @@ function FoodItem(source, columns, food) {
 
 function getAttributeLabel(amount, unit) {
 	if (amount === "tr") {
-		return "Trace amounts of ";
+		return "(trace)";
 	} else {
 		if (unit === "kcal") {
 			return amount + " calories";
