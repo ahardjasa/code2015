@@ -185,111 +185,111 @@ function FoodItem(source, columns, food) {
 				return folder + "vegetables.png";
 			default:
 				return "";
-		};
-	}
+		}
+	};
+	this.parseColumns(food);
+}
 
-	function parseColumns() {
-		var i;
-		for (i = 0; i < columns.length; i++) {
-			var columnAttr = columns[i];
-			var columnItems = /([^(]+)(\((.*)\))?/.exec(columnAttr);
-			var columnName = columnItems[1].trim().toLowerCase();
-			var columnUnit = "";
-			if (columnItems[3] != null) {
-				columnUnit = columnItems[3].trim().toLowerCase();
-			}
-			var foodAttribute = getAttributeLabel(food[i], columnUnit);
+FoodItem.prototype.parseColumns = function (food) {
+	var i;
+	for (i = 0; i < this.columns.length; i++) {
+		var columnAttr = this.columns[i];
+		var columnItems = /([^(]+)(\((.*)\))?/.exec(columnAttr);
+		var columnName = columnItems[1].trim().toLowerCase();
+		var columnUnit = "";
+		if (columnItems[3] != null) {
+			columnUnit = columnItems[3].trim().toLowerCase();
+		}
+		var foodAttribute = getAttributeLabel(food[i], columnUnit);
 
-			//debugger;
-			switch(columnName) {
-				case ("food name"):
-					this.name = foodAttribute;
-					break;
-				case ("meal name"):
-					this.name = foodAttribute;
-					break;
-				case ("weight"):
-					this.weight = foodAttribute;
-					break;
-				case ("energy"):
-					if (columnUnit === "kcal") {
-						this.calories = foodAttribute;
-					}
-					break;
-				case ("calories"):
+		//debugger;
+		switch(columnName) {
+			case ("food name"):
+				this.name = foodAttribute;
+				break;
+			case ("meal name"):
+				this.name = foodAttribute;
+				break;
+			case ("weight"):
+				this.weight = foodAttribute;
+				break;
+			case ("energy"):
+				if (columnUnit === "kcal") {
 					this.calories = foodAttribute;
-					break;
-				case ("protein"):
-					this.protein = foodAttribute;
-					break;
-				case ("carbs"):
-					this.carbs = foodAttribute;
-					break;
-				case ("carbohydrate"):
-					this.carbs = foodAttribute;
-					break;
-				case ("total sugar"):
-					this.sugar = foodAttribute;
-					break;
-				case ("sugars"):
-					this.sugar = foodAttribute;
-					break;
-				case ("fat"):
-					this.totalFat = foodAttribute;
-					break;
-				case ("total fat"):
-					this.totalFat = foodAttribute;
-					break;
-				case ("trans fats"):
-					this.transFat = foodAttribute;
-					break;
-				case ("trans fat"):
-					this.transFat = foodAttribute;
-					break;
-				case ("saturated fat"):
-					this.saturatedFat = foodAttribute;
-					break;
-				case ("cholesterol"):
-					this.cholesterol = foodAttribute;
-					break;
-				case ("monounsaturated fat"):
-					this.monoFat = foodAttribute;
-					break;
-				case ("polyunsaturated fat"):
-					this.polyFat = foodAttribute;
-					break;
-				case ("sodium"):
-					this.sodium = foodAttribute;
-					break;
-				case ("magnesium"):
-					this.magnesium = foodAttribute;
-					break;
-				case ("calcium"):
-					this.calcium = foodAttribute;
-					break;
-				case ("iron"):
-					this.iron = foodAttribute;
-					break;
-				case ("sodium"):
-					this.iron = foodAttribute;
-					break;
-				case ("total dietary fibre"):
-					this.fibre = foodAttribute;
-					break;
-				default:
-					break;
-			}
+				}
+				break;
+			case ("calories"):
+				this.calories = foodAttribute;
+				break;
+			case ("protein"):
+				this.protein = foodAttribute;
+				break;
+			case ("carbs"):
+				this.carbs = foodAttribute;
+				break;
+			case ("carbohydrate"):
+				this.carbs = foodAttribute;
+				break;
+			case ("total sugar"):
+				this.sugar = foodAttribute;
+				break;
+			case ("sugars"):
+				this.sugar = foodAttribute;
+				break;
+			case ("fat"):
+				this.totalFat = foodAttribute;
+				break;
+			case ("total fat"):
+				this.totalFat = foodAttribute;
+				break;
+			case ("trans fats"):
+				this.transFat = foodAttribute;
+				break;
+			case ("trans fat"):
+				this.transFat = foodAttribute;
+				break;
+			case ("saturated fat"):
+				this.saturatedFat = foodAttribute;
+				break;
+			case ("cholesterol"):
+				this.cholesterol = foodAttribute;
+				break;
+			case ("monounsaturated fat"):
+				this.monoFat = foodAttribute;
+				break;
+			case ("polyunsaturated fat"):
+				this.polyFat = foodAttribute;
+				break;
+			case ("sodium"):
+				this.sodium = foodAttribute;
+				break;
+			case ("magnesium"):
+				this.magnesium = foodAttribute;
+				break;
+			case ("calcium"):
+				this.calcium = foodAttribute;
+				break;
+			case ("iron"):
+				this.iron = foodAttribute;
+				break;
+			case ("sodium"):
+				this.iron = foodAttribute;
+				break;
+			case ("total dietary fibre"):
+				this.fibre = foodAttribute;
+				break;
+			default:
+				break;
 		}
 	}
-	parseColumns();
-}
+};
 
 function getAttributeLabel(amount, unit) {
 	if (amount === "tr") {
 		return "(trace)";
 	} else {
 		if (unit === "kcal") {
-			return amount + " calories";
+			return amount;
 		}
 		return amount + unit;
 	}
