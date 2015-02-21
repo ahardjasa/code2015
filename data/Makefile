@@ -1,9 +1,11 @@
-all: ../public/data/generics.js ../public/data/locations.js
+all: ../public/data/generics.js ../public/data/locations.js ../public/data/fatabase.js
 
-../public/data/generics.js: generics.js
-	cp $< $@
+../public/data/fatabase.js: fatabase.csv fatabase_processor.py
+	echo 'var fatabase = ' > $@
+	./fatabase_processor.py >> $@
+	echo ';' >> $@
 
-generics.js: combined_nutrient_value_2008.csv
+../public/data/generics.js: combined_nutrient_value_2008.csv combined_nutrient_value_processor.py
 	echo 'var generics = ' > $@
 	./combined_nutrient_value_processor.py >> $@
 	echo ';' >> $@
@@ -15,11 +17,8 @@ nutrient_value_search.json:
 download_nutrient_value_csvs: nutrient_value_search.json
 	jq -r '.result.results[].resources[].url ' nutrient_value_search.json | grep -eng.csv | xargs wget -P nutrient_value_2008/
 
-../public/data/locations.js: locations.js
-	cp $< $@
-
-locations.js: vancouver_foodtrees.csv vancouver_fatabase_restaurants.json
-	(echo 'var locations = ['; sed -e '1d;s/^/\[/' -e 's/$$/\],/' vancouver_foodtrees.csv; cat vancouver_fatabase_restaurants.json; echo '];') > $@
+../public/data/locations.js: vancouver_foodtrees.csv vancouver_fatabase_restaurants.json
+	(echo 'var locations = ['; sed -e 's/\r//' -e '1d;s/^/\[/' -e 's/$$/\],/' vancouver_foodtrees.csv; cat vancouver_fatabase_restaurants.json; echo '];') > $@
 
 business_licences_csv.zip:
 	wget -N ftp://webftp.vancouver.ca/OpenData/csv/business_licences_csv.zip
