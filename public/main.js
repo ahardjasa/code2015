@@ -31,10 +31,19 @@ function MapModel() {
 	};
 }
 
-function FoodItem(source, name, calories) {
+function FoodItem(source, food) {
 	this.source = source;
-	this.name = name;
-	this.calories = calories;
+	this.name = food[0];
+	this.weight = food[2];
+	this.calories = food[3];
+	this.protein = getValue(food[5], "g");
+	this.carbs = getValue(food[6], "g");
+	this.sugar = getValue(food[7], "g");
+	this.fiber = getValue(food[8], "g");
+	this.totalFat = getValue(food[9], "g");
+	this.satFat = getValue(food[10], "g");
+	this.cholesterol = getValue(food[11], "g");
+	this.calcium = getValue(food[12], "g");
 	this.iconPath = function() {
 		var folder = "images/icons/";
 		switch (this.source.trim()) {
@@ -78,6 +87,14 @@ function FoodItem(source, name, calories) {
 	}
 }
 
+function getValue(amount, unit) {
+	if (amount === "tr") {
+		return "trace amounts of ";
+	} else {
+		return amount + unit;
+	}
+}
+
 function BasicProfile(portion) {
 	var self = this;
 	self.portion = ko.observable(portion);
@@ -86,8 +103,7 @@ function BasicProfile(portion) {
 function PageModel() {
 	this.profile = new BasicProfile(1);
 	this.map = new MapModel();
-	this.foodItems = ko.observableArray([
-	]);
+	this.foodItems = ko.observableArray([]);
 	this.totalCalories = ko.computed(function () {
 		return this.foodItems().reduce(function (total, item) {
 			return total + item.calories;
@@ -101,7 +117,7 @@ PageModel.prototype.addRandomFood = function () {
 	var food = file.foods[Math.floor(Math.random() * file.foods.length)];
 
 	// FIXME: use columns
-	this.foodItems.push(new FoodItem(file.name, food[0], food[3]));
+	this.foodItems.push(new FoodItem(file.name, food));
 };
 
 var model = new PageModel();
