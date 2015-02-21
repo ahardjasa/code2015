@@ -16,7 +16,12 @@ function PageModel() {
 }
 
 PageModel.prototype.addRandomFood = function () {
-	this.foodItems.push(new FoodItem("asdf", "cheese", 1000));
+	// FIXME: uneven weighting
+	var file = everything[Math.floor(Math.random() * everything.length)];
+	var food = file.foods[Math.floor(Math.random() * file.foods.length)];
+
+	// FIXME: use columns
+	this.foodItems.push(new FoodItem(file.name, food[0], food[3]));
 };
 
 var model = new PageModel();
