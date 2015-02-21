@@ -42,23 +42,135 @@
 			<input type="text" name="age" id="pref.age" data-bind="value: myUser.age"
 				   onfocus="if (this.value=='Enter age:') this.value = ''" onblur="var str = this.value.replace(/\s+/g, ''); if(str == '') this.value = 'Enter age:'"> <br>
 
-			<select data-bind="options: ActivityOptions, value: myUser.activityLevel"></select>
+			<!--<select data-bind="options: ActivityOptions, value: myUser.activityLevel"></select>-->
+			<div class="dropdown">
+				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+					Activity Level
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Free range</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leashed</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Caged</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Dead Cage</a></li>
+				</ul>
+			</div>
 			<br>
 			<!--activity drop down and age-->
 			<label for="pref.size">Meal Size</label>
 			<input name="Size" id="pref.size" type="range" min="0" max="10" data-bind="value: myPreferences.mealSize">
 
-			<br>
-			<input type="checkbox" name="isFoodTrucks" id="pref.isFoodTrucks" value = "foodTrucks" data-bind="checked: myPreferences.isFoodTrucks">
-			<label for="pref.isFoodTrucks">Food Trucks</label>
-			<input type="checkbox" name="isSupermarkets" id="pref.isSupermarkets" data-bind="checked: myPreferences.isSupermarkets">
-			<label for="pref.isSupermarkets">Supermarkets</label>
-			<input type="checkbox" name="isFarmersMarkets" id="pref.isFarmersMarkets" data-bind="checked: myPreferences.isFarmersMarkets">
-			<label for="pref.isFarmersMarkets">Farmer's Markets</label>
-			<input type="checkbox" name="isFruitTrees" id="pref.isFruitTrees" data-bind="checked: myPreferences.isFruitTrees">
-			<label for="pref.isFruitTrees">Fruit Trees</label>
+			<div role="tabpanel" id="pref.TabPanel">
+				<ul class="nav nav-pills">
+					<li role="presentation" class="active"><a href="#targets" role="tab" data-toggle="tab">Setings</a></li>
+					<li role="presentation"><a href="#day" role="tab" data-toggle="tab">Day</a></li>
+					<li role="presentation"><a href="#week" role="tab" data-toggle="tab">Week</a></li>
+					<li role="presentation"><a href="#month" role="tab" data-toggle="tab">Month</a></li>
+				</ul>
+				<div id="pref.TabContent" class="tab-content">
+					<div role="tabpanel" class="tab-pane fade active in" id="targets" >
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">My Settings</h3>
+							</div>
 
-			<br>
+							<div class="container">
+								<input type="checkbox" name="isFoodTrucks" id="pref.isFoodTrucks" value = "foodTrucks" data-bind="checked: myPreferences.isFoodTrucks">
+								<label for="pref.isFoodTrucks">Food Trucks</label>
+								<input type="checkbox" name="isSupermarkets" id="pref.isSupermarkets" data-bind="checked: myPreferences.isSupermarkets">
+								<label for="pref.isSupermarkets">Supermarkets</label>
+								<input type="checkbox" name="isFarmersMarkets" id="pref.isFarmersMarkets" data-bind="checked: myPreferences.isFarmersMarkets">
+								<label for="pref.isFarmersMarkets">Farmer's Markets</label>
+								<input type="checkbox" name="isFruitTrees" id="pref.isFruitTrees" data-bind="checked: myPreferences.isFruitTrees">
+								<label for="pref.isFruitTrees">Fruit Trees</label>
+							</div>
+
+							<div class="panel-body progContainer">
+								<b></b>
+								<div class="progress vertProgLeft">
+									<div class="progress-bar" role="progressbar"  style="width: 80%;">
+										80%
+									</div>
+								</div>
+								<div class="progress vertProg">
+									<div class="progress-bar" role="progressbar" style="width: 60%;">
+										60%
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div role="tabpanel" class="tab-pane fade " id="day" >
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">My Day</h3>
+							</div>
+
+							<div class="panel-body progContainer">
+								<b></b>
+								<div class="progress vertProgLeft">
+									<div class="progress-bar" role="progressbar"  style="width: 80%;">
+										80%
+									</div>
+								</div>
+								<div class="progress vertProg">
+									<div class="progress-bar" role="progressbar" style="width: 60%;">
+										60%
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div role="tabpanel" class="tab-pane fade " id="week" >
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">My Week</h3>
+							</div>
+
+							<div class="panel-body progContainer">
+								<b></b>
+								<div class="progress vertProgLeft">
+									<div class="progress-bar" role="progressbar"  style="width: 80%;">
+										80%
+									</div>
+								</div>
+								<div class="progress vertProg">
+									<div class="progress-bar" role="progressbar" style="width: 60%;">
+										60%
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div role="tabpanel" class="tab-pane fade " id="month" >
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">My Month</h3>
+							</div>
+
+							<div class="panel-body progContainer">
+								<b></b>
+								<div class="progress vertProgLeft">
+									<div class="progress-bar" role="progressbar"  style="width: 80%;">
+										80%
+									</div>
+								</div>
+								<div class="progress vertProg">
+									<div class="progress-bar" role="progressbar" style="width: 60%;">
+										60%
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 
 
 		</div>
