@@ -36,9 +36,12 @@ function FoodItem(source, name, calories) {
 	this.name = name;
 	this.calories = calories;
 	this.iconPath = function() {
+		var folder = "images/icons/";
 		switch (this.source.trim()) {
 			case "LEGUMES, NUTS AND SEEDS":
-				return "images/icons/nuts.png";
+				return folder + "nuts.png";
+			case "MIXED DISHES":
+				return folder + "mixeddishes.png";
 			default:
 				return "";
 		};

@@ -31,21 +31,19 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6">
-				<h1>where?</h1>
-			</div>
-			<div class="col-md-6">
 				Total Calories: <span data-bind="text: totalCalories">9000</span>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<h3>table goes here</h3>
+				<h3>Recommendations:</h3>
 				<ul>
 				<!-- ko foreach: foodItems -->
 					<li>
 						<img width="30px" height="30px" data-bind="attr:{src: iconPath()}"/>
-						<span data-bind="text: name"></span>
-						<span data-bind="text: calories"></span>
+						<!--<span data-bind="text: source"></span>-->
+						<span data-bind="text: name"></span>:
+						<span data-bind="text: calories"></span> calories
 					</li>
 				<!-- /ko -->
 				</ul>
