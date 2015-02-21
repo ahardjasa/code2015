@@ -1,6 +1,6 @@
 function MapModel() {
 	this.init = function () {
-		var center = {lat: -34.397, lng: 150.644}; // pick a better default
+		var center = {lat: 49.2827, lng: -123.1207}; // defaulting to Vancouver
 		this.map = new google.maps.Map(document.getElementById('map'), {
 			center: center,
 			zoom: 12,
