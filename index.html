@@ -10,8 +10,23 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
-				<h3>map goes here</h3>
+			<div class="col-md-12" id="map">
+			</div>
+			<div class="col-md-12" align="center" data-bind="with: profile">
+				<div class="starter-template">
+					<h2>How hungry are you? <span data-bind="text: portion"></span></h2>
+				</div>
+
+				<form>
+					<input type="radio" name="portion" value="1" data-bind="checked: portion"> 2 Pizza Slices<br>
+					<input type="radio" name="portion" value="2" data-bind="checked: portion"> Half Pizza<br>
+					<input type="radio" name="portion" value="3" data-bind="checked: portion"> Pizza<br>
+					<input type="radio" name="portion" value="4" data-bind="checked: portion"> Multiple Calzones<br>
+					<input type="radio" name="portion" value="5" data-bind="checked: portion"> 9000 CALORIES
+				</form>
+				<br>
+
+				<button type="button" class="btn btn-lg btn-primary">Find Nearby</button>
 			</div>
 		</div>
 		<div class="row">
@@ -46,6 +61,8 @@
 	<script src="lib/jquery-2.1.3.js"></script>
 	<script src="lib/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
 	<script src="lib/knockout-3.3.0.debug.js"></script>
+	<script src="data/everything.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMMQJPrM--XYTU3oG52NDbKLQ0oZCe-rg"></script>
 	<script src="main.js"></script>
 </body>
 </html>
