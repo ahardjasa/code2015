@@ -1,3 +1,13 @@
+function MapModel() {
+	this.init = function () {
+		var mapOptions = {
+			center: { lat: -34.397, lng: 150.644},
+			zoom: 8
+		};
+		this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+	};
+}
+
 function FoodItem(source, name, calories) {
 	this.source = source;
 	this.name = name;
@@ -6,11 +16,12 @@ function FoodItem(source, name, calories) {
 
 function BasicProfile(portion) {
 	var self = this;
-	self.portion = ko.observable(1);
+	self.portion = ko.observable(portion);
 }
 
 function PageModel() {
 	this.profile = new BasicProfile(1);
+	this.map = new MapModel();
 	this.foodItems = ko.observableArray([
 		new FoodItem("subway", "12\" meatball", 100)
 	]);
@@ -33,5 +44,6 @@ PageModel.prototype.addRandomFood = function () {
 var model = new PageModel();
 
 $(function () {
+	model.map.init();
 	ko.applyBindings(model);
 });

@@ -1,3 +1,7 @@
 body {
 	bgcolor: #fafafa;
 }
+
+#map {
+	height: 8em;
+}
