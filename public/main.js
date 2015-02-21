@@ -1,10 +1,33 @@
 function MapModel() {
 	this.init = function () {
-		var mapOptions = {
-			center: { lat: -34.397, lng: 150.644},
-			zoom: 8
-		};
-		this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		var center = {lat: -34.397, lng: 150.644}; // pick a better default
+		this.map = new google.maps.Map(document.getElementById('map'), {
+			center: center,
+			zoom: 12,
+			disableDefaultUI: true
+		});
+		var marker = new google.maps.Marker({
+			position: center,
+			title: "!",
+			draggable: true
+		});
+		marker.setMap(this.map);
+
+		var first = true;
+		if (navigator.geolocation) {
+			// TODO-NG: watch as I walk down the street
+			navigator.geolocation.watchPosition(function (position) {
+				console.log(position);
+				var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				if (first) {
+					this.map.setCenter(geolocate);
+					first = false;
+				} else {
+					this.map.panTo(geolocate);
+				}
+				marker.setPosition(geolocate);
+			}.bind(this));
+		}
 	};
 }
 
