@@ -24,3 +24,9 @@ download_nutrient_value_csvs: nutrient_value_search.json
 
 locations.js: vancouver_foodtrees.csv
 	(echo 'var locations = ['; sed -e '1d;s/^/\[/' -e 's/$$/\],/' vancouver_foodtrees.csv; echo '];') > $@
+
+business_licenses_csv.zip:
+	wget -N ftp://webftp.vancouver.ca/OpenData/csv/business_licences_csv.zip
+
+business_licenses.csv: business_licenses_csv.zip
+	unzip -o business_licences_csv.zip
