@@ -7,15 +7,22 @@ clean:
 ../public/data/everything.js: everything.js
 	cp $< $@
 
-legumes.json: nutrient_value_legumes_nuts_and_seeds_2008.csv
+nutrient_value_2008/%.json: nutrient_value_2008/%.csv
 	./nutrient_value_processor.py $< $@
 
 mixed_dishes.json: nutrient_value_mixed_dishes_2008.csv
 	./nutrient_value_processor.py $< $@
 
-everything.js: legumes.json mixed_dishes.json
+everything.js: $(patsubst %.csv,%.json,$(wildcard nutrient_value_2008/*.csv))
 	echo 'var everything = [' > $@
 	cat legumes.json >> $@
 	echo ',' >> $@
 	cat mixed_dishes.json >> $@
 	echo '];' >> $@
+
+nutrient_value_search.json:
+	curl 'http://open.canada.ca/data/en/api/3/action/package_search?q=nutrient+value' -o $@
+
+.PHONY: download_nutrient_value_csvs
+download_nutrient_value_csvs: nutrient_value_search.json
+	jq -r '.result.results[].resources[].url ' nutrient_value_search.json | grep -eng.csv | xargs wget -P nutrient_value_2008/
