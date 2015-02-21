@@ -43,7 +43,7 @@
 				<ul>
 				<!-- ko foreach: foodItems -->
 					<li>
-						<span data-bind="text: source"></span>
+						<img width="30px" height="30px" data-bind="attr:{src: iconPath()}"/>
 						<span data-bind="text: name"></span>
 						<span data-bind="text: calories"></span>
 					</li>
