@@ -34,7 +34,33 @@
 				<br>
 
 				<button type="button" class="btn btn-lg btn-primary">Find Nearby</button>
+				<button type="button" class="btn btn-lg btn-primary" data-bind="click: $root.preferences.Toggle">Preferences</button>
 			</div>
+		</div>
+		<div class="row prefhidden" id="pref" data-bind="with: preferences, css: { prefvisible: $root.preferences.isVisible }">
+			<p data-bind="text: GetGreeting()"></p>
+			<input type="text" name="age" id="pref.age" data-bind="value: myUser.age"
+				   onfocus="if (this.value=='Enter age:') this.value = ''" onblur="var str = this.value.replace(/\s+/g, ''); if(str == '') this.value = 'Enter age:'"> <br>
+
+			<select data-bind="options: ActivityOptions, value: myUser.activityLevel"></select>
+			<br>
+			<!--activity drop down and age-->
+			<label for="pref.size">Meal Size</label>
+			<input name="Size" id="pref.size" type="range" min="0" max="10" data-bind="value: myPreferences.mealSize">
+
+			<br>
+			<input type="checkbox" name="isFoodTrucks" id="pref.isFoodTrucks" value = "foodTrucks" data-bind="checked: myPreferences.isFoodTrucks">
+			<label for="pref.isFoodTrucks">Food Trucks</label>
+			<input type="checkbox" name="isSupermarkets" id="pref.isSupermarkets" data-bind="checked: myPreferences.isSupermarkets">
+			<label for="pref.isSupermarkets">Supermarkets</label>
+			<input type="checkbox" name="isFarmersMarkets" id="pref.isFarmersMarkets" data-bind="checked: myPreferences.isFarmersMarkets">
+			<label for="pref.isFarmersMarkets">Farmer's Markets</label>
+			<input type="checkbox" name="isFruitTrees" id="pref.isFruitTrees" data-bind="checked: myPreferences.isFruitTrees">
+			<label for="pref.isFruitTrees">Fruit Trees</label>
+
+			<br>
+
+
 		</div>
 		<div class="row">
 			<div class="col-md-6">
@@ -71,6 +97,7 @@
 	<script src="lib/knockout-3.3.0.debug.js"></script>
 	<script src="data/everything.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMMQJPrM--XYTU3oG52NDbKLQ0oZCe-rg"></script>
+	<script src="preferences.js"></script>
 	<script src="main.js"></script>
 </body>
 </html>

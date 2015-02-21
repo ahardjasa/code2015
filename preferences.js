@@ -30,12 +30,16 @@ function UserPreferences()
 function PreferencesViewModel()
 {
 	var self = this;
+	self.isVisible = ko.observable(false);
 	self.myPreferences = new UserPreferences();
 	self.myUser = new User("Jim", "Bob");
 	self.GetGreeting = function()
 		{return "Hello " + self.myUser.firstName + " " + self.myUser.lastName;};
 
 	self.ActivityOptions = ["Very Active", "Slightly Active", "Sedentary" ];
+
+	self.Toggle = function(){
+		self.isVisible(!self.isVisible());
+	};
 }
 
-ko.applyBindings(new PreferencesViewModel());

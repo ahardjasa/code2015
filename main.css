@@ -27,6 +27,18 @@ input[type=range][orient=vertical]
 	padding: 0 5px;
 }
 
+.prefhidden {
+	height: 0px;
+	overflow: hidden;
+	transition: height 1s;
+
+}
+
+.prefvisible {
+	height: 100px;
+	transition: height 1s;
+}
+
 .bglabel {
 	-moz-transform:rotate(270deg);
 	-o-transform:rotate(270deg);
