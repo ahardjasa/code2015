@@ -4,4 +4,9 @@ body {
 
 #map {
 	height: 8em;
+	transition: height 1s;
+}
+
+#map:hover {
+	height: 20em;
 }
