@@ -5,6 +5,13 @@ import csv
 import json
 
 
+def clean(text):
+    try:
+        return float(text)
+    except Exception:
+        return text
+
+
 def parse(input_file, output_file=None):
     foods = []
 
@@ -22,7 +29,7 @@ def parse(input_file, output_file=None):
                         unit = u'\u00b5g'
                     columns[c] = (columns[c], unit)
             elif row[4]:
-                foods.append(row)
+                foods.append([clean(c) for c in row])
 
     if output_file:
         with open(output_file, 'w') as ofh:
