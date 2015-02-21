@@ -1,6 +1,44 @@
 
 
 function MapModel() {
+	this.state = 'new';
+	this.markers = [];
+
+	function rad(deg) {
+		return deg * Math.PI / 180;
+	}
+
+	function distance(lat1d, long1d, lat2d, long2d) {
+		var lat1 = rad(lat1d);
+		var long1 = rad(long1d);
+		var lat2 = rad(lat2d);
+		var long2 = rad(long2d);
+		return 6372.8 * Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(long1 - long2))
+	}
+
+	this.drawNearby = function (lat, lng) {
+		var i = 0;
+		locations.forEach(function (loc) {
+			var km = distance(loc[0], loc[1], lat, lng);
+			if (km < 5) {
+				if (i >= this.markers.length) {
+					this.markers.push(new google.maps.Marker({
+						icon: 'images/tree-60-32.png',
+						position: new google.maps.LatLng(loc[0], loc[1]),
+						title: loc[3],
+						map: this.map
+					}));
+				} else {
+					this.markers[i].setPosition({lat: loc[0], lng: loc[1]})
+				}
+				i++;
+			}
+		}, this);
+		while (this.markers.length > i) {
+			this.markers.pop().setMap(null);
+		}
+	};
+
 	this.init = function () {
 		var center = {lat: 49.2827, lng: -123.1207}; // defaulting to Vancouver
 		this.map = new google.maps.Map(document.getElementById('map'), {
@@ -10,26 +48,34 @@ function MapModel() {
 		});
 		var marker = new google.maps.Marker({
 			position: center,
-			title: "!",
-			draggable: true
+			title: "Current Location",
+			draggable: true,
+			map: this.map
 		});
-		marker.setMap(this.map);
+		this.drawNearby(center.lat, center.lng);
 
-		var first = true;
 		if (navigator.geolocation) {
 			// TODO-NG: watch as I walk down the street
 			navigator.geolocation.watchPosition(function (position) {
-				console.log(position);
 				var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-				if (first) {
+				if (this.state === 'new') {
+					this.state = 'follow';
+					marker.setPosition(geolocate);
 					this.map.setCenter(geolocate);
-					first = false;
-				} else {
+					this.drawNearby(geolocate.lat(), geolocate.lng());
+				} else if (this.state === 'follow') {
+					marker.setPosition(geolocate);
 					this.map.panTo(geolocate);
+					this.drawNearby(geolocate.lat(), geolocate.lng());
 				}
-				marker.setPosition(geolocate);
 			}.bind(this));
 		}
+
+		google.maps.event.addListener(marker, 'dragend', function (event) {
+			this.state = 'pick';
+			this.map.panTo(event.latLng);
+			this.drawNearby(event.latLng.lat(), event.latLng.lng());
+		}.bind(this));
 	};
 }
 

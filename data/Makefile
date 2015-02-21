@@ -1,4 +1,4 @@
-all: ../public/data/everything.js
+all: ../public/data/everything.js ../public/data/locations.js
 
 .PHONY: clean
 clean:
@@ -6,12 +6,6 @@ clean:
 
 ../public/data/everything.js: everything.js
 	cp $< $@
-
-nutrient_value_2008/%.json: nutrient_value_2008/%.csv
-	./nutrient_value_processor.py $< $@
-
-mixed_dishes.json: nutrient_value_mixed_dishes_2008.csv
-	./nutrient_value_processor.py $< $@
 
 everything.js: $(patsubst %.csv,%.json,$(wildcard nutrient_value_2008/*.csv))
 	echo 'var everything = [' > $@
@@ -24,3 +18,9 @@ nutrient_value_search.json:
 .PHONY: download_nutrient_value_csvs
 download_nutrient_value_csvs: nutrient_value_search.json
 	jq -r '.result.results[].resources[].url ' nutrient_value_search.json | grep -eng.csv | xargs wget -P nutrient_value_2008/
+
+../public/data/locations.js: locations.js
+	cp $< $@
+
+locations.js: vancouver_foodtrees.csv
+	(echo 'var locations = ['; sed -e '1d;s/^/\[/' -e 's/$$/\],/' vancouver_foodtrees.csv; echo '];') > $@
