@@ -41,7 +41,5 @@ function PreferencesViewModel()
 	self.Toggle = function(){
 		self.isVisible(!self.isVisible());
 	};
-
-	self.GetDay = function() {};
 }
 
