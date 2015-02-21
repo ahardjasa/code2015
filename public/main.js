@@ -4,13 +4,13 @@ function FoodItem(source, name, calories) {
 	this.calories = calories;
 }
 
-function Profile(portion) {
+function BasicProfile(portion) {
 	var self = this;
 	self.portion = ko.observable(1);
 }
 
 function PageModel() {
-	this.profile = new Profile(1);
+	this.profile = new BasicProfile(1);
 	this.foodItems = ko.observableArray([
 		new FoodItem("subway", "12\" meatball", 100)
 	]);
