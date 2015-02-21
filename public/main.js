@@ -91,15 +91,17 @@ function MapModel() {
 			position: center,
 			title: 'Current Location',
 			draggable: true,
-			map: this.map
+			map: this.map,
+			zIndex: 10
 		});
 
 		pageModel.nearbyRestaurants.subscribe(function (restaurants) {
 			var i = 0;
 			restaurants.forEach(function (loc) {
+				var icon = (loc.menu in treeTypes) ? 'images/tree-60-32.png' : 'images/restaurant-4-32.png';
 				if (i >= this.markers.length) {
 					this.markers.push(new google.maps.Marker({
-						icon: (loc.menu in treeTypes) ? 'images/tree-60-32.png' : 'images/restaurant-4-32.png',
+						icon: icon,
 						position: loc,
 						title: loc.name,
 						map: this.map
@@ -107,6 +109,7 @@ function MapModel() {
 				} else {
 					this.markers[i].setPosition(loc);
 					this.markers[i].setTitle(loc.name);
+					this.markers[i].setIcon(icon);
 				}
 				i++;
 			}, this);
