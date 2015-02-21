@@ -99,7 +99,7 @@ function MapModel() {
 			restaurants.forEach(function (loc) {
 				if (i >= this.markers.length) {
 					this.markers.push(new google.maps.Marker({
-						icon: 'images/tree-60-32.png',
+						icon: (loc.menu in treeTypes) ? 'images/tree-60-32.png' : 'images/restaurant-4-32.png',
 						position: loc,
 						title: loc.name,
 						map: this.map
