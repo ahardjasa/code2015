@@ -8,9 +8,16 @@
 	<link rel="stylesheet" href="main.css"/>
 </head>
 <body>
+	<div class="background"></div>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12" id="map">
+			<div class="col-md-12" id="map"></div>
+			<div class="col-md-12" id="menu">
+				<div class="row">
+					<div class="col-md-4">change location</div>
+					<div class="col-md-4">see your options</div>
+					<div class="col-md-4">change settings</div>
+				</div>
 			</div>
 			<div class="col-md-12" align="center" data-bind="with: profile">
 				<div class="starter-template">
@@ -18,7 +25,6 @@
 						<!--<span data-bind="text: portion"></span>-->
 					</h3>
 				</div>
-
 				<div class="radio-custom">
 					<input type="radio" id="radio1" value="1" data-bind="checked: portion">
 					<label for="radio1">2 Pizza Slices</label>
@@ -182,20 +188,36 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h3>Recommendations:</h3>
-				<ul>
-				<!-- ko foreach: foodItems -->
-					<li>
-						<img width="40px" height="40px" data-bind="attr:{src: iconPath()}"/>
-						<!--<span data-bind="text: source"></span>-->
-						<h4 style="display: inline"><span class="label label-default" data-bind="text: name"></span></h4>
-						<h4 style="display: inline"><span class="label label-primary" data-bind="text: calories"></span></h4>
-						<h4 style="display: inline"><span class="label label-primary" data-bind="text: weight"></span></h4>
-						<h4 style="display: inline"><span class="label label-success" data-bind="text: protein + ' protein'"></span></h4>
-						<h4 style="display: inline"><span class="label label-danger" data-bind="text: carbs + ' carbs'"></span></h4>
-						<h4 style="display: inline"><span class="label label-warning" data-bind="text: totalFat + ' fat'"></span></h4>
-					</li>
-				<!-- /ko -->
-				</ul>
+				<table class="table food-list">
+					<thead>
+						<tr>
+							<th></th>
+							<th></th>
+							<th class="food-list-metric">Calories</th>
+							<th class="food-list-metric">Protein</th>
+							<th class="food-list-metric">Carbs</th>
+							<th class="food-list-metric">Total Fat</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody data-bind="foreach: foodItems">
+						<tr>
+							<td class="food-list-icon"><img width="40px" height="40px" data-bind="attr:{src: iconPath()}"/></td>
+							<td class="food-list-description">
+								<span class="name" data-bind="text: name"></span>
+								<span class="size" data-bind="text: weight + ' g'"></span>
+								<span class="from">where from?</span>
+							</td>
+							<td class="food-list-metric" data-bind="text: calories"></td>
+							<td class="food-list-metric" data-bind="text: protein"></td>
+							<td class="food-list-metric" data-bind="text: carbs"></td>
+							<td class="food-list-metric" data-bind="text: totalFat"></td>
+							<td class="food-list-rating">
+								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 				<span class="btn btn-default" data-bind="click: addRandomFood">Add Another</span>
 			</div>
 		</div>
