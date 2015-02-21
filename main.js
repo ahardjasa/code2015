@@ -1,5 +1,3 @@
-
-
 function MapModel() {
 	this.state = 'new';
 	this.markers = [];
@@ -137,7 +135,7 @@ function FoodItem(source, food) {
 
 function getValue(amount, unit) {
 	if (amount === "tr") {
-		return "trace amounts of ";
+		return "Trace amounts of ";
 	} else {
 		return amount + unit;
 	}
