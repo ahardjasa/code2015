@@ -6,8 +6,7 @@ FoodService.prototype.random = function () {
 	var cols = generics.cols;
 	var food = generics.rows[Math.floor(Math.random() * generics.rows.length)];
 
-	// FIXME: use columns
-	return new FoodItem(food[cols.indexOf('CATEGORY')], food);
+	return new FoodItem(food[cols.indexOf('CATEGORY')], cols, food);
 };
 
 FoodService.prototype.menu = function (id) {
@@ -17,7 +16,7 @@ FoodService.prototype.menu = function (id) {
 		var fruit = generics.rows.find(function (f) {
 			return f[categoryIndex] === treeType[0] && f[0] === treeType[1];
 		});
-		return [new FoodItem(fruit[categoryIndex], fruit)];
+		return [new FoodItem(fruit[categoryIndex], generics.cols, fruit)];
 	}
 	return [];
 };
@@ -143,19 +142,10 @@ function MapModel() {
 	};
 }
 
-function FoodItem(source, food) {
+function FoodItem(source, columns, food) {
+	this.calories;
 	this.source = source;
-	this.name = food[0];
-	this.weight = food[2];
-	this.calories = food[3];
-	this.protein = getValue(food[5], "g");
-	this.carbs = getValue(food[6], "g");
-	this.sugar = getValue(food[7], "g");
-	this.fiber = getValue(food[8], "g");
-	this.totalFat = getValue(food[9], "g");
-	this.satFat = getValue(food[10], "g");
-	this.cholesterol = getValue(food[11], "g");
-	this.calcium = getValue(food[12], "g");
+	this.columns = columns;
 	this.iconPath = function() {
 		var folder = "images/icons/";
 		switch (this.source.trim()) {
@@ -197,12 +187,89 @@ function FoodItem(source, food) {
 				return "";
 		};
 	}
+
+	function parseColumns() {
+		var i;
+		for (i = 0; i < columns.length; i++) {
+			var columnAttr = columns[i];
+			var columnItems = /([^(]+)(\((.*)\))?/.exec(columnAttr);
+			var columnName = columnItems[1].trim().toLowerCase();
+			var columnUnit = "";
+			if (columnItems[3] != null) {
+				columnUnit = columnItems[3].trim().toLowerCase();
+			}
+			var foodAttribute = getAttributeLabel(food[i], columnUnit);
+
+			//debugger;
+			switch(columnName) {
+				case ("food name"):
+					this.name = foodAttribute;
+					break;
+				case ("weight"):
+					this.weight = foodAttribute;
+					break;
+				case ("energy"):
+					if (columnUnit === "kcal") {
+						this.calories = foodAttribute;
+					}
+					break;
+				case ("calories"):
+					this.calories = foodAttribute;
+					break;
+				case ("protein"):
+					this.protein = foodAttribute;
+					break;
+				case ("carbohydrate"):
+					this.carbs = foodAttribute;
+					break;
+				case ("total sugar"):
+					this.sugar = foodAttribute;
+					break;
+				case ("total fat"):
+					this.totalFat = foodAttribute;
+					break;
+				case ("saturated fat"):
+					this.saturatedFat = foodAttribute;
+					break;
+				case ("cholesterol"):
+					this.cholesterol = foodAttribute;
+					break;
+				case ("monounsaturated fat"):
+					this.monoFat = foodAttribute;
+					break;
+				case ("polyunsaturated fat"):
+					this.polyFat = foodAttribute;
+					break;
+				case ("dha"):
+					this.dha = foodAttribute;
+					break;
+				case ("epa"):
+					this.epa = foodAttribute;
+					break;
+				case ("sodium"):
+					this.sodium = foodAttribute;
+					break;
+				case ("calcium"):
+					this.calcium = foodAttribute;
+					break;
+				case ("total dietary fibre"):
+					this.fibre = foodAttribute;
+					break;
+				default:
+					break;
+			}
+		}
+	}
+	parseColumns();
 }
 
-function getValue(amount, unit) {
+function getAttributeLabel(amount, unit) {
 	if (amount === "tr") {
 		return "Trace amounts of ";
 	} else {
+		if (unit === "kcal") {
+			return amount + " calories";
+		}
 		return amount + unit;
 	}
 }
@@ -210,8 +277,6 @@ function getValue(amount, unit) {
 function BasicProfile(portion) {
 	var self = this;
 	self.portion = ko.observable(portion);
-
-
 }
 
 
