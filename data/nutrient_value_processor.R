@@ -16,12 +16,10 @@ for(dt in nut2008){
 }
 nutcats <- mapply(function(x, y) scan(x, what = "character", skip = y, sep = ",", nlines = 1)[1], paste0(nut2008dir,list.files(nut2008dir)), headerloc)
 names(nut2008) <- nutcats
-allnut2008 <- rbindlistn(nut2008, names = T, fill = T)
+allnut2008 <- rbindlistn(nut2008, names = "CATEGORY", fill = T)
 allnut2008 <- allnut2008[get("Food Name ()") != ""]
-
-subcat.idces <- allnut2008[, which((is.na(get("Protein (g)"))|get("Protein (g)") == "") & (is.na(get("Weight (g)"))|get("Weight (g)") == ""))]
-# allnut2008 <- unique(allnut2008, by = names(allnut2008)[which(names(allnut2008)!=".Names")])
-# allnut2008[get("Food Name ()") == ""]
-
-
+subcat.idces <- allnut2008[,which(get("Measure ()") == "")]
 allnut2008[, SUBCATEGORY := (unlist(mapply(function(x, y) rep(x, y), allnut2008[subcat.idces, get("Food Name ()")], running(c(subcat.idces, (nrow(allnut2008)+1)), fun=function(v){v[2] - v[1]}, width = 2, simplify = F), SIMPLIFY = FALSE)))]
+allnut2008 <- allnut2008[-subcat.idces]
+allnut2008 <- allnut2008[, lapply(.SD, function(x) ifelse(is.na(x), "", x))]
+write.csv(allnut2008, "C:/cygwin64/home/amelia.hardjasa/code2015/data/combined_nutrient_value_2008.csv", row.names = F)
