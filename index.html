@@ -204,14 +204,15 @@
 						<tr>
 							<td class="food-list-icon"><img width="40px" height="40px" data-bind="attr:{src: iconPath()}"/></td>
 							<td class="food-list-description">
-								<span class="name" data-bind="text: name"></span>
-								<span class="size" data-bind="text: weight + ' g'"></span>
+								<span class="badge" data-bind="text: measureLabel">/</span>
+								<span class="name" data-bind="text: nameLabel"></span>
+								<span class="size" data-bind="text: weightLabel"></span>
 								<span class="from">where from?</span>
 							</td>
-							<td class="food-list-metric" data-bind="text: calories"></td>
-							<td class="food-list-metric" data-bind="text: protein"></td>
-							<td class="food-list-metric" data-bind="text: carbs"></td>
-							<td class="food-list-metric" data-bind="text: totalFat"></td>
+							<td class="food-list-metric" data-bind="text: caloriesLabel"></td>
+							<td class="food-list-metric" data-bind="text: proteinLabel"></td>
+							<td class="food-list-metric" data-bind="text: carbsLabel"></td>
+							<td class="food-list-metric" data-bind="text: totalFatLabel"></td>
 							<td class="food-list-rating">
 								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 							</td>
