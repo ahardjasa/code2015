@@ -32,7 +32,7 @@ def parse(input_file, output_file=None):
 
     if output_file:
         with open(output_file, 'w') as ofh:
-            json.dump(dict(name=name, columns=columns, foods=foods), ofh)
+            json.dump(dict(name=name, columns=columns, foods=foods), ofh, sort_keys=True)
 
 if __name__ == '__main__':
     parse(*sys.argv[1:])
