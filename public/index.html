@@ -10,8 +10,20 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
-				<h3>map goes here</h3>
+			<div class="col-md-12" align="center" data-bind="with: profile">
+				<div class="starter-template">
+					<h2>How hungry are you? <span data-bind="text: portion"></span></h2>
+				</div>
+
+				<form>
+					<input type="radio" name="portion" value="1" data-bind="checked: portion"> Light snack<br>
+					<input type="radio" name="portion" value="2" data-bind="checked: portion"> Medium meal<br>
+					<input type="radio" name="portion" value="3" data-bind="checked: portion"> Big portions<br>
+					<input type="radio" name="portion" value="4" data-bind="checked: portion"> 9000 Calories
+				</form>
+				<br>
+
+				<button type="button" class="btn btn-lg btn-primary">Find</button>
 			</div>
 		</div>
 		<div class="row">
