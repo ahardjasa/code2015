@@ -1,16 +1,12 @@
-all: ../public/data/everything.js ../public/data/locations.js
+all: ../public/data/generics.js ../public/data/locations.js
 
-.PHONY: clean
-clean:
-	rm -f everything.js nutrient_value_2008/*
-
-../public/data/everything.js: everything.js
+../public/data/generics.js: generics.js
 	cp $< $@
 
-everything.js: $(patsubst %.csv,%.json,$(wildcard nutrient_value_2008/*.csv))
-	echo 'var everything = [' > $@
-	for f in nutrient_value_2008/*.json; do cat $$f >> $@; echo ',' >> $@ ; done
-	echo '];' >> $@
+generics.js: combined_nutrient_value_2008.csv
+	echo 'var generics = ' > $@
+	./combined_nutrient_value_processor.py >> $@
+	echo ';' >> $@
 
 nutrient_value_search.json:
 	curl 'http://open.canada.ca/data/en/api/3/action/package_search?q=nutrient+value' -o $@
