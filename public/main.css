@@ -1,4 +1,5 @@
 body {
+<<<<<<< HEAD
 	background-color: cadetblue;
 
 
@@ -18,4 +19,16 @@ input[type=range][orient=vertical]
 	-o-transform:rotate(270deg);
 	-webkit-transform:rotate(270deg);
 	-ms-transform:rotate(270deg);
+=======
+	bgcolor: #fafafa;
+}
+
+#map {
+	height: 8em;
+	transition: height 1s;
+}
+
+#map:hover {
+	height: 20em;
+>>>>>>> 0d118e6080b8f49bfe34c8e9c2bff444e104344f
 }
