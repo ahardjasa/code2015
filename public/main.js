@@ -35,6 +35,14 @@ function FoodItem(source, name, calories) {
 	this.source = source;
 	this.name = name;
 	this.calories = calories;
+	this.iconPath = function() {
+		switch (this.source.trim()) {
+			case "LEGUMES, NUTS AND SEEDS":
+				return "images/icons/nuts.png";
+			default:
+				return "";
+		};
+	}
 }
 
 function BasicProfile(portion) {
@@ -46,7 +54,6 @@ function PageModel() {
 	this.profile = new BasicProfile(1);
 	this.map = new MapModel();
 	this.foodItems = ko.observableArray([
-		new FoodItem("subway", "12\" meatball", 100)
 	]);
 	this.totalCalories = ko.computed(function () {
 		return this.foodItems().reduce(function (total, item) {
