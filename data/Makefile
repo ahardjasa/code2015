@@ -22,11 +22,17 @@ download_nutrient_value_csvs: nutrient_value_search.json
 ../public/data/locations.js: locations.js
 	cp $< $@
 
-locations.js: vancouver_foodtrees.csv
-	(echo 'var locations = ['; sed -e '1d;s/^/\[/' -e 's/$$/\],/' vancouver_foodtrees.csv; echo '];') > $@
+locations.js: vancouver_foodtrees.csv vancouver_fatabase_restaurants.json
+	(echo 'var locations = ['; sed -e '1d;s/^/\[/' -e 's/$$/\],/' vancouver_foodtrees.csv; cat vancouver_fatabase_restaurants.json; echo '];') > $@
 
-business_licenses_csv.zip:
+business_licences_csv.zip:
 	wget -N ftp://webftp.vancouver.ca/OpenData/csv/business_licences_csv.zip
 
-business_licenses.csv: business_licenses_csv.zip
-	unzip -o business_licences_csv.zip
+business_licenses.csv: business_licences_csv.zip
+	unzip -D -o business_licences_csv.zip
+
+fatabase_restaurants.txt: fatabase.csv
+	awk -F, '{print $$3}' $< | grep -v 'Meal Name' | sort -u > $@
+
+vancouver_fatabase_restaurants.json: business_licence_processor.py fatabase_restaurants.txt business_licenses.csv
+	./business_licence_processor.py | sed -e 's/$$/,/' > $@
