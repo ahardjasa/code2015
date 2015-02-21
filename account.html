@@ -8,11 +8,14 @@
 </head>
 <body>
 <p data-bind="text: GetGreeting()"></p>
-<input type="text" name="first" > <br>
-<!--actvity drop down and age-->
+<input type="text" name="age" id="pref.age" data-bind="value: myUser.age"
+	   onfocus="if (this.value=='Enter age:') this.value = ''" onblur="var str = this.value.replace(/\s+/g, ''); if(str == '') this.value = 'Enter age:'"> <br>
+
+<select data-bind="options: ActivityOptions, value: myUser.activityLevel">
+<br>
+<!--activity drop down and age-->
 <label for="pref.size">Meal Size</label>
 <input name="Size" id="pref.size" type="range" min="0" max="10" data-bind="value: myPreferences.mealSize">
-<p data-bind="text: myPreferences.mealSize()"></p>
 <input type="checkbox" name="isFoodTrucks" id="pref.isFoodTrucks" value = "foodTrucks" data-bind="checked: myPreferences.isFoodTrucks">
 <label for="pref.isFoodTrucks">Food Trucks</label>
 <input type="checkbox" name="isSupermarkets" id="pref.isSupermarkets" data-bind="checked: myPreferences.isSupermarkets">
@@ -23,13 +26,11 @@
 <label for="pref.isFruitTrees">Fruit Trees</label>
 
 <br>
-<label class="bglabel" for="pref.calories">Calories</label>
-
+<label class="bglabel" display:block for="pref.calories">Calories</label>
 <input name="Calories" id="pref.calories" type="range" orient = "vertical" min="0" max="10000" data-bind="value: myPreferences.dailyCalories">
-<label class="bglabel" for="pref.iron">Iron</label>
-
+<label class="bglabel" display:blockfor="pref.iron">Iron</label>
 <input name="Iron" id="pref.iron" type="range" orient = "vertical" min="0" max="1000" data-bind="value: myPreferences.dailyIron">
-<label class="bglabel" for="pref.magnesium">Magnesium</label>
+<label class="bglabel" display:block for="pref.magnesium">Magnesium</label>
 <input name="Magnesium" id="pref.magnesium" type="range" orient = "vertical" min="0" max="100" data-bind="value: myPreferences.dailyMagnesium">
 
 
