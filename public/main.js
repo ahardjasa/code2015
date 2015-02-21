@@ -205,6 +205,9 @@ function FoodItem(source, columns, food) {
 				case ("food name"):
 					this.name = foodAttribute;
 					break;
+				case ("meal name"):
+					this.name = foodAttribute;
+					break;
 				case ("weight"):
 					this.weight = foodAttribute;
 					break;
@@ -219,14 +222,29 @@ function FoodItem(source, columns, food) {
 				case ("protein"):
 					this.protein = foodAttribute;
 					break;
+				case ("carbs"):
+					this.carbs = foodAttribute;
+					break;
 				case ("carbohydrate"):
 					this.carbs = foodAttribute;
 					break;
 				case ("total sugar"):
 					this.sugar = foodAttribute;
 					break;
+				case ("sugars"):
+					this.sugar = foodAttribute;
+					break;
+				case ("fat"):
+					this.totalFat = foodAttribute;
+					break;
 				case ("total fat"):
 					this.totalFat = foodAttribute;
+					break;
+				case ("trans fats"):
+					this.transFat = foodAttribute;
+					break;
+				case ("trans fat"):
+					this.transFat = foodAttribute;
 					break;
 				case ("saturated fat"):
 					this.saturatedFat = foodAttribute;
@@ -240,17 +258,20 @@ function FoodItem(source, columns, food) {
 				case ("polyunsaturated fat"):
 					this.polyFat = foodAttribute;
 					break;
-				case ("dha"):
-					this.dha = foodAttribute;
-					break;
-				case ("epa"):
-					this.epa = foodAttribute;
-					break;
 				case ("sodium"):
 					this.sodium = foodAttribute;
 					break;
+				case ("magnesium"):
+					this.magnesium = foodAttribute;
+					break;
 				case ("calcium"):
 					this.calcium = foodAttribute;
+					break;
+				case ("iron"):
+					this.iron = foodAttribute;
+					break;
+				case ("sodium"):
+					this.iron = foodAttribute;
 					break;
 				case ("total dietary fibre"):
 					this.fibre = foodAttribute;
