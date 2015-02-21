@@ -12,26 +12,42 @@ FoodService.prototype.random = function () {
 };
 
 FoodService.prototype.menu = function (id) {
-	if (id === 'apple') {
+	if (treeTypes[id]) {
 		var fruits = everything.find(function (nv) {
-			return nv.name === 'FRUIT AND FRUIT JUICES';
+			return nv.name === treeTypes[id][0];
 		});
-		var apple = fruits.foods.find(function (f) {
-			return f[0] === 'Apple with skin (7cm.diam)';
+		var fruit = fruits.foods.find(function (f) {
+			return f[0] === treeTypes[id][1];
 		});
-		return [new FoodItem(fruits.name, apple)];
+		return [new FoodItem(fruits.name, fruit)];
 	}
 	return [];
 };
 
 var foodService = new FoodService();
 
+var treeTypes = {
+	"apple": ['FRUIT AND FRUIT JUICES', 'Apple with skin (7cm.diam)'],
+	"apricot": ['FRUIT AND FRUIT JUICES', 'Apricots, raw'],
+	"berry": null,
+	"cherry": null,
+	"grape": ['FRUIT AND FRUIT JUICES', 'Grapes'],
+	"hazelnut": null,
+	"lemon": null,
+	"peach": ['FRUIT AND FRUIT JUICES', 'Peach'],
+	"pear": ['FRUIT AND FRUIT JUICES', 'Pear with skin'],
+	"persimmon": null,
+	"plum": ['FRUIT AND FRUIT JUICES', 'Plum'],
+	"quince": null,
+	"walnut": null
+};
 
 function RestaurantService() {
 
 }
 
 RestaurantService.prototype.nearby = function (lat, lng) {
+
 	function rad(deg) {
 		return deg * Math.PI / 180;
 	}
@@ -73,13 +89,12 @@ function MapModel() {
 		});
 		var marker = new google.maps.Marker({
 			position: center,
-			title: "Current Location",
+			title: 'Current Location',
 			draggable: true,
 			map: this.map
 		});
 
 		pageModel.nearbyRestaurants.subscribe(function (restaurants) {
-			console.log('nearby restaurants changed:', restaurants);
 			var i = 0;
 			restaurants.forEach(function (loc) {
 				if (i >= this.markers.length) {
