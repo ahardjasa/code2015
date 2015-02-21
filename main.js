@@ -38,10 +38,40 @@ function FoodItem(source, name, calories) {
 	this.iconPath = function() {
 		var folder = "images/icons/";
 		switch (this.source.trim()) {
+			case "BAKED GOODS":
+				return folder + "baked.png";
+			case "BEVERAGES":
+				return folder + "drink.png";
+			case "BREADS, CEREALS AND OTHER GRAIN PRODUCTS":
+				return folder + "bread.png";
+			case "DAIRY FOODS AND OTHER RELATED PRODUCTS":
+				return folder + "dairy.png";
+			case "EGGS AND EGG DISHES":
+				return folder + "egg.png";
+			case "FAST FOODS":
+				return folder + "fastfood.png";
+			case "FATS AND OILS":
+				return folder + "fats.png";
+			case "FISH AND SHELLFISH":
+				return folder + "fish.png";
+			case "FRUIT AND FRUIT JUICES":
+				return folder + "fruit.png";
 			case "LEGUMES, NUTS AND SEEDS":
 				return folder + "nuts.png";
+			case "MEAT AND POULTRY":
+				return folder + "meat.png";
+			case "MISCELLANEOUS FOODS":
+				return folder + "sauce.png";
 			case "MIXED DISHES":
 				return folder + "mixeddishes.png";
+			case "SNACKS":
+				return folder + "snacks.png";
+			case "SOUPS":
+				return folder + "soups.png";
+			case "SWEETS AND SUGARS":
+				return folder + "sugar.png";
+			case "VEGETABLES AND VEGETABLE PRODUCTS":
+				return folder + "vegetables.png";
 			default:
 				return "";
 		};
