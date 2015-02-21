@@ -1,7 +1,37 @@
-function MapModel() {
-	this.state = 'new';
-	this.markers = [];
+function FoodService() {
 
+}
+
+FoodService.prototype.random = function () {
+	// FIXME: uneven weighting
+	var file = everything[Math.floor(Math.random() * everything.length)];
+	var food = file.foods[Math.floor(Math.random() * file.foods.length)];
+
+	// FIXME: use columns
+	return new FoodItem(file.name, food);
+};
+
+FoodService.prototype.menu = function (id) {
+	if (id === 'apple') {
+		var fruits = everything.find(function (nv) {
+			return nv.name === 'FRUIT AND FRUIT JUICES';
+		});
+		var apple = fruits.foods.find(function (f) {
+			return f[0] === 'Apple with skin (7cm.diam)';
+		});
+		return [new FoodItem(fruits.name, apple)];
+	}
+	return [];
+};
+
+var foodService = new FoodService();
+
+
+function RestaurantService() {
+
+}
+
+RestaurantService.prototype.nearby = function (lat, lng) {
 	function rad(deg) {
 		return deg * Math.PI / 180;
 	}
@@ -14,28 +44,25 @@ function MapModel() {
 		return 6372.8 * Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(long1 - long2))
 	}
 
-	this.drawNearby = function (lat, lng) {
-		var i = 0;
-		locations.forEach(function (loc) {
-			var km = distance(loc[0], loc[1], lat, lng);
-			if (km < 5) {
-				if (i >= this.markers.length) {
-					this.markers.push(new google.maps.Marker({
-						icon: 'images/tree-60-32.png',
-						position: new google.maps.LatLng(loc[0], loc[1]),
-						title: loc[3],
-						map: this.map
-					}));
-				} else {
-					this.markers[i].setPosition({lat: loc[0], lng: loc[1]})
-				}
-				i++;
-			}
-		}, this);
-		while (this.markers.length > i) {
-			this.markers.pop().setMap(null);
+	return locations.filter(function (loc) {
+		var km = distance(loc[0], loc[1], lat, lng);
+		return km < 5;
+	}).map(function (loc) {
+		return {
+			lat: loc[0],
+			lng: loc[1],
+			name: loc[3],
+			menu: loc[3]
 		}
-	};
+	});
+};
+
+var restaurantService = new RestaurantService();
+
+
+function MapModel() {
+	this.state = 'new';
+	this.markers = [];
 
 	this.init = function () {
 		var center = {lat: 49.2827, lng: -123.1207}; // defaulting to Vancouver
@@ -50,7 +77,30 @@ function MapModel() {
 			draggable: true,
 			map: this.map
 		});
-		this.drawNearby(center.lat, center.lng);
+
+		pageModel.nearbyRestaurants.subscribe(function (restaurants) {
+			console.log('nearby restaurants changed:', restaurants);
+			var i = 0;
+			restaurants.forEach(function (loc) {
+				if (i >= this.markers.length) {
+					this.markers.push(new google.maps.Marker({
+						icon: 'images/tree-60-32.png',
+						position: loc,
+						title: loc.name,
+						map: this.map
+					}));
+				} else {
+					this.markers[i].setPosition(loc);
+					this.markers[i].setTitle(loc.name);
+				}
+				i++;
+			}, this);
+			while (this.markers.length > i) {
+				this.markers.pop().setMap(null);
+			}
+		}, this);
+
+		pageModel.location(center);
 
 		if (navigator.geolocation) {
 			// TODO-NG: watch as I walk down the street
@@ -60,11 +110,11 @@ function MapModel() {
 					this.state = 'follow';
 					marker.setPosition(geolocate);
 					this.map.setCenter(geolocate);
-					this.drawNearby(geolocate.lat(), geolocate.lng());
+					pageModel.location({lat: geolocate.lat(), lng: geolocate.lng()})
 				} else if (this.state === 'follow') {
 					marker.setPosition(geolocate);
 					this.map.panTo(geolocate);
-					this.drawNearby(geolocate.lat(), geolocate.lng());
+					pageModel.location({lat: geolocate.lat(), lng: geolocate.lng()})
 				}
 			}.bind(this));
 		}
@@ -72,7 +122,7 @@ function MapModel() {
 		google.maps.event.addListener(marker, 'dragend', function (event) {
 			this.state = 'pick';
 			this.map.panTo(event.latLng);
-			this.drawNearby(event.latLng.lat(), event.latLng.lng());
+			pageModel.location({lat: event.latLng.lat(), lng: event.latLng.lng()})
 		}.bind(this));
 	};
 }
@@ -150,11 +200,32 @@ function BasicProfile(portion) {
 
 
 function PageModel() {
+	this.location = ko.observable();
+
+	this.nearbyRestaurants = ko.computed(function () {
+		var loc = this.location();
+		return loc ? restaurantService.nearby(loc.lat, loc.lng) : [];
+	}, this);
+
+	this.addedFoodItems = ko.observableArray();
+	this.nearbyFoodItems = ko.computed(function () {
+		var items = [];
+		this.nearbyRestaurants().forEach(function (restaurant) {
+			foodService.menu(restaurant.menu).forEach(function (food) {
+				// if not already contains?
+				items.push(food);
+			})
+		});
+		return items;
+	}, this);
+	this.foodItems = ko.computed(function () {
+		return this.addedFoodItems().concat(this.nearbyFoodItems());
+	}, this);
+
 	this.profile = new BasicProfile(1);
-	this.map = new MapModel();
+	this.map = new MapModel(this.foodService, this.nearbyFoodItems);
 	this.preferences = new PreferencesViewModel();
-	this.foodItems = ko.observableArray([
-	]);
+
 	this.totalCalories = ko.computed(function () {
 		return this.foodItems().reduce(function (total, item) {
 			return total + item.calories;
@@ -162,17 +233,12 @@ function PageModel() {
 	}, this);
 }
 PageModel.prototype.addRandomFood = function () {
-	// FIXME: uneven weighting
-	var file = everything[Math.floor(Math.random() * everything.length)];
-	var food = file.foods[Math.floor(Math.random() * file.foods.length)];
-
-	// FIXME: use columns
-	this.foodItems.push(new FoodItem(file.name, food));
+	this.addedFoodItems.push(foodService.random());
 };
 
-var model = new PageModel();
+var pageModel = new PageModel();
 
 $(function () {
-	model.map.init();
-	ko.applyBindings(model);
+	pageModel.map.init();
+	ko.applyBindings(pageModel);
 });
