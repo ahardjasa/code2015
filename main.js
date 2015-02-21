@@ -49,9 +49,9 @@ function FoodItem(source, name, calories) {
 			case "EGGS AND EGG DISHES":
 				return folder + "egg.png";
 			case "FAST FOODS":
-				return folder + "fastfood.png";
+				return folder + "hero.png";
 			case "FATS AND OILS":
-				return folder + "fats.png";
+				return folder + "cheese.png";
 			case "FISH AND SHELLFISH":
 				return folder + "fish.png";
 			case "FRUIT AND FRUIT JUICES":
@@ -67,9 +67,9 @@ function FoodItem(source, name, calories) {
 			case "SNACKS":
 				return folder + "snacks.png";
 			case "SOUPS":
-				return folder + "soups.png";
+				return folder + "soup.png";
 			case "SWEETS AND SUGARS":
-				return folder + "sugar.png";
+				return folder + "candy.png";
 			case "VEGETABLES AND VEGETABLE PRODUCTS":
 				return folder + "vegetables.png";
 			default:
