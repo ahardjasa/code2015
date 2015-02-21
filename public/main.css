@@ -19,13 +19,59 @@ body {
 	height: 20em;
 }
 
-input[type=range][orient=vertical]
+.vertProg
 {
 	-webkit-appearance: slider-vertical; /* WebKit */
-	width: 8px;
-	height: 175px;
-	padding: 0 5px;
+	/*transform: rotate(-90deg);*/
+	display:inline-block;
+	width:100px;
 }
+.vertProgLeft
+{
+	-webkit-appearance: slider-vertical; /* WebKit */
+	/*transform: rotate(-90deg);*/
+	display:inline-block;
+	width:100px;
+	float: left
+}
+
+.progContainer
+{
+	position: relative;
+	overflow: visible;
+}
+
+.progContainer b:before{
+	content:'';
+	padding:30% 0;
+	display:block;
+	background:transparent;
+	position:relative;
+	top:5px
+}
+
+.progContainer b{
+	white-space: nowrap;
+	display: inline-block;
+	overflow: visible;
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+	-webkit-transform: rotate(-90deg);
+
+	/* also accepts left, right, top, bottom coordinates; not required, but a good idea for styling */
+	-webkit-transform-origin: 50% 50%;
+	-moz-transform-origin: 50% 50%;
+	-ms-transform-origin: 50% 50%;
+	-o-transform-origin: 50% 50%;
+	transform-origin: 50% 50%;
+
+	/* Should be unset in IE9+ I think. */
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
 
 .prefhidden {
 	height: 0px;
@@ -35,7 +81,7 @@ input[type=range][orient=vertical]
 }
 
 .prefvisible {
-	height: 100px;
+	height: 500px;
 	transition: height 1s;
 }
 
