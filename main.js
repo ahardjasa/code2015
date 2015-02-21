@@ -3,23 +3,21 @@ function FoodService() {
 }
 
 FoodService.prototype.random = function () {
-	// FIXME: uneven weighting
-	var file = everything[Math.floor(Math.random() * everything.length)];
-	var food = file.foods[Math.floor(Math.random() * file.foods.length)];
+	var cols = generics.cols;
+	var food = generics.rows[Math.floor(Math.random() * generics.rows.length)];
 
 	// FIXME: use columns
-	return new FoodItem(file.name, food);
+	return new FoodItem(food[cols.indexOf('CATEGORY')], food);
 };
 
 FoodService.prototype.menu = function (id) {
 	if (treeTypes[id]) {
-		var fruits = everything.find(function (nv) {
-			return nv.name === treeTypes[id][0];
+		var treeType = treeTypes[id];
+		var categoryIndex = generics.cols.indexOf('CATEGORY');
+		var fruit = generics.rows.find(function (f) {
+			return f[categoryIndex] === treeType[0] && f[0] === treeType[1];
 		});
-		var fruit = fruits.foods.find(function (f) {
-			return f[0] === treeTypes[id][1];
-		});
-		return [new FoodItem(fruits.name, fruit)];
+		return [new FoodItem(fruit[categoryIndex], fruit)];
 	}
 	return [];
 };
