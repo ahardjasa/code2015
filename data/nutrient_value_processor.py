@@ -7,6 +7,7 @@ import json
 
 
 def clean(text):
+    text = text.strip()
     try:
         return float(text)
     except Exception:
