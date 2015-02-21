@@ -7,6 +7,8 @@ function User(first, last)
 	var self = this;
 	self.firstName = first;
 	self.lastName = last;
+	self.age = ko.observable("Enter age:");
+	self.activityLevel = ko.observable();
 }
 function UserPreferences()
 {
@@ -22,6 +24,7 @@ function UserPreferences()
 	self.dailyIron = ko.observable(900);
 	self.dailyMagnesium = ko.observable(90);
 
+
 }
 
 function PreferencesViewModel()
@@ -31,6 +34,8 @@ function PreferencesViewModel()
 	self.myUser = new User("Jim", "Bob");
 	self.GetGreeting = function()
 		{return "Hello " + self.myUser.firstName + " " + self.myUser.lastName;};
+
+	self.ActivityOptions = ["Very Active", "Slightly Active", "Sedentary" ];
 }
 
 ko.applyBindings(new PreferencesViewModel());

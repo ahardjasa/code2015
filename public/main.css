@@ -20,7 +20,6 @@ input[type=range][orient=vertical]
 }
 
 .bglabel {
-	transform:rotate(270deg);
 	-moz-transform:rotate(270deg);
 	-o-transform:rotate(270deg);
 	-webkit-transform:rotate(270deg);
