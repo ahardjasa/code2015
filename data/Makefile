@@ -2,7 +2,7 @@ all: ../public/data/everything.js
 
 .PHONY: clean
 clean:
-	rm -f everything.js legumes.json mixed_dishes.json
+	rm -f everything.js nutrient_value_2008/*
 
 ../public/data/everything.js: everything.js
 	cp $< $@
@@ -15,9 +15,7 @@ mixed_dishes.json: nutrient_value_mixed_dishes_2008.csv
 
 everything.js: $(patsubst %.csv,%.json,$(wildcard nutrient_value_2008/*.csv))
 	echo 'var everything = [' > $@
-	cat legumes.json >> $@
-	echo ',' >> $@
-	cat mixed_dishes.json >> $@
+	for f in nutrient_value_2008/*.json; do cat $$f >> $@; echo ',' >> $@ ; done
 	echo '];' >> $@
 
 nutrient_value_search.json:
