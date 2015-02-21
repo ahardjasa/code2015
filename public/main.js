@@ -193,90 +193,118 @@ function FoodItem(source, columns, food) {
 FoodItem.prototype.parseColumns = function (food) {
 	var i;
 	for (i = 0; i < this.columns.length; i++) {
-		var columnAttr = this.columns[i];
-		var columnItems = /([^(]+)(\((.*)\))?/.exec(columnAttr);
+		var columnAttributes = this.columns[i];
+		var columnItems = /([^(]+)(\((.*)\))?/.exec(columnAttributes);
 		var columnName = columnItems[1].trim().toLowerCase();
 		var columnUnit = "";
 		if (columnItems[3] != null) {
 			columnUnit = columnItems[3].trim().toLowerCase();
 		}
-		var foodAttribute = getAttributeLabel(food[i], columnUnit);
+		var amount = food[i];
+		var amountLabel = getAttributeLabel(amount, columnUnit);
 
-		//debugger;
 		switch(columnName) {
 			case ("food name"):
-				this.name = foodAttribute;
+				this.name = amount;
+				this.nameLabel = amountLabel;
+				break;
+			case ("measure"):
+				this.measure = amount;
+				this.measureLabel = amountLabel;
 				break;
 			case ("meal name"):
-				this.name = foodAttribute;
+				this.name = amount;
+				this.nameLabel = amountLabel;
 				break;
 			case ("weight"):
-				this.weight = foodAttribute;
+				this.weight = amount;
+				this.weightLabel = amountLabel;
 				break;
 			case ("energy"):
 				if (columnUnit === "kcal") {
-					this.calories = foodAttribute;
+					this.calories = amount;
+					this.caloriesLabel = amountLabel;
 				}
 				break;
 			case ("calories"):
-				this.calories = foodAttribute;
+				this.calories = amount;
+				this.caloriesLabel = amountLabel;
 				break;
 			case ("protein"):
-				this.protein = foodAttribute;
+				this.protein = amount;
+				this.proteinLabel = amountLabel;
 				break;
 			case ("carbs"):
-				this.carbs = foodAttribute;
+				this.carbs = amount;
+				this.carbsLabel = amountLabel;
 				break;
 			case ("carbohydrate"):
-				this.carbs = foodAttribute;
+				this.carbs = amount;
+				this.carbsLabel = amountLabel;
 				break;
 			case ("total sugar"):
-				this.sugar = foodAttribute;
+				this.sugar = amount;
+				this.sugarLabel = amountLabel;
 				break;
 			case ("sugars"):
-				this.sugar = foodAttribute;
+				this.sugar = amount;
+				this.sugarLabel = amountLabel;
 				break;
 			case ("fat"):
-				this.totalFat = foodAttribute;
+				this.totalFat = amount;
+				this.totalFatLabel = amountLabel;
 				break;
 			case ("total fat"):
-				this.totalFat = foodAttribute;
+				this.totalFat = amount;
+				this.totalFatLabel = amountLabel;
 				break;
 			case ("trans fats"):
-				this.transFat = foodAttribute;
+				this.transFat = amount;
+				this.transFatLabel = amountLabel;
 				break;
 			case ("trans fat"):
-				this.transFat = foodAttribute;
+				this.transFat = amount;
+				this.transFatLabel = amountLabel;
 				break;
 			case ("saturated fat"):
-				this.saturatedFat = foodAttribute;
+				this.saturatedFat = amount;
+				this.saturatedFatLabel = amountLabel;
 				break;
 			case ("cholesterol"):
-				this.cholesterol = foodAttribute;
+				this.cholesterol = amount;
+				this.cholesterolLabel = amountLabel;
 				break;
 			case ("monounsaturated fat"):
-				this.monoFat = foodAttribute;
+				this.monoFat = amount;
+				this.monoFatLabel = amountLabel;
 				break;
 			case ("polyunsaturated fat"):
-				this.polyFat = foodAttribute;
+				this.polyFat = amount;
+				this.polyFatLabel = amountLabel;
 				break;
 			case ("sodium"):
-				this.sodium = foodAttribute;
+				this.sodium = amount;
+				this.sodiumLabel = amountLabel;
 				break;
 			case ("magnesium"):
-				this.magnesium = foodAttribute;
+				this.magnesium = amount;
+				this.magnesiumLabel = amountLabel;
 				break;
 			case ("calcium"):
-				this.calcium = foodAttribute;
+				this.calcium = amount;
+				this.calciumLabel = amountLabel;
 				break;
 			case ("iron"):
-				this.iron = foodAttribute;
+				this.iron = amount;
+				this.ironLabel = amountLabel;
 				break;
 			case ("sodium"):
-				this.iron = foodAttribute;
+				this.iron = amount;
+				this.ironLabel = amountLabel;
 				break;
 			case ("total dietary fibre"):
-				this.fibre = foodAttribute;
+				this.fibre = amount;
+				this.fibreLabel = amountLabel;
 				break;
 			default:
 				break;
@@ -286,7 +314,7 @@ FoodItem.prototype.parseColumns = function (food) {
 
 function getAttributeLabel(amount, unit) {
 	if (amount === "tr") {
-		return "(trace)";
+		return "trace";
 	} else {
 		if (unit === "kcal") {
 			return amount;
