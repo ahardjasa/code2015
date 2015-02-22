@@ -526,8 +526,10 @@ function PageModel() {
 		} else {
 			if (!this.userHasSeenLocationHint) {
 				var popup = new google.maps.InfoWindow({
-					content: "Drag to change your location"
+					content: "Drag this to change your location. Nearby foods will automatically update."
 				});
+				// Call to resize
+				popup.setContent(popup.getContent());
 				popup.open(this.map, this.map.currentUserMarker);
 				this.userHasSeenLocationHint = true;
 			}
