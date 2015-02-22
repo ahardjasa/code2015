@@ -11,12 +11,12 @@
 	<div class="background"></div>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12" id="map"></div>
+			<div class="col-md-12" id="map" data-bind="css: { expanded: map.expanded }"></div>
 		</div>
 		<div class="row">
 			<div class="col-md-12" id="menu">
 				<div class="row">
-					<div class="col-md-4 options-toggle"><a href="#map">change location</a></div>
+					<div class="col-md-4 options-toggle" data-bind="css: { expanded: map.expanded }"><a href="#map" data-bind="click: map.toggle.bind(map)">change location</a></div>
 					<div class="col-md-4 options-toggle"><a href="#">change hunger?</a></div>
 					<div class="col-md-4 options-toggle" data-bind="click: preferences.Toggle"><a href="#prefs">change preferences</a></div>
 				</div>

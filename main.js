@@ -96,6 +96,8 @@ function MapModel() {
 	this.currentUserMarker;
 	this.previousUserPopup;
 
+	this.expanded = ko.observable(false);
+
 	this.init = function () {
 		var center = {lat: 49.2827, lng: -123.1207}; // defaulting to Vancouver
 		this.map = new google.maps.Map(document.getElementById('map'), {
@@ -201,6 +203,14 @@ function MapModel() {
 		popup.open(this.map, this.currentUserMarker);
 	}
 }
+
+MapModel.prototype.toggle = function () {
+	this.expanded(!this.expanded());
+	google.maps.event.trigger(this.map, 'resize');
+	setTimeout(function () {
+		google.maps.event.trigger(this.map, 'resize');
+	}.bind(this), 1000)
+};
 
 function FoodItem(source, columns, food) {
 	this.weight = null;

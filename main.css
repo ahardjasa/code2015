@@ -26,6 +26,10 @@ body {
 	color: #ffffff;
 }
 
+.options-toggle.expanded {
+	background: linear-gradient(to top, #785, #562);
+}
+
 .radio-custom label {
 	display: inline-block;
 	cursor: pointer;
@@ -37,6 +41,10 @@ body {
 #map {
 	height: 8em;
 	transition: height 1s;
+}
+
+#map.expanded {
+	height: 20em;
 }
 
 .food-list {
