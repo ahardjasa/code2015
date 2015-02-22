@@ -309,7 +309,7 @@ FoodItem.prototype.GetTotalHealthIndex = function()
     //
 	//console.log(this.name + ";" + this.protein + ";" + proteinScore + ";" + this.carbs + ";" + carbScore + ";" + this.fibreScore + ";" + fibreScore + ";" + this.fat + ";" + fatScore);
 	//return proteinScore + carbScore + fibreScore + fatScore;
-}
+};
 
 FoodItem.prototype.iconPath = function () {
 	var folder = "images/icons/";
@@ -349,6 +349,21 @@ FoodItem.prototype.iconPath = function () {
 		case "VEGETABLES AND VEGETABLE PRODUCTS":
 			return folder + "vegetables.png";
 		default:
+			if (/\bsandwich\b/i.test(this.name)) {
+				return folder + 'fastfood.png';
+			}
+			if (/\bdonut\b/i.test(this.name)) {
+				return folder + 'donut.png';
+			}
+			if (/\bpizza\b/i.test(this.name)) {
+				return folder + '117.png';
+			}
+			if (/\b(milkshake|blizzard)\b/i.test(this.name)) {
+				return folder + '159.png';
+			}
+			if (/\bmuffin\b/i.test(this.name)) {
+				return folder + 'baked.png';
+			}
 			return folder + "132.png";
 	}
 };
@@ -501,6 +516,7 @@ function trimDigits(num, amount) {
 }
 
 function PageModel() {
+	this.preferences = new PreferencesViewModel();
 	this.userHasSeenLocationHint = false;
 	this.location = ko.observable();
 	this.expanded = ko.observable('hunger');
@@ -520,6 +536,7 @@ function PageModel() {
 	};
 	this.desiredTypes = ko.observableArray(['truck', 'tree', 'restaurant']);
 	this.search = ko.observable();
+	this.debouncedSearch = ko.pureComputed(this.search).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
 
 	this.nearbyRestaurants = ko.computed(function () {
 		var loc = this.location();
@@ -553,8 +570,38 @@ function PageModel() {
 			this.sortOrder(field);
 			this.sortDesc(true);
 		}
+		console.log(field);
+
+		var listRow = document.getElementById("listColumns");
+		for(var i = 0; i < listRow.children.length; i++)
+		{
+			if(listRow.children[i].className.indexOf("food-list-metric") < 0) continue;
+			if(listRow.children[i].id === field) {
+				if(this.sortDesc() === true)
+					listRow.children[i].children[0].className = "glyphicon glyphicon-sort-by-order-alt";
+				else
+					listRow.children[i].children[0].className = "glyphicon glyphicon-sort-by-order";
+			}
+			else {
+				if(listRow.children[i].children[0].className.indexOf("hidden") < 0)listRow.children[i].children[0].className += " hidden";
+			}
+		}
 	};
 
+	var hungerLevel = this.preferences.myUser.hungerLevel;
+
+	function buildFoodFilter(element)
+	{
+		if(hungerLevel() === 0) return true;
+		else
+		{
+			var calorieMean = hungerLevel() * 300;
+			var calorieMin = calorieMean - 300;
+			var calorieMax = calorieMean + 300;
+			if(element.calories > calorieMin && element.calories < calorieMax) return true;
+		}
+		return false;
+	}
 	function buildSortFunction(prop, reverse) {
 		if (prop == 'distance') {
 			var sort = function (a, b) {
@@ -582,8 +629,8 @@ function PageModel() {
 	}
 
 	this.foodItems = ko.computed(function () {
-		var items = this.nearbyFoodItems();
-		var search = this.search();
+		var items = this.nearbyFoodItems().filter(buildFoodFilter);
+		var search = this.debouncedSearch();
 		if (search) {
 			return items.filter(function (item) {
 				return item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
@@ -600,7 +647,7 @@ function PageModel() {
 
 	this.profile = new BasicProfile('1');
 	this.map = new MapModel();
-	this.preferences = new PreferencesViewModel();
+
 
 	this.totalCalories = ko.computed(function () {
 		return this.foodItems().reduce(function (total, item) {
