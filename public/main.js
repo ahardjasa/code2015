@@ -264,6 +264,7 @@ FoodItem.prototype.parseColumns = function (food, columns) {
 		switch(columnName) {
 			case "food name":
 			case "menu items":
+			case "meal name":
 				this.name = amount;
 				this.nameLabel = amountLabel;
 				break;
@@ -273,10 +274,6 @@ FoodItem.prototype.parseColumns = function (food, columns) {
 					amountLabel = null;
 				}
 				this.measureLabel = amountLabel;
-				break;
-			case ("meal name"):
-				this.name = amount;
-				this.nameLabel = amountLabel;
 				break;
 			case ("weight"):
 				this.weight = amount;
@@ -296,11 +293,8 @@ FoodItem.prototype.parseColumns = function (food, columns) {
 				this.protein = amount;
 				this.proteinLabel = amountLabel;
 				break;
-			case ("carbs"):
-				this.carbs = amount;
-				this.carbsLabel = amountLabel;
-				break;
-			case ("carbohydrate"):
+			case "carbs":
+			case "carbohydrate":
 				this.carbs = amount;
 				this.carbsLabel = amountLabel;
 				break;
@@ -312,19 +306,13 @@ FoodItem.prototype.parseColumns = function (food, columns) {
 				this.sugar = amount;
 				this.sugarLabel = amountLabel;
 				break;
-			case ("fat"):
+			case "fat":
+			case "total fat":
 				this.totalFat = amount;
 				this.totalFatLabel = amountLabel;
 				break;
-			case ("total fat"):
-				this.totalFat = amount;
-				this.totalFatLabel = amountLabel;
-				break;
-			case ("trans fats"):
-				this.transFat = amount;
-				this.transFatLabel = amountLabel;
-				break;
-			case ("trans fat"):
+			case "trans fats":
+			case "trans fat":
 				this.transFat = amount;
 				this.transFatLabel = amountLabel;
 				break;
@@ -357,10 +345,6 @@ FoodItem.prototype.parseColumns = function (food, columns) {
 				this.calciumLabel = amountLabel;
 				break;
 			case ("iron"):
-				this.iron = amount;
-				this.ironLabel = amountLabel;
-				break;
-			case ("sodium"):
 				this.iron = amount;
 				this.ironLabel = amountLabel;
 				break;
