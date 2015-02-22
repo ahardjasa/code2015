@@ -29,6 +29,11 @@ FoodService.prototype.menu = function (id) {
 			menu.push(new FoodItem('hfbc', healthyfamiliesbc.cols, row));
 		}
 	});
+	menus.rows.forEach(function (row) {
+		if (row[1] === id) {
+			menu.push(new FoodItem('menus', menus.cols, row));
+		}
+	});
 	return menu;
 };
 
@@ -113,28 +118,30 @@ function MapModel() {
 			zIndex: 10
 		});
 
+		function icon(loc) {
+			if (loc.type === "restaurant") {
+				return 'images/tree.png';
+			} else if (loc.type === "tree") {
+				return 'images/restaurant.png';
+			} else if (loc.type === "truck") {
+				return 'images/truck.png';
+			}
+			return 'images/restaurant.png'; // what else is there?
+		}
+
 		pageModel.nearbyRestaurants.subscribe(function (restaurants) {
 			var i = 0;
 			restaurants.forEach(function (loc) {
-				var icon = function() {
-					if (loc.type === "restaurant") {
-						return 'images/tree.png';
-					} else if (loc.type === "tree") {
-						return 'images/restaurant.png';
-					} else if (loc.type === "truck") {
-						return 'images/truck.png';
-					}
-				}
 				if (i >= this.markers.length) {
 					var marker = new google.maps.Marker({
-						icon: icon(),
+						icon: icon(loc),
 						position: loc,
 						title: loc.name,
 						map: this.map
-					})
+					});
 					this.markers.push(marker);
 
-					google.maps.event.addListener(marker, 'click', function() {
+					google.maps.event.addListener(marker, 'click', function () {
 						var popup = new google.maps.InfoWindow({
 							content: loc.name
 						});
@@ -143,7 +150,7 @@ function MapModel() {
 				} else {
 					this.markers[i].setPosition(loc);
 					this.markers[i].setTitle(loc.name);
-					this.markers[i].setIcon(icon);
+					this.markers[i].setIcon(icon(loc));
 				}
 				i++;
 			}, this);
@@ -287,6 +294,7 @@ FoodItem.prototype.parseColumns = function (food, columns) {
 			case "food name":
 			case "menu items":
 			case "meal name":
+			case "mealname":
 				this.name = amount;
 				this.nameLabel = amountLabel;
 				break;
