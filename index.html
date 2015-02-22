@@ -167,8 +167,8 @@
 						<tr>
 							<td class="food-list-icon"><img width="40px" height="40px" data-bind="attr:{src: iconPath()}"/></td>
 							<td class="food-list-description">
-								<span class="badge" data-bind="visible: measureLabel, text: measureLabel"></span>
 								<span class="name" data-bind="text: nameLabel"></span>
+								<span class="measure" data-bind="visible: measureLabel, text: '(' + measureLabel + ')'"></span>
 								<span class="size" data-bind="text: weightLabel"></span>
 								from
 								<a href="#"><span class="from" data-bind="text: from.name, click: $root.map.panToLocation.bind($root.map, from)"></span></a>
