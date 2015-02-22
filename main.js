@@ -142,8 +142,9 @@ function MapModel() {
 		pageModel.nearbyRestaurants.subscribe(function (restaurants) {
 			var i = 0;
 			restaurants.forEach(function (loc) {
+				var marker;
 				if (i >= this.markers.length) {
-					var marker = new google.maps.Marker({
+					marker = new google.maps.Marker({
 						icon: icon(loc),
 						position: loc,
 						title: loc.name,
@@ -158,10 +159,12 @@ function MapModel() {
 						popup.open(this.map, marker);
 					});
 				} else {
+					marker = this.markers[i];
 					this.markers[i].setPosition(loc);
 					this.markers[i].setTitle(loc.name);
 					this.markers[i].setIcon(icon(loc));
 				}
+				loc.marker = marker;
 				i++;
 			}, this);
 			while (this.markers.length > i) {
@@ -196,28 +199,15 @@ function MapModel() {
 	};
 
 	this.panToLocation = function(from, name) {
-		var points = new google.maps.LatLng(from.lat, from.lng);
-		var popup = new google.maps.InfoWindow({
-			content: name
-		});
+		if (from.lat != null && from.lng != null) {
+			var points = new google.maps.LatLng(from.lat, from.lng);
+			var popup = new google.maps.InfoWindow({
+				content: from.name
+			});
 
-		this.currentUserMarker.setMap(null);
-		this.currentUserMarker = new google.maps.Marker({
-			position: points,
-			map: this.map,
-			title: name
-		});
-
-		this.map.panTo(points);
-		if (this.previousUserPopup != null) {
-			this.previousUserPopup.close();
+			this.map.panTo(points);
+			popup.open(this.map, from.marker);
 		}
-
-		this.previousUserPopup = popup;
-		google.maps.event.addListener(this.currentUserMarker, 'click', function() {
-			popup.open(this.map, this.currentUserMarker);
-		}.bind(this));
-		popup.open(this.map, this.currentUserMarker);
 	}
 }
 
@@ -533,7 +523,10 @@ function PageModel() {
 
 	this.totalCalories = ko.computed(function () {
 		return this.foodItems().reduce(function (total, item) {
-			return total + item.calories;
+			if (typeof item.calories == 'number') {
+				total += item.calories;
+			}
+			return total;
 		}, 0);
 	}, this);
 }
