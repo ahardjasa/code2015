@@ -586,7 +586,6 @@ function PageModel() {
 			this.sortOrder(field);
 			this.sortDesc(true);
 		}
-		console.log(field);
 
 		var listRow = document.getElementById("listColumns");
 		for(var i = 0; i < listRow.children.length; i++)
