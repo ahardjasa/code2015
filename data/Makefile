@@ -1,4 +1,4 @@
-OUTPUTS=generics locations fatabase healthyfamiliesbc meals menus
+OUTPUTS=generics locations fatabase healthyfamiliesbc menus
 
 all: $(addsuffix .js,$(addprefix ../public/data/,$(OUTPUTS)))
 
@@ -12,12 +12,7 @@ all: $(addsuffix .js,$(addprefix ../public/data/,$(OUTPUTS)))
 	./csv_to_json.py $< >> $@
 	echo ';' >> $@
 
-../public/data/meals.js: meals.csv csv_to_json.py
-	echo 'var meals = ' > $@
-	./csv_to_json.py $< >> $@
-	echo ';' >> $@
-
-../public/data/menus.js: menus.csv csv_to_json.py
+../public/data/menus.js: meals_menus.csv csv_to_json.py
 	echo 'var menus = ' > $@
 	./csv_to_json.py $< >> $@
 	echo ';' >> $@
@@ -27,7 +22,7 @@ all: $(addsuffix .js,$(addprefix ../public/data/,$(OUTPUTS)))
 	./combined_nutrient_value_processor.py >> $@
 	echo ';' >> $@
 
-../public/data/locations.js: locations_processor.py fatabase.txt healthyfamiliesbc.csv foodtrucks.csv business_licences.csv surrey/restaurants.json
+../public/data/locations.js: locations_processor.py fatabase.txt healthyfamiliesbc.csv meals_menus.csv foodtrucks.csv business_licences.csv surrey/restaurants.json
 	(echo 'var locations = ['; \
 		sed -e 's/\r//' -e '1d;s/^/\[/' -e 's/$$/,"tree"\],/' vancouver_foodtrees.csv; \
 		./locations_processor.py | sed -e 's/$$/,/'; \

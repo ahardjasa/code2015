@@ -14,10 +14,10 @@ def main():
         reader.next()
         hfbc_names = set(row[-1].strip() for row in reader)
 
-    with open('menus.csv') as mf:
+    with open('meals_menus.csv') as mf:
         reader = csv.reader(mf)
         reader.next()
-        menus = set(row[0].strip() for row in reader)
+        menus = set(row[1].strip() for row in reader)
 
     if fatabase_names & hfbc_names:
         raise Exception('overlapping names: ' + fatabase_names & hfbc_names)
