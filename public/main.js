@@ -152,6 +152,11 @@ function MapModel() {
 			pageModel.location({lat: event.latLng.lat(), lng: event.latLng.lng()})
 		}.bind(this));
 	};
+
+	this.panToLocation = function(event) {
+		var points = new google.maps.LatLng(event.lat, event.lng);
+		this.map.panTo(points);
+	}
 }
 
 function FoodItem(source, columns, food) {
