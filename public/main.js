@@ -19,6 +19,13 @@ FoodService.prototype.menu = function (id) {
 		return [new FoodItem(fruit[categoryIndex], generics.cols, fruit)];
 	}
 	var menu = [];
+
+	console.log(id);
+	if (id === "supermarket") {
+		supermarkets.rows.forEach(function (row) {
+			menu.push(new FoodItem('suprmkt', supermarkets.cols, row));
+		});
+	}
 	healthyfamiliesbc.rows.forEach(function (row) {
 		if (row[row.length - 1] === id) {
 			menu.push(new FoodItem('hfbc', healthyfamiliesbc.cols, row));
@@ -84,14 +91,14 @@ RestaurantService.prototype.nearby = function (lat, lng) {
 		if (desired.indexOf(type) === -1) {
 			return;
 		}
-
+		var menu = (type === "supermarket") ? "supermarket" : loc[3];
 		var km = distance(loc[0], loc[1], lat, lng);
 		if (km < 5) {
 			found.push({
 				lat: loc[0],
 				lng: loc[1],
 				name: loc[2], // these really need cleaning up - loc[3] is generally preferrable
-				menu: loc[3],
+				menu: menu,
 				type: type,
 				km: km
 			});
@@ -536,7 +543,7 @@ function PageModel() {
 			this.expanded(v);
 		}
 	};
-	this.desiredTypes = ko.observableArray(['truck', 'tree', 'restaurant']);
+	this.desiredTypes = ko.observableArray(['truck', 'tree', 'restaurant', 'supermarket']);
 	this.search = ko.observable();
 	this.debouncedSearch = ko.pureComputed(this.search).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
 

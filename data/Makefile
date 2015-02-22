@@ -1,4 +1,4 @@
-OUTPUTS=generics locations fatabase healthyfamiliesbc menus
+OUTPUTS=generics locations fatabase healthyfamiliesbc menus supermarkets
 
 all: $(addsuffix .js,$(addprefix ../public/data/,$(OUTPUTS)))
 
@@ -14,6 +14,11 @@ all: $(addsuffix .js,$(addprefix ../public/data/,$(OUTPUTS)))
 
 ../public/data/menus.js: meals_menus.csv csv_to_json.py
 	echo 'var menus = ' > $@
+	./csv_to_json.py $< >> $@
+	echo ';' >> $@
+
+../public/data/supermarkets.js: supermarkets.csv csv_to_json.py
+	echo 'var supermarkets = ' > $@
 	./csv_to_json.py $< >> $@
 	echo ';' >> $@
 
