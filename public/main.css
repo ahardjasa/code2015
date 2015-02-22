@@ -182,3 +182,37 @@ span.hidden {
 	visibility: hidden;
 }
 
+td.food-list-rating {
+	text-align: center;
+}
+
+div.foodranking5{
+	width: 40px;
+	height: 35px;
+	background-repeat: no-repeat;
+	background-image: url("images/heart5.png");
+}
+div.foodranking4 {
+	width: 40px;
+	height: 35px;
+	background-repeat: no-repeat;
+	background-image: url("images/heart4.png");
+}
+div.foodranking3{
+	width: 40px;
+	height: 35px;
+	background-repeat: no-repeat;
+	background-image: url("images/heart3.png");
+}
+div.foodranking2{
+	width: 40px;
+	height: 35px;
+	background-repeat: no-repeat;
+	background-image: url("images/heart2.png");
+}
+div.foodranking1{
+	width: 40px;
+	height: 35px;
+	background-repeat: no-repeat;
+	background-image: url("images/heart1.png");
+}
