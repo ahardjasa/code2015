@@ -507,6 +507,7 @@ function trimDigits(num, amount) {
 }
 
 function PageModel() {
+	this.preferences = new PreferencesViewModel();
 	this.location = ko.observable();
 	this.expanded = ko.observable('hunger');
 	this.toggleExpanded = function (v) {
@@ -551,8 +552,38 @@ function PageModel() {
 			this.sortOrder(field);
 			this.sortDesc(true);
 		}
+		console.log(field);
+
+		var listRow = document.getElementById("listColumns");
+		for(var i = 0; i < listRow.children.length; i++)
+		{
+			if(listRow.children[i].className.indexOf("food-list-metric") < 0) continue;
+			if(listRow.children[i].id === field) {
+				if(this.sortDesc() === true)
+					listRow.children[i].children[0].className = "glyphicon glyphicon-sort-by-order-alt";
+				else
+					listRow.children[i].children[0].className = "glyphicon glyphicon-sort-by-order";
+			}
+			else {
+				if(listRow.children[i].children[0].className.indexOf("hidden") < 0)listRow.children[i].children[0].className += " hidden";
+			}
+		}
 	};
 
+	var hungerLevel = this.preferences.myUser.hungerLevel;
+
+	function buildFoodFilter(element)
+	{
+		if(hungerLevel() === 0) return true;
+		else
+		{
+			var calorieMean = hungerLevel() * 300;
+			var calorieMin = calorieMean - 300;
+			var calorieMax = calorieMean + 300;
+			if(element.calories > calorieMin && element.calories < calorieMax) return true;
+		}
+		return false;
+	}
 	function buildSortFunction(prop, reverse) {
 		if (prop == 'distance') {
 			var sort = function (a, b) {
@@ -591,14 +622,14 @@ function PageModel() {
 	}, this);
 
 	this.sortedFoodItems = ko.computed(function () {
-		var items = this.foodItems().sort(buildSortFunction(this.sortOrder(), this.sortDesc())).concat([]); // take a copy before shrinking
+		var items = this.foodItems().filter(buildFoodFilter).sort(buildSortFunction(this.sortOrder(), this.sortDesc()));
 		items.length = Math.min(items.length, 100); // *everything* can be a very long list
 		return items;
 	}, this);
 
 	this.profile = new BasicProfile('1');
 	this.map = new MapModel();
-	this.preferences = new PreferencesViewModel();
+
 
 	this.totalCalories = ko.computed(function () {
 		return this.foodItems().reduce(function (total, item) {

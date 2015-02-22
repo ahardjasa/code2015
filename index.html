@@ -33,12 +33,11 @@
 				<h3>How hungry are you?</h3>
 
 				<div id="hungergames" class="btn-group" role="group" >
-					<button id="hunger0" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser, 'hunger0')">Dunno</button>
-					<button id="hunger1" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser, 'hunger1')">Full</button>
-					<button id="hunger2" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser,'hunger2')">Snack</button>
-					<button id="hunger3" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser,'hunger3')">Hungry</button>
-					<button id="hunger4" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser,'hunger4')">Starved</button>
-					<button id="hunger5" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser,'hunger5')">Famished</button>
+					<button id="hunger0" type="button" class="btn btn-default btn-primary" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser, 'hunger0')">Dunno</button>
+					<button id="hunger1" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser,'hunger1')">Snack</button>
+					<button id="hunger2" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser,'hunger2')">Hungry</button>
+					<button id="hunger3" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser,'hunger3')">Starved</button>
+					<button id="hunger4" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser,'hunger4')">Famished</button>
 				</div>
 			</div>
 		</div>
@@ -138,14 +137,26 @@
 			<div class="col-md-12">
 				<table class="table food-list">
 					<thead>
-						<tr>
-							<th colspan="2"><h4>Recommendations</h4><input type="search" data-bind="value: search" placeholder="Search" /></th>
-							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'calories')">Calories</th>
-							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'protein')">Protein</th>
-							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'carbs')">Carbs</th>
-							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'totalFat')">Total Fat</th>
-							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'distance')">Distance</th>
-							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'totalHealthIndex')"><abbr title="Total Health Index">THI</abbr></th>
+						<tr id="listColumns">
+							<th colspan="2"><u><h4>Recommendations</h4></u></th>
+							<th id="calories" class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'calories')">
+								<span class="glyphicon glyphicon-sort-by-order-alt hidden"></span>
+								Calories</th>
+							<th id="protein" class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'protein')">
+								<span class="glyphicon glyphicon-sort-by-order-alt hidden"></span>
+								Protein</th>
+							<th id="carbs" class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'carbs')">
+								<span class="glyphicon glyphicon-sort-by-order-alt hidden"></span>
+								Carbs</th>
+							<th id="totalFat" class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'totalFat')">
+								<span class="glyphicon glyphicon-sort-by-order-alt hidden"></span>
+								Total Fat</th>
+							<th id="distance" class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'distance')">
+								<span class="glyphicon glyphicon-sort-by-order-alt hidden"></span>
+								Distance (km)</th>
+							<th id="totalHealthIndex" class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'totalHealthIndex')">
+								<span class="glyphicon glyphicon-sort-by-order-alt"></span>
+								THI</th>
 							<th></th>
 						</tr>
 					</thead>
