@@ -361,11 +361,16 @@ function PageModel() {
 	this.addedFoodItems = ko.observableArray();
 	this.nearbyFoodItems = ko.computed(function () {
 		var items = [];
+		var seen = {};
 		this.nearbyRestaurants().forEach(function (restaurant) {
-			foodService.menu(restaurant.menu).forEach(function (food) {
-				// if not already contains?
-				items.push(food);
-			})
+			if (!seen[restaurant.menu]) {
+				seen[restaurant.menu] = true;
+				foodService.menu(restaurant.menu).forEach(function (food) {
+					// this isn't quite right
+					// a generic food can be in multiple menus, and we'd get duplicates
+					items.push(food);
+				});
+			}
 		});
 		return items;
 	}, this);
