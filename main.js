@@ -63,16 +63,21 @@ RestaurantService.prototype.nearby = function (lat, lng) {
 		return 6372.8 * Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(long1 - long2))
 	}
 
-	return locations.filter(function (loc) {
+	var found = [];
+	locations.forEach(function (loc) {
 		var km = distance(loc[0], loc[1], lat, lng);
-		return km < 5;
-	}).map(function (loc) {
-		return {
-			lat: loc[0],
-			lng: loc[1],
-			name: loc[3],
-			menu: loc[3]
+		if (km < 5) {
+			found.push({
+				lat: loc[0],
+				lng: loc[1],
+				name: loc[3],
+				menu: loc[3],
+				km: km
+			});
 		}
+	});
+	return found.sort(function (a, b) {
+		return a.km - b.km;
 	});
 };
 
@@ -150,60 +155,65 @@ function MapModel() {
 
 function FoodItem(source, columns, food) {
 	this.weight = null;
+	this.weightLabel = null;
 	this.calories = null;
+	this.caloriesLabel = null;
 	this.protein = null;
+	this.proteinLabel = null;
 	this.carbs = null;
+	this.carbsLabel = null;
+	this.measureLabel = null;
 
 	this.source = source;
-	this.columns = columns;
-	this.iconPath = function() {
-		var folder = "images/icons/";
-		switch (this.source.trim()) {
-			case "BAKED GOODS":
-				return folder + "baked.png";
-			case "BEVERAGES":
-				return folder + "drink.png";
-			case "BREADS, CEREALS AND OTHER GRAIN PRODUCTS":
-				return folder + "bread.png";
-			case "DAIRY FOODS AND OTHER RELATED PRODUCTS":
-				return folder + "dairy.png";
-			case "EGGS AND EGG DISHES":
-				return folder + "egg.png";
-			case "FAST FOODS":
-				return folder + "hero.png";
-			case "FATS AND OILS":
-				return folder + "cheese.png";
-			case "FISH AND SHELLFISH":
-				return folder + "fish.png";
-			case "FRUIT AND FRUIT JUICES":
-				return folder + "fruit.png";
-			case "LEGUMES, NUTS AND SEEDS":
-				return folder + "nuts.png";
-			case "MEAT AND POULTRY":
-				return folder + "meat.png";
-			case "MISCELLANEOUS FOODS":
-				return folder + "sauce.png";
-			case "MIXED DISHES":
-				return folder + "mixeddishes.png";
-			case "SNACKS":
-				return folder + "snacks.png";
-			case "SOUPS":
-				return folder + "soup.png";
-			case "SWEETS AND SUGARS":
-				return folder + "candy.png";
-			case "VEGETABLES AND VEGETABLE PRODUCTS":
-				return folder + "vegetables.png";
-			default:
-				return folder + "132.png";
-		}
-	};
-	this.parseColumns(food);
+	this.parseColumns(food, columns);
 }
 
-FoodItem.prototype.parseColumns = function (food) {
+FoodItem.prototype.iconPath = function () {
+	var folder = "images/icons/";
+	switch (this.source.trim()) {
+		case "BAKED GOODS":
+			return folder + "baked.png";
+		case "BEVERAGES":
+			return folder + "drink.png";
+		case "BREADS, CEREALS AND OTHER GRAIN PRODUCTS":
+			return folder + "bread.png";
+		case "DAIRY FOODS AND OTHER RELATED PRODUCTS":
+			return folder + "dairy.png";
+		case "EGGS AND EGG DISHES":
+			return folder + "egg.png";
+		case "FAST FOODS":
+			return folder + "hero.png";
+		case "FATS AND OILS":
+			return folder + "cheese.png";
+		case "FISH AND SHELLFISH":
+			return folder + "fish.png";
+		case "FRUIT AND FRUIT JUICES":
+			return folder + "fruit.png";
+		case "LEGUMES, NUTS AND SEEDS":
+			return folder + "nuts.png";
+		case "MEAT AND POULTRY":
+			return folder + "meat.png";
+		case "MISCELLANEOUS FOODS":
+			return folder + "sauce.png";
+		case "MIXED DISHES":
+			return folder + "mixeddishes.png";
+		case "SNACKS":
+			return folder + "snacks.png";
+		case "SOUPS":
+			return folder + "soup.png";
+		case "SWEETS AND SUGARS":
+			return folder + "candy.png";
+		case "VEGETABLES AND VEGETABLE PRODUCTS":
+			return folder + "vegetables.png";
+		default:
+			return folder + "132.png";
+	}
+};
+
+FoodItem.prototype.parseColumns = function (food, columns) {
 	var i;
-	for (i = 0; i < this.columns.length; i++) {
-		var columnAttributes = this.columns[i];
+	for (i = 0; i < columns.length; i++) {
+		var columnAttributes = columns[i];
 		var columnItems = /([^(]+)(\((.*)\))?/.exec(columnAttributes);
 		var columnName = columnItems[1].trim().toLowerCase();
 		var columnUnit = "";
@@ -220,6 +230,9 @@ FoodItem.prototype.parseColumns = function (food) {
 				break;
 			case ("measure"):
 				this.measure = amount;
+				if (amount == 1) {
+					amountLabel = null;
+				}
 				this.measureLabel = amountLabel;
 				break;
 			case ("meal name"):
