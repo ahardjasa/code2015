@@ -16,6 +16,16 @@ body {
 	background-color: #fafafa;
 }
 
+#menu > .row {
+	background: linear-gradient(to bottom, #785, #562);
+	text-align: center;
+}
+
+.options-toggle a {
+	font-size: large;
+	color: #ffffff;
+}
+
 .radio-custom label {
 	display: inline-block;
 	cursor: pointer;
