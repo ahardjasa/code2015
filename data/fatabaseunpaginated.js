@@ -45,17 +45,13 @@ function getFoodData(link){
 		};
 		var filtered_food_table = food_table.filter(filterfn);
 
-		var food_data = filtered_food_table.map(function(str) {
-			var result = '';
-			for (var i = 0; i < str.length-1; i++){
-				result = result + "," + str[i];
-			}
-			result += "\n";
-			return result;
+		var food_data = filtered_food_table.map(function(array) {
+			return JSON.stringify(array)
+
 		});
 
 		//require('utils').dump(food_data);
-		fs.write("testing.csv", food_data, 'a');
+		fs.write("fatabase.txt", food_data, 'a');
 
 	})
 }
