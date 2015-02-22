@@ -26,6 +26,7 @@ html, body {
 .options-toggle a {
 	font-size: large;
 	color: #ffffff;
+	display: block;
 }
 
 .options-toggle.expanded {

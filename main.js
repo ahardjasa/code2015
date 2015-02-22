@@ -174,7 +174,10 @@ function MapModel() {
 		if (navigator.geolocation) {
 			// TODO-NG: watch as I walk down the street
 			navigator.geolocation.watchPosition(function (position) {
-				this.setLocation({lat: position.coords.latitude, lng: position.coords.longitude}, this.state === 'new', true);
+				if (this.state !== 'pick') {
+					var ll = {lat: position.coords.latitude, lng: position.coords.longitude};
+					this.setLocation(ll, this.state === 'new', true);
+				}
 			}.bind(this));
 		}
 
@@ -578,7 +581,12 @@ function PageModel() {
 
 	this.foodItems = ko.computed(function () {
 		var items = this.nearbyFoodItems();
-		// search
+		var search = this.search();
+		if (search) {
+			return items.filter(function (item) {
+				return item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+			});
+		}
 		return items;
 	}, this);
 
