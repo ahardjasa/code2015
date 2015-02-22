@@ -134,17 +134,16 @@
 			</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-6">
-				Total Calories: <span data-bind="text: totalCalories">9000</span>
-			</div>
-		</div>
 		<div id="recommendations" class="row">
+			<br>
+			<div class="col-md-12">
+				Total Calories: <span class="food-list-metric" data-bind="text: totalCalories"></span>
+			</div>
 			<div class="col-md-12">
 				<table class="table food-list">
 					<thead>
 						<tr>
-							<th colspan="2"><h3>Recommendations:</h3></th>
+							<th colspan="2"><u><h4>Recommendations</h4></u></th>
 							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'calories')">Calories</th>
 							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'protein')">Protein</th>
 							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'carbs')">Carbs</th>
@@ -177,11 +176,6 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<h3>then something else</h3>
 			</div>
 		</div>
 	</div>
