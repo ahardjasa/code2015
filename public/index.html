@@ -139,7 +139,7 @@
 				<table class="table food-list">
 					<thead>
 						<tr>
-							<th colspan="2"><h4>Recommendations</h4></th>
+							<th colspan="2"><h4>Recommendations</h4><input type="search" data-bind="value: search" placeholder="Search" /></th>
 							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'calories')">Calories</th>
 							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'protein')">Protein</th>
 							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'carbs')">Carbs</th>
@@ -174,8 +174,11 @@
 						<tr class="no-nearby">
 							<td colspan="9">
 								<div class="row">
-									<div class="well col-md-8 col-md-offset-2">
-										<p>No nearby food sources found.</p>
+									<div class="well col-md-8 col-md-offset-2" data-bind="visible: search">
+										<p>No nearby food sources matched your search.</p>
+									</div>
+									<div class="well col-md-8 col-md-offset-2" data-bind="visible: !search()">
+										<p data-bind="if: !search()">No nearby food sources found.</p>
 										<p>Take a look at <a href="#" data-bind="click: vancouver">Vancouver</a> to see what open data makes possible, or browse <a href="#">all food items</a></p>
 									</div>
 								</div>
