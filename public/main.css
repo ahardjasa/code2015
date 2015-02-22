@@ -1,4 +1,5 @@
-body {
+html, body {
+	height: 100%;
 }
 
 .background {
@@ -14,6 +15,7 @@ body {
 
 .container {
 	background-color: #fafafa;
+	min-height: 100%;
 }
 
 #menu > .row {
@@ -63,7 +65,7 @@ body {
 
 }
 
-.food-list th > h3 {
+.food-list th > h4 {
 	margin-bottom: 0;
 }
 

@@ -139,7 +139,10 @@ function MapModel() {
 		}
 
 		// notice when the map region size changes
-		pageModel.expanded.subscribe(function () {
+		pageModel.expanded.subscribe(function (expanded) {
+			var open = expanded === 'map';
+			this.map.setOptions({ zoomControl: open });
+
 			google.maps.event.trigger(this.map, 'resize');
 			setTimeout(function () {
 				google.maps.event.trigger(this.map, 'resize');
