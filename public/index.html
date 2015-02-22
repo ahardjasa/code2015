@@ -160,9 +160,10 @@
 							<th></th>
 							<th></th>
 							<th class="food-list-metric" data-bind="click: $root.sortCal">Calories</th>
-							<th class="food-list-metric">Protein</th>
-							<th class="food-list-metric">Carbs</th>
-							<th class="food-list-metric">Total Fat</th>
+							<th class="food-list-metric" data-bind="click: $root.sortProt">Protein</th>
+							<th class="food-list-metric" data-bind="click: $root.sortCarb">Carbs</th>
+							<th class="food-list-metric" data-bind="click: $root.sortFat">Total Fat</th>
+							<th class="food-list-metric" data-bind="click: $root.sortDistance">Distance (km)</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -180,9 +181,11 @@
 							<td class="food-list-metric" data-bind="text: proteinLabel"></td>
 							<td class="food-list-metric" data-bind="text: carbsLabel"></td>
 							<td class="food-list-metric" data-bind="text: totalFatLabel"></td>
+							<td class="food-list-metric" data-bind="text: trimDigits(from.km, 3)"></td>
 							<td class="food-list-rating">
 								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 							</td>
+
 						</tr>
 					</tbody>
 				</table>
