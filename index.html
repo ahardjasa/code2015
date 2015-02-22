@@ -30,22 +30,13 @@
 		</div>
 		<div id="hunger" class="row" data-bind="css: { expanded: expanded() === 'hunger' }">
 			<div class="col-md-12" align="center" data-bind="with: profile">
-				<div class="starter-template">
-					<h3>How hungry are you?
-						<!--<span data-bind="text: portion"></span>-->
-					</h3>
-				</div>
-				<div class="radio-custom">
-					<input type="radio" id="radio1" value="1" data-bind="checked: portion">
-					<label for="radio1">2 Pizza Slices</label>
-					<input type="radio" id="radio2" value="2" data-bind="checked: portion">
-					<label for="radio2">Half Pizza</label>
-					<input type="radio" id="radio3" value="3" data-bind="checked: portion">
-					<label for="radio3">Full Pizza</label>
-					<input type="radio" id="radio4" value="4" data-bind="checked: portion">
-					<label for="radio4">Several Calzones</label>
-					<input type="radio" id="radio5" value="5" data-bind="checked: portion">
-					<label for="radio5">9000 CALORIES</label>
+				<h3>How hungry are you?</h3>
+				<div class="form-inline">
+					<label class="radio-inline"><input type="radio" value="1" data-bind="checked: portion"> 2 Pizza Slices</label>
+					<label class="radio-inline"><input type="radio" value="2" data-bind="checked: portion"> Half Pizza</label>
+					<label class="radio-inline"><input type="radio" value="3" data-bind="checked: portion"> Full Pizza</label>
+					<label class="radio-inline"><input type="radio" value="4" data-bind="checked: portion"> Several Calzones</label>
+					<label class="radio-inline"><input type="radio" value="5" data-bind="checked: portion"> 9000 CALORIES</label>
 				</div>
 				<br>
 			</div>
@@ -135,7 +126,6 @@
 								<input type="checkbox" name="showHistCarbs" id="pref.showHistCarbs" data-bind="checked: myPreferences.isShowHistCarbs">
 								<label for="pref.isFruitTrees">Carbs</label>
 							</div>
-
 						</div>
 					</div>
 				</div>
