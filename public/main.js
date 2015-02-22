@@ -88,7 +88,7 @@ var restaurantService = new RestaurantService();
 function MapModel() {
 	this.state = 'new';
 	this.markers = [];
-	this.previousUserMarker;
+	this.currentUserMarker;
 	this.previousUserPopup;
 
 	this.init = function () {
@@ -98,7 +98,7 @@ function MapModel() {
 			zoom: 12,
 			disableDefaultUI: true
 		});
-		var marker = new google.maps.Marker({
+		this.currentUserMarker = new google.maps.Marker({
 			position: center,
 			title: 'Current Location',
 			draggable: true,
@@ -137,18 +137,18 @@ function MapModel() {
 				var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				if (this.state === 'new') {
 					this.state = 'follow';
-					marker.setPosition(geolocate);
+					this.currentUserMarker.setPosition(geolocate);
 					this.map.setCenter(geolocate);
 					pageModel.location({lat: geolocate.lat(), lng: geolocate.lng()})
 				} else if (this.state === 'follow') {
-					marker.setPosition(geolocate);
+					this.currentUserMarker.setPosition(geolocate);
 					this.map.panTo(geolocate);
 					pageModel.location({lat: geolocate.lat(), lng: geolocate.lng()})
 				}
 			}.bind(this));
 		}
 
-		google.maps.event.addListener(marker, 'dragend', function (event) {
+		google.maps.event.addListener(this.currentUserMarker, 'dragend', function (event) {
 			this.state = 'pick';
 			this.map.panTo(event.latLng);
 			pageModel.location({lat: event.latLng.lat(), lng: event.latLng.lng()})
@@ -161,28 +161,24 @@ function MapModel() {
 		var popup = new google.maps.InfoWindow({
 			content: name
 		});
-		var marker = new google.maps.Marker({
+
+		this.currentUserMarker.setMap(null);
+		this.currentUserMarker = new google.maps.Marker({
 			position: points,
 			map: this.map,
 			title: name
 		});
 
 		this.map.panTo(points);
-
-		if (this.previousUserMarker != null) {
-			this.previousUserMarker.setMap(null);
-		}
-
 		if (this.previousUserPopup != null) {
 			this.previousUserPopup.close();
 		}
 
-		this.previousUserMarker = marker;
 		this.previousUserPopup = popup;
-		google.maps.event.addListener(marker, 'click', function() {
-			popup.open(this.map, marker);
+		google.maps.event.addListener(this.currentUserMarker, 'click', function() {
+			popup.open(this.map, this.currentUserMarker);
 		});
-		popup.open(this.map, marker);
+		popup.open(this.map, this.currentUserMarker);
 	}
 }
 
@@ -199,6 +195,7 @@ function FoodItem(source, columns, food) {
 
 	this.source = source;
 	this.parseColumns(food, columns);
+	this.userChecked = false;
 }
 
 FoodItem.prototype.iconPath = function () {
