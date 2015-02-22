@@ -159,6 +159,7 @@
 							<th class="food-list-metric" data-bind="click: $root.sortFat">Total Fat</th>
 							<th class="food-list-metric" data-bind="click: $root.sortDistance">Distance (km)</th>
 							<th></th>
+							<th class="food-list-metric" data-bind="click: $root.sortDistance">I ATE THIS.</th>
 						</tr>
 					</thead>
 					<tbody data-bind="foreach: foodItems">
@@ -175,10 +176,8 @@
 							<td class="food-list-metric" data-bind="text: carbsLabel"></td>
 							<td class="food-list-metric" data-bind="text: totalFatLabel"></td>
 							<td class="food-list-metric" data-bind="text: trimDigits(from.km, 3)"></td>
-							<td class="food-list-rating">
-								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-							</td>
-
+							<td class="food-list-rating"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></td>
+							<td class="food-list-metric"><input type="checkbox" value="userChecked" data-bind="checked: userChecked" /></td>
 						</tr>
 					</tbody>
 				</table>
