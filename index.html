@@ -171,9 +171,8 @@
 							<td class="food-list-description">
 								<span class="badge" data-bind="visible: measureLabel, text: measureLabel"></span>
 								<span class="name" data-bind="text: nameLabel"></span>
-								<span class="size" data-bind="text: weightLabel"></span>
-								from
-								<span class="from" data-bind="text: from.name"></span>
+								<span class="size" data-bind="text: weightLabel"></span>from
+								<a href="#"><span class="from" data-bind="text: from.name, click: $root.map.panToLocation.bind($root.map, from)"></span></a>
 							</td>
 							<td class="food-list-metric" data-bind="text: caloriesLabel"></td>
 							<td class="food-list-metric" data-bind="text: proteinLabel"></td>
