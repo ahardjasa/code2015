@@ -36,30 +36,20 @@ html, body {
 	background: linear-gradient(to top, #0a5a90, #06446c);
 }
 
-#prefs {
+#prefs,
+#about,
+#hunger {
 	max-height: 0;
 	overflow: hidden;
 	transition: max-height 1s;
 }
 
 #prefs.expanded {
-	max-height: 500px;
-}
-
-#about {
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height 1s;
+	max-height: 12em;
 }
 
 #about.expanded {
 	max-height: 500px;
-}
-
-#hunger {
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height 1s;
 }
 
 #hunger.expanded {
