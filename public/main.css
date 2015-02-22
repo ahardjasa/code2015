@@ -60,6 +60,7 @@ body {
 
 .food-list .food-list-metric {
 	text-align: right;
+	white-space: nowrap;
 }
 
 .vertProg
