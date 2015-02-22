@@ -46,17 +46,29 @@ function User(first, last)
 	self.foodItems = [];
 
 	self.addFoodItem = function(day, foodItem) {
-		var strippedDate = new Date(day.year, day.month, day.day, 0, 0, 0);
+		var strippedDate = new Date(day.getFullYear(), day.getMonth(), day.getDay(), 0, 0, 0, 0);
 		var food = self.foodItems.find(
 			function(element, index, array) {
-				return element.year === strippedDate.year && element.month === strippedDate.month
-					&& element.day === strippedDate.day; } );
+				return element["Day"].getFullYear() === strippedDate.getFullYear() && element["Day"].getMonth() === strippedDate.getMonth()
+					&& element["Day"].getDay() === strippedDate.getDay(); } );
 		if( food === undefined)
 			{self.foodItems.push({Day:strippedDate, Food:foodItem});}
 		else
 		{ food.Food += foodItem;}
 	};
 
+	self.getGraphData = function(minDay, maxDay, column)
+	{
+		var data = [];
+		for(var i = 0; i < self.foodItems.length; i++)
+		{
+			if( self.foodItems[i]["Day"] > minDay && self.foodItems[i]["Day"] < maxDay)
+			{
+				data.push([self.foodItems[i]["Day"].getTime(), self.foodItems[i]["Food"][column]]);
+			}
+		}
+		return data;
+	};
 	self.getDataByFoodParamAndDate = function(paramName, day)
 	{
 		var strippedDate = new Date(day.year, day.month, day.day, 0, 0, 0);
@@ -68,8 +80,16 @@ function User(first, last)
 
 	};
 
-	self.SampleUser = function()
+	self.AddSampleFood = function()
 	{
+		self.addFoodItem(new Date(), pageModel.foodItems()[0]);
+		self.addFoodItem(new Date(2014, 1, 1), pageModel.foodItems()[1]);
+		self.addFoodItem(new Date(2013, 2, 4), pageModel.foodItems()[2]);
+		self.addFoodItem(new Date(2012, 3, 5), pageModel.foodItems()[3]);
+		self.addFoodItem(new Date(2011, 4, 6), pageModel.foodItems()[4]);
+		self.addFoodItem(new Date(2010, 2, 1), pageModel.foodItems()[5]);
+		self.addFoodItem(new Date(2004,  3, 2), pageModel.foodItems()[6]);
+		self.addFoodItem(new Date(2004,  5, 6), pageModel.foodItems()[7]);
 
 	}
 
@@ -104,6 +124,7 @@ function PreferencesViewModel()
 	{
 		$(function() {
 
+			self.myUser.AddSampleFood();
 			// insert checkboxes
 			var displayTypes = $("#prefHistoryChoices");
 
@@ -114,7 +135,8 @@ function PreferencesViewModel()
 				var data = [];
 
 				if(self.myPreferences.isShowHistCalories)
-				{ data.push({label:"Calories", data: [[1,2]]}) ;}
+				{ data.push({label:"Calories"
+					, data: self.myUser.getGraphData(new Date(1990, 2, 0), new Date(), "calories")}) ;}
 
 				if(self.myPreferences.isShowHistFat)
 				{ data.push({label:"Fat", data: [[3,4]]}) ;}
@@ -125,8 +147,32 @@ function PreferencesViewModel()
 				if(self.myPreferences.isShowHistCarbs)
 				{ data.push({label:"Carbs", data: [[7,8]]}) ;}
 
-				if(data.length > 0)
-				{$.plot("#prefHistoryPlot", data);}
+				if(data.length > 0) {
+
+					//yaxis = {
+					//	show: false};
+                    //
+					xaxis=  {
+						mode: "time"
+						,min: new Date(1990, 2, 0).getTime()
+						,max: new Date().getTime()
+					    , timeformat: "%b-%Y"
+					, timezone: "browser"};
+                    //
+					//grid = { show: false};
+
+					series = {
+						bars: {
+							show: true
+						}};
+
+					var options = {
+						xaxis: xaxis, series: series
+					};
+
+						$.plot("#prefHistoryPlot", data, options);
+
+				}
 
 
 
