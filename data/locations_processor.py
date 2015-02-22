@@ -14,6 +14,11 @@ def main():
         reader.next()
         hfbc_names = set(row[-1].strip() for row in reader)
 
+    with open('menus.csv') as mf:
+        reader = csv.reader(mf)
+        reader.next()
+        menus = set(row[0].strip() for row in reader)
+
     def find_menu(*candidates):
         for name in fatabase_names:
             for candidate in candidates:
@@ -35,9 +40,14 @@ def main():
             business_name = row[2]
             foodtype = row[3]  # do something with this
 
+            if foodtype == "Hot Dogs" and not business_name:
+                business_name = "Hot Dog Stand"
+
             found = find_menu(business_name)
             if found:
-                print json.dumps([lat, lng, found[1], found[0], foodtype, 'truck'])
+                print json.dumps([lat, lng, found[1], found[0], 'truck'])
+            elif foodtype in menus:
+                print json.dumps([lat, lng, business_name, foodtype, 'truck'])
 
     with open('business_licences.csv') as bl:
         reader = csv.reader(bl)
