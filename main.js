@@ -578,12 +578,13 @@ function PageModel() {
 			if(listRow.children[i].className.indexOf("food-list-metric") < 0) continue;
 			if(listRow.children[i].id === field) {
 				if(this.sortDesc() === true)
-					listRow.children[i].children[0].className = "glyphicon glyphicon-sort-by-order-alt";
+					listRow.children[i].children[0].className = "glyphicon glyphicon-arrow-down";
 				else
-					listRow.children[i].children[0].className = "glyphicon glyphicon-sort-by-order";
+					listRow.children[i].children[0].className = "glyphicon glyphicon-arrow-up";
 			}
 			else {
-				if(listRow.children[i].children[0].className.indexOf("hidden") < 0)listRow.children[i].children[0].className += " hidden";
+				if(listRow.children[i].children[0].className.indexOf("hidden") < 0)listRow.children[i].children[0].className = "glyphicon glyphicon-sort";
+				//if(listRow.children[i].children[0].className.indexOf("hidden") < 0)listRow.children[i].children[0].className += " hidden";
 			}
 		}
 	};
@@ -597,7 +598,7 @@ function PageModel() {
 		{
 			var calorieMean = hungerLevel() * 300;
 			var calorieMin = calorieMean - 300;
-			var calorieMax = calorieMean + 300;
+			var calorieMax = (hungerLevel() === 4) ? calorieMean + 30000 : calorieMean + 300;
 			if(element.calories > calorieMin && element.calories < calorieMax) return true;
 		}
 		return false;
