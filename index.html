@@ -145,12 +145,12 @@
 					<thead>
 						<tr>
 							<th colspan="2"><h3>Recommendations:</h3></th>
-							<th class="food-list-metric" data-bind="click: $root.sortCal">Calories</th>
-							<th class="food-list-metric" data-bind="click: $root.sortProt">Protein</th>
-							<th class="food-list-metric" data-bind="click: $root.sortCarb">Carbs</th>
-							<th class="food-list-metric" data-bind="click: $root.sortFat">Total Fat</th>
-							<th class="food-list-metric" data-bind="click: $root.sortDistance">Distance (km)</th>
-							<th class="food-list-metric" data-bind="click: $root.sortIndex">THI</th>
+							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'calories')">Calories</th>
+							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'protein')">Protein</th>
+							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'carbs')">Carbs</th>
+							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'totalFat')">Total Fat</th>
+							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'distance')">Distance (km)</th>
+							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'totalHealthIndex')">THI</th>
 							<th></th>
 						</tr>
 					</thead>
