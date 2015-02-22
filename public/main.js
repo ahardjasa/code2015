@@ -321,7 +321,6 @@ FoodItem.prototype.GetTotalHealthIndex = function()
 };
 
 FoodItem.prototype.iconPath = function () {
-	debugger;
 	var folder = "images/icons/";
 	switch (this.source.trim()) {
 		case "BAKED GOODS":
