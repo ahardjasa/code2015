@@ -104,6 +104,8 @@ RestaurantService.prototype.nearby = function (lat, lng) {
 
 var restaurantService = new RestaurantService();
 
+var VANCOUVER = {lat: 49.2827, lng: -123.1207};
+var OTTAWA = {lat: 45.2501566, lng: -75.8002568};
 
 function MapModel() {
 	this.state = 'new';
@@ -111,7 +113,7 @@ function MapModel() {
 	this.popup = null;
 
 	this.init = function () {
-		var center = {lat: 49.2827, lng: -123.1207}; // defaulting to Vancouver
+		var center = VANCOUVER; // defaulting to Vancouver
 		this.map = new google.maps.Map(document.getElementById('map'), {
 			center: center,
 			zoom: 15,
@@ -169,25 +171,30 @@ function MapModel() {
 		if (navigator.geolocation) {
 			// TODO-NG: watch as I walk down the street
 			navigator.geolocation.watchPosition(function (position) {
-				var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-				if (this.state === 'new') {
-					this.state = 'follow';
-					this.currentUserMarker.setPosition(geolocate);
-					this.map.setCenter(geolocate);
-					pageModel.location({lat: geolocate.lat(), lng: geolocate.lng()})
-				} else if (this.state === 'follow') {
-					this.currentUserMarker.setPosition(geolocate);
-					this.map.panTo(geolocate);
-					pageModel.location({lat: geolocate.lat(), lng: geolocate.lng()})
-				}
+				this.setLocation({lat: position.coords.latitude, lng: position.coords.longitude}, this.state === 'new', true);
 			}.bind(this));
 		}
 
 		google.maps.event.addListener(this.currentUserMarker, 'dragend', function (event) {
-			this.state = 'pick';
-			this.map.panTo(event.latLng);
-			pageModel.location({lat: event.latLng.lat(), lng: event.latLng.lng()})
+			this.setLocation({lat: event.latLng.lat(), lng: event.latLng.lng()}, false, false);
 		}.bind(this));
+	};
+
+	this.setLocation = function (ll, quick, auto) {
+		if (quick) {
+			this.map.setCenter(ll);
+		} else {
+			this.map.panTo(ll);
+		}
+		if (auto) {
+			if (this.state === 'new') {
+				this.state = 'follow';
+			}
+		} else {
+			this.state = 'pick';
+		}
+		this.currentUserMarker.setPosition(ll);
+		pageModel.location(ll);
 	};
 
 	this.panToLocation = function (from) {
@@ -475,8 +482,22 @@ function BasicProfile(portion) {
 	self.portion = ko.observable(portion);
 }
 
-function trimDigits(num, sigAmount) {
-	return num == null ? null : num.toFixed(sigAmount);
+function trimDigits(num, amount) {
+	if (num == null) {
+		return null;
+	}
+	if (amount == null) {
+		if (Math.abs(num) > 1) {
+			amount = 0
+		} else if (Math.abs(num) > 0.1) {
+			amount = 1;
+		} else if (Math.abs(num) > 0.01) {
+			amount = 2;
+		} else {
+			amount = 3;
+		}
+	}
+	return num.toFixed(amount);
 }
 
 function PageModel() {
@@ -573,6 +594,10 @@ function PageModel() {
 			return total + item.calories;
 		}, 0);
 	}, this);
+
+	this.vancouver = function () {
+		this.map.setLocation(VANCOUVER, true, false);
+	}
 }
 
 var pageModel = new PageModel();
