@@ -320,9 +320,9 @@ FoodItem.prototype.GetTotalHealthIndex = function()
 
 	sugarFactor = isNaN(sugarFactor) ? 0 : sugarFactor;
 
-	var score =   1.5* fibreFactor + fatFactor + carbFactor + 1* proteinFactor + sugarFactor;
-	var total = score + 20;  //lower bound of bad scale
-	total = total/25;  //upper bound with lowerbound shift
+	var score =   1.5* fibreFactor + 1.1* fatFactor + carbFactor + 1* proteinFactor + sugarFactor;
+	var total = score + 15;  //lower bound of bad scale
+	total = total/20;  //upper bound with lowerbound shift
 	total *= 10;
 	return total;
 };
