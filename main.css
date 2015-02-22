@@ -83,6 +83,14 @@ body {
 	white-space: nowrap;
 }
 
+.food-list tr + .no-nearby {
+	display: none;
+}
+
+.food-list .no-nearby {
+	text-align: center;
+}
+
 .vertProg
 {
 	-webkit-appearance: slider-vertical; /* WebKit */

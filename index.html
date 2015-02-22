@@ -154,7 +154,8 @@
 							<th></th>
 						</tr>
 					</thead>
-					<tbody data-bind="foreach: sortedFoodItems">
+					<tbody>
+						<!-- ko foreach: sortedFoodItems -->
 						<tr>
 							<td class="food-list-icon"><img width="40px" height="40px" data-bind="attr:{src: iconPath()}"/></td>
 							<td class="food-list-description">
@@ -168,12 +169,22 @@
 							<td class="food-list-metric" data-bind="text: proteinLabel"></td>
 							<td class="food-list-metric" data-bind="text: carbsLabel"></td>
 							<td class="food-list-metric" data-bind="text: totalFatLabel"></td>
-							<td class="food-list-metric" data-bind="text: trimDigits(from.km, 3)"></td>
+							<td class="food-list-metric" data-bind="text: trimDigits(from.km)"></td>
 							<td class="food-list-metric" data-bind="text: trimDigits(totalHealthIndex, 3)"></td>
 							<td class="food-list-rating">
 								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 							</td>
-
+						</tr>
+						<!-- /ko -->
+						<tr class="no-nearby">
+							<td colspan="9">
+								<div class="row">
+									<div class="well col-md-8 col-md-offset-2">
+										<p>No nearby food sources found.</p>
+										<p>Take a look at <a href="#" data-bind="click: vancouver">Vancouver</a> to see what open data makes possible, or browse <a href="#">all food items</a></p>
+									</div>
+								</div>
+							</td>
 						</tr>
 					</tbody>
 				</table>
