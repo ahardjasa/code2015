@@ -520,7 +520,7 @@ function PageModel() {
 		return items;
 	}, this);
 
-	this.profile = new BasicProfile(1);
+	this.profile = new BasicProfile('1');
 	this.map = new MapModel();
 	this.preferences = new PreferencesViewModel();
 
