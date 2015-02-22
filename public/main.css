@@ -74,6 +74,10 @@ html, body {
 	font-weight: normal;
 }
 
+.food-list th.food-list-metric {
+	cursor: pointer;
+}
+
 .food-list .food-list-icon {
 	padding-top: 0;
 	padding-bottom: 0;
