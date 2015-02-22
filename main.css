@@ -188,6 +188,7 @@ td.food-list-rating {
 	height: 20px;
 	display: inline-block;
 	background-repeat: no-repeat;
+	vertical-align: bottom;
 }
 .foodranking5 {
 	background-image: url("images/heart5.png");
