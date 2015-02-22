@@ -20,7 +20,6 @@ FoodService.prototype.menu = function (id) {
 	}
 	var menu = [];
 
-	console.log(id);
 	if (id === "supermarket") {
 		supermarkets.rows.forEach(function (row) {
 			menu.push(new FoodItem('suprmkt', supermarkets.cols, row));
