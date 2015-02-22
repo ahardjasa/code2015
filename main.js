@@ -21,7 +21,12 @@ FoodService.prototype.menu = function (id) {
 	var menu = [];
 	fatabase.rows.forEach(function (row) {
 		if (row[0] === id) {
-			menu.push(new FoodItem('asfd', fatabase.cols, row));
+			menu.push(new FoodItem('fatabase', fatabase.cols, row));
+		}
+	});
+	healthyfamiliesbc.rows.forEach(function (row) {
+		if (row[row.length - 1] === id) {
+			menu.push(new FoodItem('hfbc', healthyfamiliesbc.cols, row));
 		}
 	});
 	return menu;
@@ -257,7 +262,8 @@ FoodItem.prototype.parseColumns = function (food, columns) {
 		var amountLabel = getAttributeLabel(amount, columnUnit);
 
 		switch(columnName) {
-			case ("food name"):
+			case "food name":
+			case "menu items":
 				this.name = amount;
 				this.nameLabel = amountLabel;
 				break;
