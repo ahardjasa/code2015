@@ -514,89 +514,52 @@ function PageModel() {
 		return items;
 	}, this);
 
-	this.sortOrder = ko.observable("MagicDes");
+	this.sortOrder = ko.observable('totalHealthIndex');
+	this.sortDesc = ko.observable(true);
 
-	this.sortCal = function() {
-		if(this.sortOrder() === "CaloriesAsc") {this.sortOrder("CaloriesDes");}
-		else {this.sortOrder("CaloriesAsc");}
-	};
-
-	this.sortCarb = function() {
-		if(this.sortOrder() === "CarbsAsc") {this.sortOrder("CarbsDes");}
-		else {this.sortOrder("CarbsAsc");}
-	};
-
-	this.sortProt = function() {
-		if(this.sortOrder() === "ProteinAsc") {this.sortOrder("ProteinDes");}
-		else {this.sortOrder("ProteinAsc");}
-	};
-
-	this.sortFat = function() {
-		if(this.sortOrder() === "FatAsc") {this.sortOrder("FatDes");}
-		else {this.sortOrder("FatAsc");}
-	};
-
-	this.sortIndex = function() {
-		if(this.sortOrder() === "MagicAsc") {this.sortOrder("MagicDes");}
-		else {this.sortOrder("MagicAsc");}
-	};
-	this.sortDistance = function() {
-		if(this.sortOrder() === "DistanceAsc") {this.sortOrder("DistanceDes");}
-		else {this.sortOrder("DistanceAsc");}
-	};
-
-	var self = this;
-
-	this.SortMagic = function(a, b) {
-		switch(self.sortOrder()) {
-			case ("CaloriesAsc"):
-				if(isNaN(a.calories)) return -1;
-				if(isNaN(b.calories)) return 1;
-				return a.calories - b.calories;
-				break;
-			case ("CaloriesDes"):
-				if(isNaN(a.calories)) return 1;
-				if(isNaN(b.calories)) return -1;
-				return b.calories - a.calories;
-			case ("CarbsAsc"):
-				if(isNaN(a.carbs)) return -1;
-				if(isNaN(b.carbs)) return 1;
-				return a.carbs - b.carbs;
-			case ("CarbsDes"):
-				if(isNaN(a.carbs)) return 1;
-				if(isNaN(b.carbs)) return -1;
-				return b.carbs - a.carbs;
-			case ("FatAsc"):
-				if(isNaN(a.totalFat)) return -1;
-				if(isNaN(b.totalFat)) return 1;
-				return a.totalFat - b.totalFat;
-			case ("FatDes"):
-				if(isNaN(a.totalFat)) return 1;
-				if(isNaN(b.totalFat)) return -1;
-				return b.totalFat - a.totalFat;
-			case ("ProteinAsc"):
-				if(isNaN(a.protein)) return -1;
-				if(isNaN(b.protein)) return 1;
-				return a.protein - b.protein;
-			case ("ProteinDes"):
-				if(isNaN(a.protein)) return 1;
-				if(isNaN(b.protein)) return -1;
-				return b.protein - a.protein;
-			case ("DistanceAsc"):
-				return a.from.km - b.from.km;
-			case ("DistanceDes"):
-				return b.from.km - a.from.km;
-			case ("MagicDes"):
-				return b.totalHealthIndex - a.totalHealthIndex;
-			case ("MagicAsc"):
-			default:
-				return a.totalHealthIndex - b.totalHealthIndex;
-
+	this.sortBy = function (field) {
+		if (this.sortOrder() === field) {
+			this.sortDesc(!this.sortDesc())
+		} else {
+			this.sortOrder(field);
+			this.sortDesc(true);
 		}
 	};
 
-	this.sortedFoodItems = this.foodItems = ko.computed(function () {
-		var items = this.nearbyFoodItems().sort(this.SortMagic);
+	function buildSortFunction(prop, reverse) {
+		if (prop == 'distance') {
+			var sort = function (a, b) {
+				return a.from.km - b.from.km;
+			};
+		} else {
+			var sort = function (a, b) {
+				if (isNaN(a[prop])) {
+					if (isNaN(b[prop])) {
+						return 0;
+					}
+					return -1;
+				} else if (isNaN(b[prop])) {
+					return 1;
+				}
+				return a[prop] - b[prop];
+			};
+		}
+		if (reverse) {
+			return function (a, b) {
+				return sort(b, a);
+			}
+		}
+		return sort;
+	}
+
+	this.foodItems = ko.computed(function () {
+		var items = this.nearbyFoodItems();
+		// search
+		return items;
+	}, this);
+
+	this.sortedFoodItems = ko.computed(function () {
+		var items = this.foodItems().sort(buildSortFunction(this.sortOrder(), this.sortDesc()));
 		items.length = Math.min(items.length, 100); // *everything* can be a very long list
 		return items;
 	}, this);
