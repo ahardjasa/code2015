@@ -504,7 +504,7 @@ FoodItem.prototype.parseColumns = function (food, columns) {
 function getAttributeLabel(amount, unit) {
 	if (amount === "tr") {
 		return "(trace)";
-	} else if (!unit || unit === "kcal") {
+	} else if (!amount || !unit || unit === "kcal") {
 		return amount;
 	}
 	return amount + unit;
