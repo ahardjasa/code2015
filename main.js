@@ -24,7 +24,7 @@ FoodService.prototype.menu = function (id) {
 			menu.push(new FoodItem('asfd', fatabase.cols, row));
 		}
 	});
-    return menu;
+	return menu;
 };
 
 var foodService = new FoodService();
@@ -70,7 +70,7 @@ RestaurantService.prototype.nearby = function (lat, lng) {
 			found.push({
 				lat: loc[0],
 				lng: loc[1],
-				name: loc[3],
+				name: loc[2], // these really need cleaning up - loc[3] is generally preferrable
 				menu: loc[3],
 				km: km
 			});
@@ -368,6 +368,7 @@ function PageModel() {
 				foodService.menu(restaurant.menu).forEach(function (food) {
 					// this isn't quite right
 					// a generic food can be in multiple menus, and we'd get duplicates
+					food.from = restaurant;
 					items.push(food);
 				});
 			}
