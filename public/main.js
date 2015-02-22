@@ -101,8 +101,6 @@ function MapModel() {
 	this.currentUserMarker;
 	this.previousUserPopup;
 
-	this.expanded = ko.observable(false);
-
 	this.init = function () {
 		var center = {lat: 49.2827, lng: -123.1207}; // defaulting to Vancouver
 		this.map = new google.maps.Map(document.getElementById('map'), {
@@ -128,6 +126,14 @@ function MapModel() {
 			}
 			return 'images/restaurant.png'; // what else is there?
 		}
+
+		// notice when the map region size changes
+		pageModel.expanded.subscribe(function () {
+			google.maps.event.trigger(this.map, 'resize');
+			setTimeout(function () {
+				google.maps.event.trigger(this.map, 'resize');
+			}.bind(this), 1000);
+		}, this);
 
 		pageModel.nearbyRestaurants.subscribe(function (restaurants) {
 			var i = 0;
@@ -206,18 +212,10 @@ function MapModel() {
 		this.previousUserPopup = popup;
 		google.maps.event.addListener(this.currentUserMarker, 'click', function() {
 			popup.open(this.map, this.currentUserMarker);
-		});
+		}.bind(this));
 		popup.open(this.map, this.currentUserMarker);
 	}
 }
-
-MapModel.prototype.toggle = function () {
-	this.expanded(!this.expanded());
-	google.maps.event.trigger(this.map, 'resize');
-	setTimeout(function () {
-		google.maps.event.trigger(this.map, 'resize');
-	}.bind(this), 1000)
-};
 
 function FoodItem(source, columns, food) {
 	this.weight = null;
@@ -409,6 +407,14 @@ function trimDigits(num, sigAmount) {
 
 function PageModel() {
 	this.location = ko.observable();
+	this.expanded = ko.observable('hunger');
+	this.toggleExpanded = function (v) {
+		if (this.expanded() == v) {
+			this.expanded(null);
+		} else {
+			this.expanded(v);
+		}
+	};
 
 	this.nearbyRestaurants = ko.computed(function () {
 		var loc = this.location();
@@ -462,8 +468,7 @@ function PageModel() {
 
 	var self = this;
 
-	this.SortMagic = function(a, b)
-	{
+	this.SortMagic = function(a, b) {
 		switch(self.sortOrder()) {
 			case ("CaloriesAsc"):
 				if(isNaN(a.calories)) return -1;
@@ -518,11 +523,8 @@ function PageModel() {
 		return items;
 	}, this);
 
-
-
-
 	this.profile = new BasicProfile(1);
-	this.map = new MapModel(this.foodService, this.nearbyFoodItems);
+	this.map = new MapModel();
 	this.preferences = new PreferencesViewModel();
 
 	this.totalCalories = ko.computed(function () {

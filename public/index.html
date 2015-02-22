@@ -11,18 +11,24 @@
 	<div class="background"></div>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12" id="map" data-bind="css: { expanded: map.expanded }"></div>
+			<div class="col-md-12" id="map" data-bind="css: { expanded: expanded() === 'map' }"></div>
 		</div>
 		<div class="row">
 			<div class="col-md-12" id="menu">
 				<div class="row">
-					<div class="col-md-4 options-toggle" data-bind="css: { expanded: map.expanded }"><a href="#map" data-bind="click: map.toggle.bind(map)">change location</a></div>
-					<div class="col-md-4 options-toggle"><a href="#">change hunger?</a></div>
-					<div class="col-md-4 options-toggle" data-bind="click: preferences.Toggle"><a href="#prefs">change preferences</a></div>
+					<div class="col-md-4 options-toggle" data-bind="css: { expanded: expanded() === 'map' }">
+						<a href="#map" data-bind="click: toggleExpanded.bind($root, 'map')">change location</a>
+					</div>
+					<div class="col-md-4 options-toggle" data-bind="css: { expanded: expanded() === 'hunger' }">
+						<a href="#" data-bind="click: toggleExpanded.bind($root, 'hunger')">change hunger?</a>
+					</div>
+					<div class="col-md-4 options-toggle" data-bind="css: { expanded: expanded() === 'prefs' }">
+						<a href="#" data-bind="click: toggleExpanded.bind($root, 'prefs')">change preferences</a>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div id="hunger" class="row" data-bind="css: { expanded: expanded() === 'hunger' }">
 			<div class="col-md-12" align="center" data-bind="with: profile">
 				<div class="starter-template">
 					<h3>How hungry are you?
@@ -44,7 +50,7 @@
 				<br>
 			</div>
 		</div>
-		<div class="row prefhidden" id="pref" data-bind="with: preferences, css: { prefvisible: $root.preferences.isVisible }">
+		<div id="prefs" class="row" data-bind="with: preferences, css: { expanded: $root.expanded() === 'prefs' }">
 			<p data-bind="text: GetGreeting()"></p>
 			<input type="text" name="age" id="pref.age" data-bind="value: myUser.age"
 				   onfocus="if (this.value=='Enter age:') this.value = ''" onblur="var str = this.value.replace(/\s+/g, ''); if(str == '') this.value = 'Enter age:'"> <br>

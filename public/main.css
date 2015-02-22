@@ -30,12 +30,24 @@ body {
 	background: linear-gradient(to top, #785, #562);
 }
 
-.radio-custom label {
-	display: inline-block;
-	cursor: pointer;
-	position: relative;
-	margin-right: 15px;
-	font-size: 12px;
+#prefs {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 1s;
+}
+
+#prefs.expanded {
+	max-height: 500px;
+}
+
+#hunger {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 1s;
+}
+
+#hunger.expanded {
+	max-height: 12em;
 }
 
 #map {
@@ -122,19 +134,6 @@ body {
 
 	/* Should be unset in IE9+ I think. */
 	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-}
-
-
-.prefhidden {
-	height: 0px;
-	overflow: hidden;
-	transition: height 1s;
-
-}
-
-.prefvisible {
-	height: 500px;
-	transition: height 1s;
 }
 
 .bglabel {
