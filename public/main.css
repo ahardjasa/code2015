@@ -111,11 +111,11 @@ html, body {
 	padding-left: 0;
 }
 
-.food-list tr + .no-nearby {
-	display: none;
+.food-list .food-list-description {
+	width: 100%;
 }
 
-.food-list .no-nearby {
+.no-nearby {
 	text-align: center;
 }
 
