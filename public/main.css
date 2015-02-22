@@ -20,7 +20,8 @@ html, body {
 }
 
 #menu > .row {
-	background: linear-gradient(to bottom, #785, #562);
+	background: linear-gradient(to bottom, #0e707e, #024f5a);
+	background: linear-gradient(to bottom, #0a5a90, #06446c);
 	text-align: center;
 }
 
@@ -31,7 +32,8 @@ html, body {
 }
 
 .options-toggle.expanded {
-	background: linear-gradient(to top, #785, #562);
+	background: linear-gradient(to top, #0e707e, #024f5a);
+	background: linear-gradient(to top, #0a5a90, #06446c);
 }
 
 #prefs {
