@@ -42,6 +42,7 @@
 			</div>
 		</div>
 		<div id="prefs" class="row" data-bind="with: preferences, css: { expanded: $root.expanded() === 'prefs' }">
+			<div class="col-md-12">
 			<p data-bind="text: GetGreeting()"></p>
 			<input type="text" name="age" id="pref.age" data-bind="value: myUser.age"
 				   onfocus="if (this.value=='Enter age:') this.value = ''" onblur="var str = this.value.replace(/\s+/g, ''); if(str == '') this.value = 'Enter age:'"> <br>
@@ -78,9 +79,9 @@
 							</div>
 
 							<div class="container">
-								<label><input type="checkbox" value="truck" data-bind="checked: myPreferences.desiredTypes"> Food Trucks</label>
-								<label><input type="checkbox" value="tree" data-bind="checked: myPreferences.desiredTypes"> Fruit Trees</label>
-								<label><input type="checkbox" value="restaurant" data-bind="checked: myPreferences.desiredTypes"> Restaurants</label>
+								<label><input type="checkbox" value="truck" data-bind="checked: $root.desiredTypes"> Food Trucks</label>
+								<label><input type="checkbox" value="tree" data-bind="checked: $root.desiredTypes"> Fruit Trees</label>
+								<label><input type="checkbox" value="restaurant" data-bind="checked: $root.desiredTypes"> Restaurants</label>
 							</div>
 
 							<div class="panel-body progContainer">
@@ -131,6 +132,7 @@
 					</div>
 				</div>
 			</div>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-6">
@@ -152,7 +154,7 @@
 							<th></th>
 						</tr>
 					</thead>
-					<tbody data-bind="foreach: foodItems">
+					<tbody data-bind="foreach: sortedFoodItems">
 						<tr>
 							<td class="food-list-icon"><img width="40px" height="40px" data-bind="attr:{src: iconPath()}"/></td>
 							<td class="food-list-description">
@@ -175,7 +177,6 @@
 						</tr>
 					</tbody>
 				</table>
-				<span class="btn btn-default" data-bind="click: addRandomFood">Add Another</span>
 			</div>
 		</div>
 		<div class="row">

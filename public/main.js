@@ -77,8 +77,14 @@ RestaurantService.prototype.nearby = function (lat, lng) {
 		return 6372.8 * Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(long1 - long2))
 	}
 
+	var desired = pageModel.desiredTypes();
 	var found = [];
 	locations.forEach(function (loc) {
+		var type = loc[4] || 'restaurant';
+		if (desired.indexOf(type) === -1) {
+			return;
+		}
+
 		var km = distance(loc[0], loc[1], lat, lng);
 		if (km < 5) {
 			found.push({
@@ -86,7 +92,7 @@ RestaurantService.prototype.nearby = function (lat, lng) {
 				lng: loc[1],
 				name: loc[2], // these really need cleaning up - loc[3] is generally preferrable
 				menu: loc[3],
-				type: loc[4] || "restaurant",
+				type: type,
 				km: km
 			});
 		}
@@ -483,13 +489,14 @@ function PageModel() {
 			this.expanded(v);
 		}
 	};
+	this.desiredTypes = ko.observableArray(['truck', 'tree', 'restaurant']);
+	this.search = ko.observable();
 
 	this.nearbyRestaurants = ko.computed(function () {
 		var loc = this.location();
 		return loc ? restaurantService.nearby(loc.lat, loc.lng) : [];
 	}, this);
 
-	this.addedFoodItems = ko.observableArray();
 	this.nearbyFoodItems = ko.computed(function () {
 		var items = [];
 		var seen = {};
@@ -532,7 +539,7 @@ function PageModel() {
 	this.sortIndex = function() {
 		if(this.sortOrder() === "MagicAsc") {this.sortOrder("MagicDes");}
 		else {this.sortOrder("MagicAsc");}
-	}
+	};
 	this.sortDistance = function() {
 		if(this.sortOrder() === "DistanceAsc") {this.sortOrder("DistanceDes");}
 		else {this.sortOrder("DistanceAsc");}
@@ -588,12 +595,8 @@ function PageModel() {
 		}
 	};
 
-	this.FilterMagic = function(element) {
-		return self.preferences.myPreferences.desiredTypes.indexOf(element.from.type) !== -1;
-	};
-
-	this.foodItems = ko.computed(function () {
-		var items = this.addedFoodItems().concat(this.nearbyFoodItems()).filter(this.FilterMagic).sort(this.SortMagic);
+	this.sortedFoodItems = this.foodItems = ko.computed(function () {
+		var items = this.nearbyFoodItems().sort(this.SortMagic);
 		items.length = Math.min(items.length, 100); // *everything* can be a very long list
 		return items;
 	}, this);
@@ -608,12 +611,6 @@ function PageModel() {
 		}, 0);
 	}, this);
 }
-
-PageModel.prototype.addRandomFood = function () {
-	var food = foodService.random();
-	food.from = { name: "wherever fine foods can be found" };
-	this.addedFoodItems.push(food);
-};
 
 var pageModel = new PageModel();
 
