@@ -31,7 +31,7 @@ html, body {
 	display: block;
 }
 
-.options-toggle.expanded {
+.options-toggle.expanded a {
 	background: linear-gradient(to top, #0e707e, #024f5a);
 	background: linear-gradient(to top, #0a5a90, #06446c);
 }
