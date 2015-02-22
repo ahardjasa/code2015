@@ -14,6 +14,12 @@ def main():
         reader.next()
         hfbc_names = set(row[-1].strip() for row in reader)
 
+    with open('supermarkets.txt') as supermarkets:
+        supermarket_names = set(line.strip() for line in supermarkets)
+
+    with open('notfood.txt') as notfood:
+        notfood_names = set(line.strip() for line in notfood)
+
     with open('meals_menus.csv') as mf:
         reader = csv.reader(mf)
         reader.next()
@@ -33,11 +39,15 @@ def main():
         for name in hfbc_names:
             for candidate in candidates:
                 if name in candidate:
-                    return name, candidate
+                    return name, candidate, "restaurant"
         for name in fatabase_names:
             for candidate in candidates:
                 if name in candidate:
-                    return name, candidate
+                    return name, candidate, "restaurant"
+        for name in supermarket_names:
+            for candidate in candidates:
+                if name in candidate:
+                    return name, candidate, "supermarket"
 
     with open('foodtrucks.csv') as ft:
         reader = csv.reader(ft)
@@ -67,13 +77,17 @@ def main():
                 continue
 
             business_name = row[3].strip()
+            if business_name in notfood_names:
+                continue
             trade_name = row[4].strip()
+            if trade_name in notfood_names:
+                continue
             lat = float(row[-4])
             lng = float(row[-3])
 
             found = find_menu(trade_name, business_name)
             if found:
-                print json.dumps([lat, lng, found[1], found[0]])
+                print json.dumps([lat, lng, found[1], found[0], found[2]])
 
     with open('surrey/restaurants.json') as jh:
         restaurants = json.load(jh)
@@ -85,7 +99,7 @@ def main():
 
             found = find_menu(business_name)
             if found:
-                print json.dumps([lat, lng, found[1], found[0]])
+                print json.dumps([lat, lng, found[1], found[0], found[2]])
 
 if __name__ == '__main__':
     main()

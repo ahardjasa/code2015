@@ -1,4 +1,5 @@
 require(data.table)
+source("C:/home/rbindlistn_mod.R")
 datadir <- "C:/cygwin64/home/amelia.hardjasa/code2015/data/"
 nut2008dir <- paste0(datadir, "nutrient_value_2008/")
 headerloc <- sapply(lapply(paste0(nut2008dir,list.files(nut2008dir)), readLines, n = 3), function(x) grep("Nutrient Value of Some Common Foods", x))
