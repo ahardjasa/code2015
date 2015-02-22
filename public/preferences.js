@@ -8,7 +8,32 @@ function User(first, last)
 	self.firstName = first;
 	self.lastName = last;
 	self.age = ko.observable("Enter age:");
+	self.gender = "F";
 	self.activityLevel = ko.observable();
+	self.healthIndeces = ko.computed(function(){
+		if(self.age() === null) return maleNeeds.rows[10];
+		switch(self.gender)
+		{
+			case("F"):
+				if(self.age() < 9) { return femaleNeeds.rows[0];}
+				if(self.age() >= 70) { return femaleNeeds.rows[femaleNeeds.rows.length - 1];}
+				for(var row in femaleNeeds.rows)
+				{
+					if(self.age() === row[0] ) { return row;}
+				}
+				return femaleNeeds.rows[10];
+			case("M"):
+				if(self.age() < 9) { return maleNeeds.rows[0];}
+				if(self.age() >= 70) { return maleNeeds.rows[maleNeeds.rows.length - 1];}
+				for(var row in maleNeeds.rows)
+				{
+					if(self.age() === row[0] ) { return row;}
+				}
+				return maleNeeds.rows[10];
+			case("O"):
+				return femaleNeeds.rows[10];
+		}
+	});
 
 	self.foodItems = [];
 
