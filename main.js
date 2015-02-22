@@ -216,7 +216,85 @@ function FoodItem(source, columns, food) {
 
 	this.source = source;
 	this.parseColumns(food, columns);
-	this.userChecked = false;
+	this.totalHealthIndex = this.GetTotalHealthIndex();
+}
+
+FoodItem.prototype.GetTotalHealthIndex = function()
+{
+	//get recommended values
+	var indices = pageModel.preferences.myUser.healthIndeces();
+
+	var weight = (this.weight === null) ? this.calories/6 : this.weight;
+	var fibreRatio = this.fibre/weight;
+	var reqFibreRatio = 0.3;
+	var Gfibre = 1;
+
+	var totalfibreRatio = fibreRatio/reqFibreRatio;
+	var fibreDiff = fibreRatio - reqFibreRatio;
+	var overrunFibreFactor = fibreDiff > 0 ? Gfibre * fibreDiff : 0;
+	var fibreFactor = Math.min(1,totalfibreRatio) + overrunFibreFactor;
+
+	if(this.name.indexOf("Peppercorn" ) > -1)
+	{
+		var i = 5;
+	}
+	fibreFactor = isNaN(fibreFactor) ? 0 : fibreFactor;
+
+	var fatRatio = this.totalFat/weight;
+	var reqFatRatio = 0.35;
+	var minFatRatio = 0.1;
+	var Gfat = -1;
+
+	var totalfatRatio = fatRatio/reqFatRatio;
+	var fatDiff = fatRatio - reqFatRatio;
+	var overrunFatFactor = fatDiff > 0 ? Gfat * fatDiff : 0;
+
+
+	var unhealthyFatRatio = fatRatio/minFatRatio;
+	var unhealthyFatDiff = unhealthyFatRatio - minFatRatio;
+	var unhealthyOverrunFat = unhealthyFatDiff > 0 ? 2*Gfat*unhealthyFatDiff : 0;
+
+	var fatFactor = Math.min(1,totalfatRatio) + overrunFatFactor + unhealthyOverrunFat;
+	fatFactor = isNaN(fatFactor) ? 0 : fatFactor;
+
+	var carbRatio = this.carbs/weight;
+	var reqCarbRatio = 0.20;
+	var Gcarb = -1;
+
+	var totalCarbRatio = carbRatio/reqCarbRatio;
+	var carbDiff = carbRatio - reqCarbRatio;
+	var overrunCarbFactor = carbDiff > 0 ? Gcarb * carbDiff : 0;
+	var carbFactor = Math.min(1,totalCarbRatio) + overrunCarbFactor;
+
+	carbFactor = isNaN(carbFactor) ? 0 : carbFactor;
+
+	var proteinRatio = this.protein/weight;
+	var reqProteinRatio = 0.20;
+	var Gprot = 1;
+
+	var totalProteinRatio = proteinRatio/reqProteinRatio;
+	var proteinDiff = proteinRatio - reqProteinRatio;
+	var overrunProteinFactor = proteinDiff > 0 ? Gprot * proteinDiff : 0;
+	var proteinFactor = Math.min(1,totalProteinRatio) + overrunProteinFactor;
+
+	proteinFactor = isNaN(proteinFactor) ? 0 : proteinFactor;
+
+
+
+
+
+	return 5* fibreFactor + 0.5* fatFactor + 0.5 *carbFactor + 2* proteinFactor;
+	//var sprotein = 2;
+	//var scarbs = -2;
+	//var sfibre = 4;
+	//var sfat = -1;
+	//var proteinScore = isNaN(this.protein) ? 0 :  sprotein * (1 - Math.min(1, this.protein / indices[2]));
+	//var carbScore = isNaN(this.carbs) ? 0 : scarbs * (1 - Math.min(1, this.carbs / indices[1]));
+	//var fibreScore = isNaN(this.fibre) ? 0: sfibre * (1 - Math.min(1, this.fibre / indices[4]));
+	//var	fatScore = isNaN(this.fat) ? 0: sfat * (1 - Math.min(1, this.fat / indices[3]));
+    //
+	//console.log(this.name + ";" + this.protein + ";" + proteinScore + ";" + this.carbs + ";" + carbScore + ";" + this.fibreScore + ";" + fibreScore + ";" + this.fat + ";" + fatScore);
+	//return proteinScore + carbScore + fibreScore + fatScore;
 }
 
 FoodItem.prototype.iconPath = function () {
@@ -260,6 +338,7 @@ FoodItem.prototype.iconPath = function () {
 			return folder + "132.png";
 	}
 };
+
 
 FoodItem.prototype.parseColumns = function (food, columns) {
 	var i;
@@ -450,6 +529,10 @@ function PageModel() {
 		else {this.sortOrder("FatAsc");}
 	};
 
+	this.sortIndex = function() {
+		if(this.sortOrder() === "MagicAsc") {this.sortOrder("MagicDes");}
+		else {this.sortOrder("MagicAsc");}
+	}
 	this.sortDistance = function() {
 		if(this.sortOrder() === "DistanceAsc") {this.sortOrder("DistanceDes");}
 		else {this.sortOrder("DistanceAsc");}
@@ -496,9 +579,12 @@ function PageModel() {
 				return a.from.km - b.from.km;
 			case ("DistanceDes"):
 				return b.from.km - a.from.km;
-			case ("Smart"):
+			case ("MagicDes"):
+				return b.totalHealthIndex - a.totalHealthIndex;
+			case ("MagicAsc"):
 			default:
-				return a.calories - b.calories;
+				return a.totalHealthIndex - b.totalHealthIndex;
+
 		}
 	};
 

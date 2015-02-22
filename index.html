@@ -118,14 +118,15 @@
 							<div id="prefHistoryPlot" style="width:400px;height:200px"></div>
 							<div id="prefHistoryChoices" class="container">
 								<input type="checkbox" name="showHistCalories" id="pref.showHistCalories" data-bind="checked: myPreferences.isShowHistCalories">
-								<label for="pref.isFoodTrucks">Calories</label>
+								<label for="pref.showHistCalories">Calories</label>
 								<input type="checkbox" name="showHistProtein" id="pref.showHistProtein" data-bind="checked: myPreferences.isShowHistProtein">
-								<label for="pref.isSupermarkets">Protein</label>
+								<label for="pref.showHistProtein">Protein</label>
 								<input type="checkbox" name="showHistFat" id="pref.showHistFat" data-bind="checked: myPreferences.isShowHistFat">
-								<label for="pref.isFarmersMarkets">Fat</label>
+								<label for="pref.showHistFat">Fat</label>
 								<input type="checkbox" name="showHistCarbs" id="pref.showHistCarbs" data-bind="checked: myPreferences.isShowHistCarbs">
-								<label for="pref.isFruitTrees">Carbs</label>
+								<label for="pref.showHistCarbs">Carbs</label>
 							</div>
+
 						</div>
 					</div>
 				</div>
@@ -147,8 +148,8 @@
 							<th class="food-list-metric" data-bind="click: $root.sortCarb">Carbs</th>
 							<th class="food-list-metric" data-bind="click: $root.sortFat">Total Fat</th>
 							<th class="food-list-metric" data-bind="click: $root.sortDistance">Distance (km)</th>
+							<th class="food-list-metric" data-bind="click: $root.sortIndex">THI</th>
 							<th></th>
-							<th class="food-list-metric" data-bind="click: $root.sortDistance">I ATE THIS.</th>
 						</tr>
 					</thead>
 					<tbody data-bind="foreach: foodItems">
@@ -166,8 +167,11 @@
 							<td class="food-list-metric" data-bind="text: carbsLabel"></td>
 							<td class="food-list-metric" data-bind="text: totalFatLabel"></td>
 							<td class="food-list-metric" data-bind="text: trimDigits(from.km, 3)"></td>
-							<td class="food-list-rating"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></td>
-							<td class="food-list-metric"><input type="checkbox" value="userChecked" data-bind="checked: userChecked" /></td>
+							<td class="food-list-metric" data-bind="text: totalHealthIndex"></td>
+							<td class="food-list-rating">
+								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+							</td>
+
 						</tr>
 					</tbody>
 				</table>
@@ -187,9 +191,8 @@
 	<script src="lib/flot/jquery.flot.js"></script>
 	<script src="data/generics.js"></script>
 	<script src="data/fatabase.js"></script>
-	<script src="data/healthyfamiliesbc.js"></script>
-	<script src="data/menus.js"></script>
 	<script src="data/locations.js"></script>
+	<script src="data/dietneeds.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMMQJPrM--XYTU3oG52NDbKLQ0oZCe-rg"></script>
 	<script src="preferences.js"></script>
 	<script src="main.js"></script>
