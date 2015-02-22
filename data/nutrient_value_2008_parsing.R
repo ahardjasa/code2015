@@ -1,4 +1,5 @@
 require(data.table)
+require(gtools)
 source("C:/home/rbindlistn_mod.R")
 datadir <- "C:/cygwin64/home/amelia.hardjasa/code2015/data/"
 nut2008dir <- paste0(datadir, "nutrient_value_2008/")
@@ -23,4 +24,6 @@ subcat.idces <- allnut2008[,which(get("Measure ()") == "")]
 allnut2008[, SUBCATEGORY := (unlist(mapply(function(x, y) rep(x, y), allnut2008[subcat.idces, get("Food Name ()")], running(c(subcat.idces, (nrow(allnut2008)+1)), fun=function(v){v[2] - v[1]}, width = 2, simplify = F), SIMPLIFY = FALSE)))]
 allnut2008 <- allnut2008[-subcat.idces]
 allnut2008 <- allnut2008[, lapply(.SD, function(x) ifelse(is.na(x), "", x))]
+allnut2008[SUBCATEGORY == "POPCORN", eval("Food Name ()") := paste("Popcorn", tolower(get("Food Name ()")), sep = ", ")]
+
 write.csv(allnut2008, "C:/cygwin64/home/amelia.hardjasa/code2015/data/combined_nutrient_value_2008.csv", row.names = F)
