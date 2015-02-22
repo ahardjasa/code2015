@@ -220,6 +220,9 @@ FoodItem.prototype.parseColumns = function (food) {
 				break;
 			case ("measure"):
 				this.measure = amount;
+				if (amount == 1) {
+					amountLabel = null;
+				}
 				this.measureLabel = amountLabel;
 				break;
 			case ("meal name"):
