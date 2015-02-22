@@ -43,8 +43,8 @@ body {
 
 }
 
-.food-list h4 {
-	display: inline-block;
+.food-list th > h3 {
+	margin-bottom: 0;
 }
 
 .food-list .food-list-icon {
