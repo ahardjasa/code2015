@@ -19,7 +19,7 @@ download_nutrient_value_csvs: nutrient_value_search.json
 
 ../public/data/locations.js: vancouver_foodtrees.csv vancouver_fatabase_restaurants.json surrey/fatabase_restaurants.json
 	(echo 'var locations = ['; \
-		sed -e 's/\r//' -e '1d;s/^/\[/' -e 's/$$/\],/' vancouver_foodtrees.csv; \
+		sed -e 's/\r//' -e '1d;s/^/\[/' -e 's/$$/,"tree"\],/' vancouver_foodtrees.csv; \
 		cat vancouver_fatabase_restaurants.json; \
 		cat surrey/fatabase_restaurants.json; \
 	echo '];') > $@

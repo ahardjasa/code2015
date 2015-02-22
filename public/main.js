@@ -72,6 +72,7 @@ RestaurantService.prototype.nearby = function (lat, lng) {
 				lng: loc[1],
 				name: loc[2], // these really need cleaning up - loc[3] is generally preferrable
 				menu: loc[3],
+				type: loc[4] || "restaurant",
 				km: km
 			});
 		}
@@ -410,7 +411,7 @@ function PageModel() {
 		else {this.sortOrder("DistanceAsc");}
 	};
 
-	self = this;
+	var self = this;
 
 	this.SortMagic = function(a, b)
 	{
