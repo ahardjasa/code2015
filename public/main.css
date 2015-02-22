@@ -27,6 +27,7 @@ html, body {
 
 .logo {
 	max-height: 200px;
+	border-bottom: solid #084a7b;
 }
 
 .options-toggle a {
@@ -70,7 +71,7 @@ html, body {
 }
 
 #map.expanded {
-	height: 20em;
+	height: 26em;
 }
 
 .food-list {
