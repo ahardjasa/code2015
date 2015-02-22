@@ -43,6 +43,16 @@ html, body {
 	max-height: 500px;
 }
 
+#about {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 1s;
+}
+
+#about.expanded {
+	max-height: 500px;
+}
+
 #hunger {
 	max-height: 0;
 	overflow: hidden;
