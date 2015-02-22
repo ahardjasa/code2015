@@ -592,8 +592,8 @@ function PageModel() {
 					listRow.children[i].children[0].className = "glyphicon glyphicon-arrow-up";
 			}
 			else {
-				if(listRow.children[i].children[0].className.indexOf("hidden") < 0)listRow.children[i].children[0].className = "glyphicon glyphicon-sort";
-				//if(listRow.children[i].children[0].className.indexOf("hidden") < 0)listRow.children[i].children[0].className += " hidden";
+			//	if(listRow.children[i].children[0].className.indexOf("hidden") < 0)listRow.children[i].children[0].className = "glyphicon glyphicon-sort hidden";
+			if(listRow.children[i].children[0].className.indexOf("hidden") < 0)listRow.children[i].children[0].className += " hidden";
 			}
 		}
 	};
