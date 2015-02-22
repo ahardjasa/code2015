@@ -350,6 +350,9 @@ function BasicProfile(portion) {
 }
 
 
+
+
+
 function PageModel() {
 	this.location = ko.observable();
 
@@ -375,11 +378,43 @@ function PageModel() {
 		});
 		return items;
 	}, this);
+
+	this.sortOrder = ko.observable("CaloriesAsc");
+
+	this.sortCal = function() {
+		if(this.sortOrder() === "CaloriesAsc") {this.sortOrder("CaloriesDes");}
+		else {this.sortOrder("CaloriesAsc");}
+	};
+
+	this.sortCarb = function() {
+		if(this.sortOrder() === "CarbsAsc") {this.sortOrder("CarbsDes");}
+		else {this.sortOrder("CarbsAsc");}
+	};
+
+	this.sortProt = function() {
+		if(this.sortOrder() === "ProteinAsc") {this.sortOrder("ProteinDes");}
+		else {this.sortOrder("ProteinAsc");}
+	};
+
+	this.sortFat = function() {
+		if(this.sortOrder() === "FatAsc") {this.sortOrder("FatDes");}
+		else {this.sortOrder("FatAsc");}
+	};
+
+	self = this;
+
+	this.SortMagic = function(a, b)
+	{
+		if(self.sortOrder() === "CaloriesDes"){ return b.calories - a.calories;}
+		return a.calories - b.calories;
+	};
+
 	this.foodItems = ko.computed(function () {
-		var all = this.addedFoodItems().concat(this.nearbyFoodItems());
-		all.length = 20;
-		return all;
+		return this.addedFoodItems().concat(this.nearbyFoodItems()).sort(this.SortMagic);
 	}, this);
+
+
+
 
 	this.profile = new BasicProfile(1);
 	this.map = new MapModel(this.foodService, this.nearbyFoodItems);
