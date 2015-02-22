@@ -46,11 +46,7 @@ function UserPreferences()
 	var self = this;
 	self.mealSize = ko.observable(5);
 	self.distance = ko.observable(5);
-	self.isFruitTrees = ko.observable("true");
-	self.isFoodTrucks = ko.observable("foodTrucks");
-	self.isSupermarkets = ko.observable("superMarkets");
-	self.isFarmersMarkets = ko.observable("farmersMarkets");
-	self.isRestaurants = ko.observable("true");
+	self.desiredTypes = ko.observableArray(['truck', 'tree', 'restaurant']);
 	self.cooking = ko.observable(false);
 	self.dailyCalories = ko.observable(9000);
 	self.dailyIron = ko.observable(900);
