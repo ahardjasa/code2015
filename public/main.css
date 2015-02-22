@@ -5,7 +5,7 @@ html, body {
 
 .background {
 	z-index: -1;
-	background-image: url(images/f72e2c85.jpeg);
+	background-image: url(images/granola.jpg);
 	background-size: cover;
 	position: fixed;
 	top: 0;
@@ -15,7 +15,7 @@ html, body {
 }
 
 .container {
-	background-color: #fafafa;
+	background-color: rgba(250, 250, 250, 0.95);
 	min-height: 100%;
 }
 
