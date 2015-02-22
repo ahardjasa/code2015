@@ -5,8 +5,9 @@ import json
 
 
 def main():
-    with open('fatabase_restaurants.txt') as fr:
-        fatabase_names = set(a.strip() for a in fr.readlines())
+    with open('fatabase.txt') as fb:
+        fatabase_names = set(json.loads(r)[0] for r in fb)
+        fatabase_names.remove('Restaurant')
 
     with open('healthyfamiliesbc.csv') as hfbc:
         reader = csv.reader(hfbc)

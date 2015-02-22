@@ -22,7 +22,7 @@ nutrient_value_search.json:
 download_nutrient_value_csvs: nutrient_value_search.json
 	jq -r '.result.results[].resources[].url ' nutrient_value_search.json | grep -eng.csv | xargs wget -P nutrient_value_2008/
 
-../public/data/locations.js: locations_processor.py fatabase_restaurants.txt healthyfamiliesbc.csv foodtrucks.csv business_licences.csv surrey/restaurants.json
+../public/data/locations.js: locations_processor.py fatabase.txt healthyfamiliesbc.csv foodtrucks.csv business_licences.csv surrey/restaurants.json
 	(echo 'var locations = ['; \
 		sed -e 's/\r//' -e '1d;s/^/\[/' -e 's/$$/,"tree"\],/' vancouver_foodtrees.csv; \
 		./locations_processor.py | sed -e 's/$$/,/'; \
