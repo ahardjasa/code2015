@@ -119,6 +119,7 @@ function MapModel() {
 			zoom: 15,
 			disableDefaultUI: true
 		});
+
 		this.currentUserMarker = new google.maps.Marker({
 			position: center,
 			title: 'Current Location',
@@ -268,7 +269,6 @@ FoodItem.prototype.GetTotalHealthIndex = function()
 	var fatDiff = fatRatio - reqFatRatio;
 	var overrunFatFactor = fatDiff > 0 ? Gfat * fatDiff : 0;
 
-
 	var unhealthyFatRatio = fatRatio/minFatRatio;
 	var unhealthyFatDiff = unhealthyFatRatio - minFatRatio;
 	var unhealthyOverrunFat = unhealthyFatDiff > 0 ? 2*Gfat*unhealthyFatDiff : 0;
@@ -297,11 +297,6 @@ FoodItem.prototype.GetTotalHealthIndex = function()
 	var proteinFactor = Math.min(1,totalProteinRatio) + overrunProteinFactor;
 
 	proteinFactor = isNaN(proteinFactor) ? 0 : proteinFactor;
-
-
-
-
-
 	return 10* fibreFactor + 0.5* fatFactor + 0.5 *carbFactor + 1* proteinFactor;
 	//var sprotein = 2;
 	//var scarbs = -2;
@@ -357,7 +352,6 @@ FoodItem.prototype.iconPath = function () {
 			return folder + "132.png";
 	}
 };
-
 
 FoodItem.prototype.parseColumns = function (food, columns) {
 	var i;
@@ -507,12 +501,20 @@ function trimDigits(num, amount) {
 }
 
 function PageModel() {
+	this.userHasSeenLocationHint = false;
 	this.location = ko.observable();
 	this.expanded = ko.observable('hunger');
 	this.toggleExpanded = function (v) {
 		if (this.expanded() == v) {
 			this.expanded(null);
 		} else {
+			if (!this.userHasSeenLocationHint) {
+				var popup = new google.maps.InfoWindow({
+					content: "Drag to change your location"
+				});
+				popup.open(this.map, this.map.currentUserMarker);
+				this.userHasSeenLocationHint = true;
+			}
 			this.expanded(v);
 		}
 	};
