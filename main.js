@@ -142,6 +142,8 @@ function MapModel() {
 				return 'images/tree.png';
 			} else if (loc.type === "truck") {
 				return 'images/truck.png';
+			} else if (loc.type === "supermarket") {
+				return 'images/supermarket.png';
 			}
 			return 'images/restaurant.png'; // what else is there?
 		}
