@@ -112,11 +112,14 @@
 							<td class="food-list-metric" data-bind="text: carbsLabel"></td>
 							<td class="food-list-metric" data-bind="text: totalFatLabel"></td>
 							<td class="food-list-metric" data-bind="text: trimDigits(from.km) + ' km'"></td>
-							<td class="food-list-metric" data-bind="text: trimDigits(totalHealthIndex, 3)"></td>
+							<!--<td class="food-list-metric" data-bind="text: trimDigits(totalHealthIndex, 3)"></td>-->
 							<td class="food-list-rating">
-								<span class="glyphicon" aria-hidden="true" data-bind="css: {
-									'glyphicon-thumbs-up': totalHealthIndex > 1,
-									'glyphicon-thumbs-down': totalHealthIndex < -1 }"></span>
+								<div class="" aria-hidden="true" data-bind="css: {
+									'foodranking5': totalHealthIndex > 9,
+									'foodranking4': totalHealthIndex <= 9 && totalHealthIndex >7,
+									'foodranking3': totalHealthIndex <= 7 && totalHealthIndex >5,
+									'foodranking2': totalHealthIndex <= 5 && totalHealthIndex >3,
+									'foodranking1': totalHealthIndex <= 3,}"></div>
 							</td>
 						</tr>
 						<!-- /ko -->
