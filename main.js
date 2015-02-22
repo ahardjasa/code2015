@@ -19,14 +19,18 @@ FoodService.prototype.menu = function (id) {
 		return [new FoodItem(fruit[categoryIndex], generics.cols, fruit)];
 	}
 	var menu = [];
-	fatabase.rows.forEach(function (row) {
-		if (row[0] === id) {
-			menu.push(new FoodItem('fatabase', fatabase.cols, row));
-		}
-	});
 	healthyfamiliesbc.rows.forEach(function (row) {
 		if (row[row.length - 1] === id) {
 			menu.push(new FoodItem('hfbc', healthyfamiliesbc.cols, row));
+		}
+	});
+	// ignore overlap between hfbc and fatabase
+	if (menu.length) {
+		return menu;
+	}
+	fatabase.rows.forEach(function (row) {
+		if (row[0] === id) {
+			menu.push(new FoodItem('fatabase', fatabase.cols, row));
 		}
 	});
 	menus.rows.forEach(function (row) {
