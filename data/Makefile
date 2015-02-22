@@ -1,8 +1,13 @@
-all: ../public/data/generics.js ../public/data/locations.js ../public/data/fatabase.js
+all: ../public/data/generics.js ../public/data/locations.js ../public/data/fatabase.js ../public/data/healthyfamiliesbc.js
 
 ../public/data/fatabase.js: fatabase.txt fatabase_processor.py
 	echo 'var fatabase = ' > $@
 	./fatabase_processor.py >> $@
+	echo ';' >> $@
+
+../public/data/healthyfamiliesbc.js: healthyfamiliesbc.csv healthyfamiliesbc_processor.py
+	echo 'var healthyfamiliesbc = ' > $@
+	./healthyfamiliesbc_processor.py >> $@
 	echo ';' >> $@
 
 ../public/data/generics.js: combined_nutrient_value_2008.csv combined_nutrient_value_processor.py
@@ -17,11 +22,10 @@ nutrient_value_search.json:
 download_nutrient_value_csvs: nutrient_value_search.json
 	jq -r '.result.results[].resources[].url ' nutrient_value_search.json | grep -eng.csv | xargs wget -P nutrient_value_2008/
 
-../public/data/locations.js: vancouver_foodtrees.csv vancouver_fatabase_restaurants.json surrey/fatabase_restaurants.json
+../public/data/locations.js: locations_processor.py fatabase_restaurants.txt healthyfamiliesbc.csv foodtrucks.csv business_licences.csv surrey/restaurants.json
 	(echo 'var locations = ['; \
 		sed -e 's/\r//' -e '1d;s/^/\[/' -e 's/$$/,"tree"\],/' vancouver_foodtrees.csv; \
-		cat vancouver_fatabase_restaurants.json; \
-		cat surrey/fatabase_restaurants.json; \
+		./locations_processor.py | sed -e 's/$$/,/'; \
 	echo '];') > $@
 
 business_licences_csv.zip:
@@ -30,17 +34,8 @@ business_licences_csv.zip:
 business_licenses.csv: business_licences_csv.zip
 	unzip -D -o business_licences_csv.zip
 
-#fatabase_restaurants.txt: fatabase.csv
-#	awk -F, '{print $$3}' $< | grep -v 'Meal Name' | sort -u > $@
-
-vancouver_fatabase_restaurants.json: business_licence_processor.py fatabase_restaurants.txt business_licenses.csv
-	./business_licence_processor.py | sed -e 's/$$/,/' > $@
-
 surrey/restaurants_json.zip:
 	wget -P surrey -N http://cosmos.surrey.ca/geo_ref/Images/OpenDataArchives/restaurants_json.zip
 
 surrey/restaurants.json: surrey/restaurants_json.zip
 	cd surrey && unzip -D -o restaurants_json.zip
-
-surrey/fatabase_restaurants.json: surrey/restaurants.json surrey/business_licence_processor.py
-	(cd surrey && ./business_licence_processor.py) | sed -e 's/$$/,/' > $@
