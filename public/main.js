@@ -401,7 +401,7 @@ FoodItem.prototype.parseColumns = function (food, columns) {
 			case "meal name":
 			case "mealname":
 				this.name = amount;
-				this.nameLabel = amountLabel;
+				this.nameLabel = amountLabel.replace(/\BTM\b/g, '\u2122');
 				break;
 			case ("measure"):
 				this.measure = amount;

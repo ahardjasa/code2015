@@ -36,34 +36,28 @@ html, body {
 	background: linear-gradient(to top, #0a5a90, #06446c);
 }
 
-#prefs {
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height 1s;
-}
-
-#prefs.expanded {
-	max-height: 500px;
-}
-
-#about {
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height 1s;
-}
-
-#about.expanded {
-	max-height: 500px;
-}
-
+#prefs,
+#about,
 #hunger {
 	max-height: 0;
 	overflow: hidden;
-	transition: max-height 1s;
+	transition: max-height 1s, opacity 0.5s;
+	opacity: 0.4;
+}
+
+#prefs.expanded {
+	max-height: 12em;
+	opacity: 1;
+}
+
+#about.expanded {
+	max-height: 20em;
+	opacity: 1;
 }
 
 #hunger.expanded {
 	max-height: 12em;
+	opacity: 1;
 }
 
 #map {
