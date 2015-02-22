@@ -272,7 +272,8 @@ FoodItem.prototype.parseColumns = function (food, columns) {
 				}
 				this.measureLabel = amountLabel;
 				break;
-			case ("weight"):
+			case "weight":
+			case "serving size":
 				this.weight = amount;
 				this.weightLabel = amountLabel;
 				break;
