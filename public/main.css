@@ -183,38 +183,24 @@ td.food-list-rating {
 	text-align: center;
 }
 
-div.foodranking5{
-	width: 40px;
-	height: 35px;
+.foodranking {
+	width: 20px;
+	height: 20px;
 	display: inline-block;
 	background-repeat: no-repeat;
+}
+.foodranking5 {
 	background-image: url("images/heart5.png");
 }
-div.foodranking4 {
-	width: 40px;
-	height: 35px;
-	display: inline-block;
-	background-repeat: no-repeat;
+.foodranking4 {
 	background-image: url("images/heart4.png");
 }
-div.foodranking3{
-	width: 40px;
-	height: 35px;
-	display: inline-block;
-	background-repeat: no-repeat;
+.foodranking3 {
 	background-image: url("images/heart3.png");
 }
-div.foodranking2{
-	width: 40px;
-	height: 35px;
-	display: inline-block;
-	background-repeat: no-repeat;
+.foodranking2 {
 	background-image: url("images/heart2.png");
 }
-div.foodranking1{
-	width: 40px;
-	height: 35px;
-	display: inline-block;
-	background-repeat: no-repeat;
+.foodranking1 {
 	background-image: url("images/heart1.png");
 }
