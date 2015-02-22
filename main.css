@@ -170,17 +170,12 @@ html, body {
 	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
 
-.sortedColumn:after{
-	font-family: 'Glyphicons Halflings';
-	content:"\E153";
-}
-
 span.hidden {
 	visibility: hidden;
 }
 
 td.food-list-rating {
-	text-align: center;
+	text-align: right;
 }
 
 .foodranking {
