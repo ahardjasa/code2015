@@ -132,12 +132,12 @@ function MapModel() {
 					})
 					this.markers.push(marker);
 
-					//var popup = new google.maps.InfoWindow({
-					//	content: loc.name
-					//});
-					//google.maps.event.addListener(marker, 'click', function() {
-					//	popup.open(this.map, this.currentUserMarker);
-					//});
+					google.maps.event.addListener(marker, 'click', function() {
+						var popup = new google.maps.InfoWindow({
+							content: loc.name
+						});
+						popup.open(this.map, marker);
+					});
 				} else {
 					this.markers[i].setPosition(loc);
 					this.markers[i].setTitle(loc.name);
@@ -175,7 +175,6 @@ function MapModel() {
 			pageModel.location({lat: event.latLng.lat(), lng: event.latLng.lng()})
 		}.bind(this));
 	};
-
 
 	this.panToLocation = function(from, name) {
 		var points = new google.maps.LatLng(from.lat, from.lng);
