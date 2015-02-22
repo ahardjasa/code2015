@@ -18,7 +18,13 @@ FoodService.prototype.menu = function (id) {
 		});
 		return [new FoodItem(fruit[categoryIndex], generics.cols, fruit)];
 	}
-	return [];
+	var menu = [];
+	fatabase.rows.forEach(function (row) {
+		if (row[0] === id) {
+			menu.push(new FoodItem('asfd', fatabase.cols, row));
+		}
+	});
+    return menu;
 };
 
 var foodService = new FoodService();
@@ -143,7 +149,11 @@ function MapModel() {
 }
 
 function FoodItem(source, columns, food) {
-	this.calories;
+	this.weight = null;
+	this.calories = null;
+	this.protein = null;
+	this.carbs = null;
+
 	this.source = source;
 	this.columns = columns;
 	this.iconPath = function() {
@@ -184,7 +194,7 @@ function FoodItem(source, columns, food) {
 			case "VEGETABLES AND VEGETABLE PRODUCTS":
 				return folder + "vegetables.png";
 			default:
-				return "";
+				return folder + "132.png";
 		}
 	};
 	this.parseColumns(food);
@@ -314,13 +324,11 @@ FoodItem.prototype.parseColumns = function (food) {
 
 function getAttributeLabel(amount, unit) {
 	if (amount === "tr") {
-		return "trace";
-	} else {
-		if (unit === "kcal") {
-			return amount;
-		}
-		return amount + unit;
+		return "(trace)";
+	} else if (!unit || unit === "kcal") {
+		return amount;
 	}
+	return amount + unit;
 }
 
 function BasicProfile(portion) {
@@ -349,7 +357,9 @@ function PageModel() {
 		return items;
 	}, this);
 	this.foodItems = ko.computed(function () {
-		return this.addedFoodItems().concat(this.nearbyFoodItems());
+		var all = this.addedFoodItems().concat(this.nearbyFoodItems());
+		all.length = 20;
+		return all;
 	}, this);
 
 	this.profile = new BasicProfile(1);
