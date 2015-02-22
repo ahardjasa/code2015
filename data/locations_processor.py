@@ -19,6 +19,15 @@ def main():
         reader.next()
         menus = set(row[0].strip() for row in reader)
 
+    if fatabase_names & hfbc_names:
+        raise Exception('overlapping names: ' + fatabase_names & hfbc_names)
+
+    if fatabase_names & menus:
+        raise Exception('overlapping menu: ' + fatabase_names & menus)
+
+    if hfbc_names & menus:
+        raise Exception('overlapping menu: ' + hfbc_names & menus)
+
     def find_menu(*candidates):
         for name in fatabase_names:
             for candidate in candidates:

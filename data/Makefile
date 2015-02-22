@@ -1,13 +1,25 @@
-all: ../public/data/generics.js ../public/data/locations.js ../public/data/fatabase.js ../public/data/healthyfamiliesbc.js
+OUTPUTS=generics locations fatabase healthyfamiliesbc meals menus
+
+all: $(addsuffix .js,$(addprefix ../public/data/,$(OUTPUTS)))
 
 ../public/data/fatabase.js: fatabase.txt fatabase_processor.py
 	echo 'var fatabase = ' > $@
 	./fatabase_processor.py >> $@
 	echo ';' >> $@
 
-../public/data/healthyfamiliesbc.js: healthyfamiliesbc.csv healthyfamiliesbc_processor.py
+../public/data/healthyfamiliesbc.js: healthyfamiliesbc.csv csv_to_json.py
 	echo 'var healthyfamiliesbc = ' > $@
-	./healthyfamiliesbc_processor.py >> $@
+	./csv_to_json.py $< >> $@
+	echo ';' >> $@
+
+../public/data/meals.js: meals.csv csv_to_json.py
+	echo 'var meals = ' > $@
+	./csv_to_json.py $< >> $@
+	echo ';' >> $@
+
+../public/data/menus.js: menus.csv csv_to_json.py
+	echo 'var menus = ' > $@
+	./csv_to_json.py $< >> $@
 	echo ';' >> $@
 
 ../public/data/generics.js: combined_nutrient_value_2008.csv combined_nutrient_value_processor.py
@@ -15,18 +27,22 @@ all: ../public/data/generics.js ../public/data/locations.js ../public/data/fatab
 	./combined_nutrient_value_processor.py >> $@
 	echo ';' >> $@
 
+../public/data/locations.js: locations_processor.py fatabase.txt healthyfamiliesbc.csv foodtrucks.csv business_licences.csv surrey/restaurants.json
+	(echo 'var locations = ['; \
+		sed -e 's/\r//' -e '1d;s/^/\[/' -e 's/$$/,"tree"\],/' vancouver_foodtrees.csv; \
+		./locations_processor.py | sed -e 's/$$/,/'; \
+	echo '];') > $@
+
+#
+# downloading data
+#
+
 nutrient_value_search.json:
 	curl 'http://open.canada.ca/data/en/api/3/action/package_search?q=nutrient+value' -o $@
 
 .PHONY: download_nutrient_value_csvs
 download_nutrient_value_csvs: nutrient_value_search.json
 	jq -r '.result.results[].resources[].url ' nutrient_value_search.json | grep -eng.csv | xargs wget -P nutrient_value_2008/
-
-../public/data/locations.js: locations_processor.py fatabase.txt healthyfamiliesbc.csv foodtrucks.csv business_licences.csv surrey/restaurants.json
-	(echo 'var locations = ['; \
-		sed -e 's/\r//' -e '1d;s/^/\[/' -e 's/$$/,"tree"\],/' vancouver_foodtrees.csv; \
-		./locations_processor.py | sed -e 's/$$/,/'; \
-	echo '];') > $@
 
 business_licences_csv.zip:
 	wget -N ftp://webftp.vancouver.ca/OpenData/csv/business_licences_csv.zip

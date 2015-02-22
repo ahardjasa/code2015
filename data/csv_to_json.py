@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import codecs
 import csv
 import json
@@ -13,8 +14,8 @@ def clean(text):
         return text
 
 
-def main():
-    with codecs.open('healthyfamiliesbc.csv', encoding='latin_1') as ifh:
+def main(filename):
+    with codecs.open(filename, encoding='latin_1') as ifh:
         reader = csv.reader(ifh)
 
         for i, row in enumerate(reader):
@@ -28,4 +29,4 @@ def main():
         print(']}')
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1])
