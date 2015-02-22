@@ -552,6 +552,9 @@ function PageModel() {
 	this.perMenuLimit = ko.observable(12);
 	this.search = ko.observable();
 	this.debouncedSearch = ko.pureComputed(this.search).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
+	this.emptyFromSearch = ko.computed(function () {
+		return this.desiredTypes().length != 4 || !(this.debouncedSearch() == null || this.debouncedSearch() == '');
+	}, this);
 
 	this.nearbyRestaurants = ko.computed(function () {
 		var loc = this.location();
