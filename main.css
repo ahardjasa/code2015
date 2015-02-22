@@ -25,6 +25,10 @@ html, body {
 	text-align: center;
 }
 
+.logo {
+	max-height: 200px;
+}
+
 .options-toggle a {
 	font-size: large;
 	color: #ffffff;
@@ -61,7 +65,7 @@ html, body {
 }
 
 #map {
-	height: 8em;
+	height: 12em;
 	transition: height 1s;
 }
 
