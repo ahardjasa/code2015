@@ -102,8 +102,7 @@ var restaurantService = new RestaurantService();
 function MapModel() {
 	this.state = 'new';
 	this.markers = [];
-	this.currentUserMarker;
-	this.previousUserPopup;
+	this.popup = null;
 
 	this.init = function () {
 		var center = {lat: 49.2827, lng: -123.1207}; // defaulting to Vancouver
@@ -122,9 +121,9 @@ function MapModel() {
 
 		function icon(loc) {
 			if (loc.type === "restaurant") {
-				return 'images/tree.png';
-			} else if (loc.type === "tree") {
 				return 'images/restaurant.png';
+			} else if (loc.type === "tree") {
+				return 'images/tree.png';
 			} else if (loc.type === "truck") {
 				return 'images/truck.png';
 			}
@@ -140,36 +139,23 @@ function MapModel() {
 		}, this);
 
 		pageModel.nearbyRestaurants.subscribe(function (restaurants) {
-			var i = 0;
-			restaurants.forEach(function (loc) {
-				var marker;
-				if (i >= this.markers.length) {
-					marker = new google.maps.Marker({
-						icon: icon(loc),
-						position: loc,
-						title: loc.name,
-						map: this.map
-					});
-					this.markers.push(marker);
-
-					google.maps.event.addListener(marker, 'click', function () {
-						var popup = new google.maps.InfoWindow({
-							content: loc.name
-						});
-						popup.open(this.map, marker);
-					});
-				} else {
-					marker = this.markers[i];
-					this.markers[i].setPosition(loc);
-					this.markers[i].setTitle(loc.name);
-					this.markers[i].setIcon(icon(loc));
-				}
-				loc.marker = marker;
-				i++;
-			}, this);
-			while (this.markers.length > i) {
+			while (this.markers.length) {
 				this.markers.pop().setMap(null);
 			}
+			restaurants.forEach(function (loc) {
+				var marker = new google.maps.Marker({
+					icon: icon(loc),
+					position: loc,
+					title: loc.name,
+					map: this.map
+				});
+				loc.marker = marker;
+				this.markers.push(marker);
+
+				google.maps.event.addListener(marker, 'click', function () {
+					this.popupOver(loc);
+				}.bind(this));
+			}, this);
 		}, this);
 
 		pageModel.location(center);
@@ -198,16 +184,22 @@ function MapModel() {
 		}.bind(this));
 	};
 
-	this.panToLocation = function(from, name) {
-		if (from.lat != null && from.lng != null) {
-			var points = new google.maps.LatLng(from.lat, from.lng);
-			var popup = new google.maps.InfoWindow({
-				content: from.name
-			});
-
-			this.map.panTo(points);
-			popup.open(this.map, from.marker);
+	this.panToLocation = function (from) {
+		window.scrollTo(0, 0);
+		if (from && from.marker) {
+			this.map.panTo(new google.maps.LatLng(from.lat, from.lng));
+			this.popupOver(from);
 		}
+	};
+
+	this.popupOver = function (loc) {
+		if (this.popup) {
+			this.popup.close();
+		}
+		this.popup = new google.maps.InfoWindow({
+			content: loc.name
+		});
+		this.popup.open(this.map, loc.marker);
 	}
 }
 
