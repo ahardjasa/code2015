@@ -45,94 +45,14 @@
 			</div>
 		</div>
 		<div id="prefs" class="row" data-bind="with: preferences, css: { expanded: $root.expanded() === 'prefs' }">
-			<div class="col-md-12">
-			<p data-bind="text: GetGreeting()"></p>
-			<input type="text" name="age" id="pref.age" data-bind="value: myUser.age"
-				   onfocus="if (this.value=='Enter age:') this.value = ''" onblur="var str = this.value.replace(/\s+/g, ''); if(str == '') this.value = 'Enter age:'"> <br>
-
-			<!--<select data-bind="options: ActivityOptions, value: myUser.activityLevel"></select>-->
-			<div class="dropdown">
-				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-					Activity Level
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Free range</a></li>
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Leashed</a></li>
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Caged</a></li>
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Dead Cage</a></li>
-				</ul>
-			</div>
-			<br>
-			<!--activity drop down and age-->
-
-			<div role="tabpanel" id="pref.TabPanel">
-				<ul class="nav nav-pills">
-					<li role="presentation" class="active"><a href="#targets" role="tab" data-toggle="tab">Settings</a></li>
-					<li role="presentation"><a href="#day" role="tab" data-toggle="tab" data-bind="click: $root.preferences.DrawDayGraph">Day</a></li>
-					<li role="presentation"><a href="#history" role="tab" data-toggle="tab" data-bind="click: $root.preferences.DrawGraph">History</a></li>
-				</ul>
-				<div id="pref.TabContent" class="tab-content">
-					<div role="tabpanel" class="tab-pane fade active in" id="targets" >
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">My Settings</h3>
-							</div>
-
-							<div class="container">
-								<label><input type="checkbox" value="truck" data-bind="checked: $root.desiredTypes"> Food Trucks</label>
-								<label><input type="checkbox" value="tree" data-bind="checked: $root.desiredTypes"> Fruit Trees</label>
-								<label><input type="checkbox" value="restaurant" data-bind="checked: $root.desiredTypes"> Restaurants</label>
-								<label><input type="checkbox" value="supermarket" data-bind="checked: $root.desiredTypes"> Supermarkets</label>
-							</div>
-
-							<div class="panel-body progContainer">
-								<b></b>
-								<div class="progress vertProgLeft">
-									<div class="progress-bar" role="progressbar"  style="width: 80%;">
-										80%
-									</div>
-								</div>
-								<div class="progress vertProg">
-									<div class="progress-bar" role="progressbar" style="width: 60%;">
-										60%
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div role="tabpanel" class="tab-pane fade " id="day" >
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">My Day</h3>
-							</div>
-
-							<div id="prefDayPlot" style="width:400px;height:200px"></div>
-						</div>
-					</div>
-
-					<div role="tabpanel" class="tab-pane fade " id="history" >
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">My History</h3>
-							</div>
-
-							<div id="prefHistoryPlot" style="width:400px;height:200px"></div>
-							<div id="prefHistoryChoices" class="container">
-								<input type="checkbox" name="showHistCalories" id="pref.showHistCalories" data-bind="checked: myPreferences.isShowHistCalories">
-								<label for="pref.showHistCalories">Calories</label>
-								<input type="checkbox" name="showHistProtein" id="pref.showHistProtein" data-bind="checked: myPreferences.isShowHistProtein">
-								<label for="pref.showHistProtein">Protein</label>
-								<input type="checkbox" name="showHistFat" id="pref.showHistFat" data-bind="checked: myPreferences.isShowHistFat">
-								<label for="pref.showHistFat">Fat</label>
-								<input type="checkbox" name="showHistCarbs" id="pref.showHistCarbs" data-bind="checked: myPreferences.isShowHistCarbs">
-								<label for="pref.showHistCarbs">Carbs</label>
-							</div>
-						</div>
-					</div>
+			<div class="col-md-12" align="center">
+				<h3>Show Food From</h3>
+				<div class="form-inline">
+					<label class="checkbox-inline"><input type="checkbox" value="truck" data-bind="checked: $root.desiredTypes"> Food Trucks</label>
+					<label class="checkbox-inline"><input type="checkbox" value="tree" data-bind="checked: $root.desiredTypes"> Fruit Trees</label>
+					<label class="checkbox-inline"><input type="checkbox" value="restaurant" data-bind="checked: $root.desiredTypes"> Restaurants</label>
+					<label class="checkbox-inline"><input type="checkbox" value="supermarket" data-bind="checked: $root.desiredTypes"> Supermarkets</label>
 				</div>
-			</div>
 			</div>
 		</div>
 		<div id="about" class="row" data-bind="css: { expanded: expanded() === 'about' }">
