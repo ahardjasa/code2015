@@ -90,6 +90,7 @@ html, body {
 	cursor: pointer;
 }
 
+.food-list .food-list-rating,
 .food-list .food-list-icon {
 	padding-top: 0;
 	padding-bottom: 0;
@@ -106,10 +107,6 @@ html, body {
 	text-align: right;
 	white-space: nowrap;
 	width: 0;
-}
-
-.food-list .food-list-rating {
-	padding-left: 0;
 }
 
 .food-list .food-list-description {
