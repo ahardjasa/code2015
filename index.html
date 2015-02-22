@@ -12,13 +12,17 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12" id="map"></div>
+		</div>
+		<div class="row">
 			<div class="col-md-12" id="menu">
 				<div class="row">
-					<div class="col-md-4">change location</div>
-					<div class="col-md-4">see your options</div>
-					<div class="col-md-4">change settings</div>
+					<div class="col-md-4 options-toggle"><a href="#map">change location</a></div>
+					<div class="col-md-4 options-toggle"><a href="#">change hunger?</a></div>
+					<div class="col-md-4 options-toggle" data-bind="click: preferences.Toggle"><a href="#prefs">change preferences</a></div>
 				</div>
 			</div>
+		</div>
+		<div class="row">
 			<div class="col-md-12" align="center" data-bind="with: profile">
 				<div class="starter-template">
 					<h3>How hungry are you?
@@ -38,9 +42,6 @@
 					<label for="radio5">9000 CALORIES</label>
 				</div>
 				<br>
-
-				<button type="button" class="btn btn-lg btn-primary">Find Nearby</button>
-				<button type="button" class="btn btn-lg btn-primary" data-bind="click: $root.preferences.Toggle">Preferences</button>
 			</div>
 		</div>
 		<div class="row prefhidden" id="pref" data-bind="with: preferences, css: { prefvisible: $root.preferences.isVisible }">
@@ -150,7 +151,7 @@
 				Total Calories: <span data-bind="text: totalCalories">9000</span>
 			</div>
 		</div>
-		<div class="row">
+		<div id="recommendations" class="row">
 			<div class="col-md-12">
 				<h3>Recommendations:</h3>
 				<table class="table food-list">
