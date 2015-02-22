@@ -108,7 +108,7 @@ function MapModel() {
 		var center = {lat: 49.2827, lng: -123.1207}; // defaulting to Vancouver
 		this.map = new google.maps.Map(document.getElementById('map'), {
 			center: center,
-			zoom: 12,
+			zoom: 15,
 			disableDefaultUI: true
 		});
 		this.currentUserMarker = new google.maps.Marker({
