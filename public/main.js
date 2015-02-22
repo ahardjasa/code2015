@@ -269,7 +269,7 @@ FoodItem.prototype.GetTotalHealthIndex = function()
 	carbFactor = isNaN(carbFactor) ? 0 : carbFactor;
 
 	var proteinRatio = this.protein/weight;
-	var reqProteinRatio = 0.20;
+	var reqProteinRatio = 0.15;
 	var Gprot = 1;
 
 	var totalProteinRatio = proteinRatio/reqProteinRatio;
@@ -283,7 +283,7 @@ FoodItem.prototype.GetTotalHealthIndex = function()
 
 
 
-	return 5* fibreFactor + 0.5* fatFactor + 0.5 *carbFactor + 2* proteinFactor;
+	return 10* fibreFactor + 0.5* fatFactor + 0.5 *carbFactor + 1* proteinFactor;
 	//var sprotein = 2;
 	//var scarbs = -2;
 	//var sfibre = 4;
@@ -507,7 +507,7 @@ function PageModel() {
 		return items;
 	}, this);
 
-	this.sortOrder = ko.observable("CaloriesAsc");
+	this.sortOrder = ko.observable("MagicDes");
 
 	this.sortCal = function() {
 		if(this.sortOrder() === "CaloriesAsc") {this.sortOrder("CaloriesDes");}
