@@ -500,12 +500,8 @@ function PageModel() {
 		}
 	};
 
-	this.FilterMagic = function(element)
-	{
-		if(element.from.type === "restaurant" && !self.preferences.myPreferences.isRestaurants()) return false;
-		else if(element.from.type === "tree" && !self.preferences.myPreferences.isFruitTrees()) return false;
-		return true;
-
+	this.FilterMagic = function(element) {
+		return self.preferences.myPreferences.desiredTypes.indexOf(element.from.type) !== -1;
 	};
 
 	this.foodItems = ko.computed(function () {

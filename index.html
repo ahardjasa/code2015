@@ -81,16 +81,9 @@
 							</div>
 
 							<div class="container">
-								<input type="checkbox" name="isFoodTrucks" id="pref.isFoodTrucks" value = "foodTrucks" data-bind="checked: myPreferences.isFoodTrucks">
-								<label for="pref.isFoodTrucks">Food Trucks</label>
-								<input type="checkbox" name="isSupermarkets" id="pref.isSupermarkets" data-bind="checked: myPreferences.isSupermarkets">
-								<label for="pref.isSupermarkets">Supermarkets</label>
-								<input type="checkbox" name="isFarmersMarkets" id="pref.isFarmersMarkets" data-bind="checked: myPreferences.isFarmersMarkets">
-								<label for="pref.isFarmersMarkets">Farmer's Markets</label>
-								<input type="checkbox" name="isFruitTrees" id="pref.isFruitTrees" data-bind="checked: myPreferences.isFruitTrees">
-								<label for="pref.isFruitTrees">Fruit Trees</label>
-								<input type="checkbox" name="isRestaurants" id="pref.isRestaurants" data-bind="checked: myPreferences.isRestaurants">
-								<label for="pref.isFruitTrees">Restaurants</label>
+								<label><input type="checkbox" value="truck" data-bind="checked: myPreferences.desiredTypes"> Food Trucks</label>
+								<label><input type="checkbox" value="tree" data-bind="checked: myPreferences.desiredTypes"> Fruit Trees</label>
+								<label><input type="checkbox" value="restaurant" data-bind="checked: myPreferences.desiredTypes"> Restaurants</label>
 							</div>
 
 							<div class="panel-body progContainer">
