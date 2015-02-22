@@ -549,7 +549,9 @@ function PageModel() {
 	this.search = ko.observable();
 	this.debouncedSearch = ko.pureComputed(this.search).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
 	this.emptyFromSearch = ko.computed(function () {
-		return this.desiredTypes().length != 4 || !(this.debouncedSearch() == null || this.debouncedSearch() == '');
+		return this.desiredTypes().length != 4
+			|| !(this.debouncedSearch() == null || this.debouncedSearch() == '')
+			|| this.preferences.myUser.hungerLevel() > 0;
 	}, this);
 
 	this.nearbyRestaurants = ko.computed(function () {
@@ -690,13 +692,4 @@ var pageModel = new PageModel();
 $(function () {
 	pageModel.map.init();
 	ko.applyBindings(pageModel);
-	var mySlider = $('.single-slider').jRange({
-		from: 0,
-		to: 100,
-		step: 1,
-		scale: [0,25,50,75,100],
-		format: '%s',
-		width: 300,
-		showLabels: true
-	});
 });
