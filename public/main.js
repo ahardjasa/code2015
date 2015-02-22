@@ -549,6 +549,7 @@ function PageModel() {
 		}
 	};
 	this.desiredTypes = ko.observableArray(['truck', 'tree', 'restaurant', 'supermarket']);
+	this.perMenuLimit = ko.observable(12);
 	this.search = ko.observable();
 	this.debouncedSearch = ko.pureComputed(this.search).extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 400 } });
 
@@ -656,8 +657,18 @@ function PageModel() {
 
 	this.sortedFoodItems = ko.computed(function () {
 		var items = this.foodItems().sort(buildSortFunction(this.sortOrder(), this.sortDesc())).concat([]); // take a copy before shrinking
-		items.length = Math.min(items.length, 100); // *everything* can be a very long list
-		return items;
+		var limit = this.perMenuLimit();
+		var counts = {};
+		var limited = [];
+		items.forEach(function (item) {
+			if (limited.length < 100) {
+				var count = counts[item.from.menu] = (counts[item.from.menu] || 0) + 1;
+				if (count < limit) {
+					limited.push(item);
+				}
+			}
+		});
+		return limited;
 	}, this);
 
 	this.profile = new BasicProfile('1');
