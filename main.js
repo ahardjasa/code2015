@@ -349,7 +349,11 @@ function BasicProfile(portion) {
 	self.portion = ko.observable(portion);
 }
 
-
+function trimDigits(num, sigAmount)
+{
+	var number = num;
+	return number.toFixed(sigAmount);
+}
 
 
 
@@ -401,12 +405,41 @@ function PageModel() {
 		else {this.sortOrder("FatAsc");}
 	};
 
+	this.sortDistance = function() {
+		if(this.sortOrder() === "DistanceAsc") {this.sortOrder("DistanceDes");}
+		else {this.sortOrder("DistanceAsc");}
+	};
+
 	self = this;
 
 	this.SortMagic = function(a, b)
 	{
-		if(self.sortOrder() === "CaloriesDes"){ return b.calories - a.calories;}
-		return a.calories - b.calories;
+		switch(self.sortOrder()) {
+			case ("CaloriesAsc"):
+				return a.calories - b.calories;
+				break;
+			case ("CaloriesDes"):
+				return b.calories - a.calories;
+			case ("CarbsAsc"):
+				return a.carbs - b.carbs;
+			case ("CarbsDes"):
+				return b.carbs - a.carbs;
+			case ("FatAsc"):
+				return a.totalFat - b.totalFat;
+			case ("FatDes"):
+				return b.totalFat - a.totalFat;
+			case ("ProteinAsc"):
+				return a.protein - b.protein;
+			case ("ProteinDes"):
+				return b.protein - a.protein;
+			case ("DistanceAsc"):
+				return a.from.km - b.from.km;
+			case ("DistanceDes"):
+				return b.from.km - a.from.km;
+			case ("Smart"):
+			default:
+				return a.calories - b.calories;
+		}
 	};
 
 	this.foodItems = ko.computed(function () {
