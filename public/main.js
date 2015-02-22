@@ -350,13 +350,9 @@ function BasicProfile(portion) {
 	self.portion = ko.observable(portion);
 }
 
-function trimDigits(num, sigAmount)
-{
-	var number = num;
-	return number.toFixed(sigAmount);
+function trimDigits(num, sigAmount) {
+	return num == null ? null : num.toFixed(sigAmount);
 }
-
-
 
 function PageModel() {
 	this.location = ko.observable();
@@ -462,8 +458,11 @@ function PageModel() {
 		}, 0);
 	}, this);
 }
+
 PageModel.prototype.addRandomFood = function () {
-	this.addedFoodItems.push(foodService.random());
+	var food = foodService.random();
+	food.from = { name: "wherever fine foods can be found" };
+	this.addedFoodItems.push(food);
 };
 
 var pageModel = new PageModel();
