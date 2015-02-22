@@ -50,6 +50,7 @@ function UserPreferences()
 	self.isFoodTrucks = ko.observable("foodTrucks");
 	self.isSupermarkets = ko.observable("superMarkets");
 	self.isFarmersMarkets = ko.observable("farmersMarkets");
+	self.isRestaurants = ko.observable("true");
 	self.cooking = ko.observable(false);
 	self.dailyCalories = ko.observable(9000);
 	self.dailyIron = ko.observable(900);

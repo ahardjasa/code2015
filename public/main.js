@@ -418,21 +418,37 @@ function PageModel() {
 	{
 		switch(self.sortOrder()) {
 			case ("CaloriesAsc"):
+				if(isNaN(a.calories)) return -1;
+				if(isNaN(b.calories)) return 1;
 				return a.calories - b.calories;
 				break;
 			case ("CaloriesDes"):
+				if(isNaN(a.calories)) return 1;
+				if(isNaN(b.calories)) return -1;
 				return b.calories - a.calories;
 			case ("CarbsAsc"):
+				if(isNaN(a.carbs)) return -1;
+				if(isNaN(b.carbs)) return 1;
 				return a.carbs - b.carbs;
 			case ("CarbsDes"):
+				if(isNaN(a.carbs)) return 1;
+				if(isNaN(b.carbs)) return -1;
 				return b.carbs - a.carbs;
 			case ("FatAsc"):
+				if(isNaN(a.totalFat)) return -1;
+				if(isNaN(b.totalFat)) return 1;
 				return a.totalFat - b.totalFat;
 			case ("FatDes"):
+				if(isNaN(a.totalFat)) return 1;
+				if(isNaN(b.totalFat)) return -1;
 				return b.totalFat - a.totalFat;
 			case ("ProteinAsc"):
+				if(isNaN(a.protein)) return -1;
+				if(isNaN(b.protein)) return 1;
 				return a.protein - b.protein;
 			case ("ProteinDes"):
+				if(isNaN(a.protein)) return 1;
+				if(isNaN(b.protein)) return -1;
 				return b.protein - a.protein;
 			case ("DistanceAsc"):
 				return a.from.km - b.from.km;
@@ -446,11 +462,14 @@ function PageModel() {
 
 	this.FilterMagic = function(element)
 	{
+		if(element.from.type === "restaurant" && !self.preferences.myPreferences.isRestaurants()) return false;
+		else if(element.from.type === "tree" && !self.preferences.myPreferences.isFruitTrees()) return false;
+		return true;
 
 	};
 
 	this.foodItems = ko.computed(function () {
-		var items = this.addedFoodItems().concat(this.nearbyFoodItems()).filter().sort(this.SortMagic);
+		var items = this.addedFoodItems().concat(this.nearbyFoodItems()).filter(this.FilterMagic).sort(this.SortMagic);
 		items.length = Math.min(items.length, 100); // *everything* can be a very long list
 		return items;
 	}, this);
