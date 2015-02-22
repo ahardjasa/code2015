@@ -101,7 +101,7 @@ function MapModel() {
 		pageModel.nearbyRestaurants.subscribe(function (restaurants) {
 			var i = 0;
 			restaurants.forEach(function (loc) {
-				var icon = (loc.menu in treeTypes) ? 'images/tree-60-32.png' : 'images/restaurant-4-32.png';
+				var icon = (loc.menu in treeTypes) ? 'images/tree.png' : 'images/restaurant.png';
 				if (i >= this.markers.length) {
 					this.markers.push(new google.maps.Marker({
 						icon: icon,
