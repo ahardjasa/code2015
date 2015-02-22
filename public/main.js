@@ -274,10 +274,6 @@ FoodItem.prototype.GetTotalHealthIndex = function()
 	var overrunFibreFactor = fibreDiff > 0 ? Gfibre * fibreDiff : 0;
 	var fibreFactor = Math.min(1,totalfibreRatio) + overrunFibreFactor;
 
-	if(this.name.indexOf("Peppercorn" ) > -1)
-	{
-		var i = 5;
-	}
 	fibreFactor = isNaN(fibreFactor) ? 0 : fibreFactor;
 
 	var fatRatio = this.totalFat/weight;
@@ -317,18 +313,18 @@ FoodItem.prototype.GetTotalHealthIndex = function()
 	var proteinFactor = Math.min(1,totalProteinRatio) + overrunProteinFactor;
 
 	proteinFactor = isNaN(proteinFactor) ? 0 : proteinFactor;
-	return 10* fibreFactor + 0.5* fatFactor + 0.5 *carbFactor + 1* proteinFactor;
-	//var sprotein = 2;
-	//var scarbs = -2;
-	//var sfibre = 4;
-	//var sfat = -1;
-	//var proteinScore = isNaN(this.protein) ? 0 :  sprotein * (1 - Math.min(1, this.protein / indices[2]));
-	//var carbScore = isNaN(this.carbs) ? 0 : scarbs * (1 - Math.min(1, this.carbs / indices[1]));
-	//var fibreScore = isNaN(this.fibre) ? 0: sfibre * (1 - Math.min(1, this.fibre / indices[4]));
-	//var	fatScore = isNaN(this.fat) ? 0: sfat * (1 - Math.min(1, this.fat / indices[3]));
-    //
-	//console.log(this.name + ";" + this.protein + ";" + proteinScore + ";" + this.carbs + ";" + carbScore + ";" + this.fibreScore + ";" + fibreScore + ";" + this.fat + ";" + fatScore);
-	//return proteinScore + carbScore + fibreScore + fatScore;
+	var sugarRatio = this.sugar/weight;
+	var Gsug = -1;
+
+	var sugarFactor = sugarRatio > 0 ? Gsug * sugarRatio : 0;
+
+	sugarFactor = isNaN(sugarFactor) ? 0 : sugarFactor;
+
+	var score =   1.5* fibreFactor + fatFactor + carbFactor + 1* proteinFactor + sugarFactor;
+	var total = score + 20;  //lower bound of bad scale
+	total = total/25;  //upper bound with lowerbound shift
+	total *= 10;
+	return total;
 };
 
 FoodItem.prototype.iconPath = function () {
@@ -694,4 +690,13 @@ var pageModel = new PageModel();
 $(function () {
 	pageModel.map.init();
 	ko.applyBindings(pageModel);
+	var mySlider = $('.single-slider').jRange({
+		from: 0,
+		to: 100,
+		step: 1,
+		scale: [0,25,50,75,100],
+		format: '%s',
+		width: 300,
+		showLabels: true
+	});
 });
