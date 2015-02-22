@@ -114,14 +114,30 @@ function MapModel() {
 		pageModel.nearbyRestaurants.subscribe(function (restaurants) {
 			var i = 0;
 			restaurants.forEach(function (loc) {
-				var icon = (loc.menu in treeTypes) ? 'images/tree.png' : 'images/restaurant.png';
+				var icon = function() {
+					if (loc.type === "restaurant") {
+						return 'images/tree.png';
+					} else if (loc.type === "tree") {
+						return 'images/restaurant.png';
+					} else if (loc.type === "truck") {
+						return 'images/truck.png';
+					}
+				}
 				if (i >= this.markers.length) {
-					this.markers.push(new google.maps.Marker({
-						icon: icon,
+					var marker = new google.maps.Marker({
+						icon: icon(),
 						position: loc,
 						title: loc.name,
 						map: this.map
-					}));
+					})
+					this.markers.push(marker);
+
+					//var popup = new google.maps.InfoWindow({
+					//	content: loc.name
+					//});
+					//google.maps.event.addListener(marker, 'click', function() {
+					//	popup.open(this.map, this.currentUserMarker);
+					//});
 				} else {
 					this.markers[i].setPosition(loc);
 					this.markers[i].setTitle(loc.name);
