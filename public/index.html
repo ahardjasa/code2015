@@ -145,8 +145,8 @@
 							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'protein')">Protein</th>
 							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'carbs')">Carbs</th>
 							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'totalFat')">Total Fat</th>
-							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'distance')">Distance (km)</th>
-							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'totalHealthIndex')">THI</th>
+							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'distance')">Distance</th>
+							<th class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'totalHealthIndex')"><abbr title="Total Health Index">THI</abbr></th>
 							<th></th>
 						</tr>
 					</thead>
@@ -165,7 +165,7 @@
 							<td class="food-list-metric" data-bind="text: proteinLabel"></td>
 							<td class="food-list-metric" data-bind="text: carbsLabel"></td>
 							<td class="food-list-metric" data-bind="text: totalFatLabel"></td>
-							<td class="food-list-metric" data-bind="text: trimDigits(from.km)"></td>
+							<td class="food-list-metric" data-bind="text: trimDigits(from.km) + ' km'"></td>
 							<td class="food-list-metric" data-bind="text: trimDigits(totalHealthIndex, 3)"></td>
 							<td class="food-list-rating">
 								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
