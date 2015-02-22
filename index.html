@@ -135,10 +135,12 @@
 		</div>
 		<div id="recommendations" class="row">
 			<div class="col-md-12">
-				<table class="table food-list">
+				<table class="table table-hover food-list">
 					<thead>
 						<tr id="listColumns">
-							<th colspan="2"><u><h4>Recommendations</h4></u></th>
+							<th colspan="2" width="100%">
+								<input class="form-control" type="search" data-bind="value: search, valueUpdate: ['input', 'afterkeydown']" placeholder="Search" />
+							</th>
 							<th id="calories" class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'calories')">
 								<span class="glyphicon glyphicon-sort-by-order-alt hidden"></span>
 								Calories</th>
@@ -153,10 +155,10 @@
 								Total Fat</th>
 							<th id="distance" class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'distance')">
 								<span class="glyphicon glyphicon-sort-by-order-alt hidden"></span>
-								Distance (km)</th>
+								Distance</th>
 							<th id="totalHealthIndex" class="food-list-metric" data-bind="click: $root.sortBy.bind($root, 'totalHealthIndex')">
 								<span class="glyphicon glyphicon-sort-by-order-alt"></span>
-								THI</th>
+								<abbr title="Total Health Index">THI</abbr></th>
 							<th></th>
 						</tr>
 					</thead>
@@ -180,7 +182,7 @@
 							<td class="food-list-rating">
 								<span class="glyphicon" aria-hidden="true" data-bind="css: {
 									'glyphicon-thumbs-up': totalHealthIndex > 1,
-									'glyphicon-thumbs-down': totalHealthIndex < -2 }"></span>
+									'glyphicon-thumbs-down': totalHealthIndex < -1 }"></span>
 							</td>
 						</tr>
 						<!-- /ko -->
