@@ -70,10 +70,15 @@ html, body {
 	margin-bottom: 0;
 }
 
+.food-list th .form-control {
+	font-weight: normal;
+}
+
 .food-list .food-list-icon {
 	padding-top: 0;
 	padding-bottom: 0;
 	width: 40px;
+	vertical-align: middle;
 }
 
 .food-list .food-list-icon img {
@@ -84,6 +89,11 @@ html, body {
 .food-list .food-list-metric {
 	text-align: right;
 	white-space: nowrap;
+	width: 0;
+}
+
+.food-list .food-list-rating {
+	padding-left: 0;
 }
 
 .food-list tr + .no-nearby {
@@ -147,11 +157,12 @@ html, body {
 	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
 
-.bglabel {
-	-moz-transform:rotate(270deg);
-	-o-transform:rotate(270deg);
-	-webkit-transform:rotate(270deg);
-	-ms-transform:rotate(270deg);
+.sortedColumn:after{
+	font-family: 'Glyphicons Halflings';
+	content:"\E153";
 }
 
+span.hidden {
+	visibility: hidden;
+}
 
