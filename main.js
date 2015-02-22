@@ -321,6 +321,7 @@ FoodItem.prototype.GetTotalHealthIndex = function()
 };
 
 FoodItem.prototype.iconPath = function () {
+	debugger;
 	var folder = "images/icons/";
 	switch (this.source.trim()) {
 		case "BAKED GOODS":
@@ -357,6 +358,8 @@ FoodItem.prototype.iconPath = function () {
 			return folder + "candy.png";
 		case "VEGETABLES AND VEGETABLE PRODUCTS":
 			return folder + "vegetables.png";
+		case "suprmkt":
+			return folder + "supermarket.png";
 		default:
 			if (/\bsandwich\b/i.test(this.name)) {
 				return folder + 'fastfood.png';
