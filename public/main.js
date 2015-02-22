@@ -444,8 +444,13 @@ function PageModel() {
 		}
 	};
 
+	this.FilterMagic = function(element)
+	{
+
+	};
+
 	this.foodItems = ko.computed(function () {
-		var items = this.addedFoodItems().concat(this.nearbyFoodItems()).sort(this.SortMagic);
+		var items = this.addedFoodItems().concat(this.nearbyFoodItems()).filter().sort(this.SortMagic);
 		items.length = Math.min(items.length, 100); // *everything* can be a very long list
 		return items;
 	}, this);
