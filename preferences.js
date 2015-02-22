@@ -10,6 +10,7 @@ function User(first, last)
 	self.age = ko.observable("Enter age:");
 	self.gender = "F";
 	self.activityLevel = ko.observable();
+	self.hungerLevel = ko.observable(0);
 	self.healthIndeces = ko.computed(function(){
 		if(self.age() === null) return maleNeeds.rows[10];
 		switch(self.gender)
@@ -35,6 +36,13 @@ function User(first, last)
 		}
 	});
 
+	self.setHunger = function(id)
+	{
+		$("#hungergames").find(".btn-primary").removeClass("btn-primary");
+		$("#" + id).addClass("btn-primary");
+		var num = id.replace("hunger", "");
+		self.hungerLevel(parseInt(num));
+	}
 	self.foodItems = [];
 
 	self.addFoodItem = function(day, foodItem) {
