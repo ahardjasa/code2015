@@ -167,7 +167,9 @@
 							<td class="food-list-metric" data-bind="text: trimDigits(from.km) + ' km'"></td>
 							<td class="food-list-metric" data-bind="text: trimDigits(totalHealthIndex, 3)"></td>
 							<td class="food-list-rating">
-								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+								<span class="glyphicon" aria-hidden="true" data-bind="css: {
+									'glyphicon-thumbs-up': totalHealthIndex > 1,
+									'glyphicon-thumbs-down': totalHealthIndex < -2 }"></span>
 							</td>
 						</tr>
 						<!-- /ko -->

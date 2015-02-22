@@ -591,7 +591,7 @@ function PageModel() {
 	}, this);
 
 	this.sortedFoodItems = ko.computed(function () {
-		var items = this.foodItems().sort(buildSortFunction(this.sortOrder(), this.sortDesc()));
+		var items = this.foodItems().sort(buildSortFunction(this.sortOrder(), this.sortDesc())).concat([]); // take a copy before shrinking
 		items.length = Math.min(items.length, 100); // *everything* can be a very long list
 		return items;
 	}, this);
