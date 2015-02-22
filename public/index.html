@@ -68,10 +68,9 @@
 
 			<div role="tabpanel" id="pref.TabPanel">
 				<ul class="nav nav-pills">
-					<li role="presentation" class="active"><a href="#targets" role="tab" data-toggle="tab">Setings</a></li>
-					<li role="presentation"><a href="#day" role="tab" data-toggle="tab">Day</a></li>
-					<li role="presentation"><a href="#week" role="tab" data-toggle="tab">Week</a></li>
-					<li role="presentation"><a href="#month" role="tab" data-toggle="tab">Month</a></li>
+					<li role="presentation" class="active"><a href="#targets" role="tab" data-toggle="tab">Settings</a></li>
+					<li role="presentation"><a href="#day" role="tab" data-toggle="tab" data-bind="click: $root.preferences.DrawDayGraph">Day</a></li>
+					<li role="presentation"><a href="#history" role="tab" data-toggle="tab" data-bind="click: $root.preferences.DrawGraph">History</a></li>
 				</ul>
 				<div id="pref.TabContent" class="tab-content">
 					<div role="tabpanel" class="tab-pane fade active in" id="targets" >
@@ -114,63 +113,29 @@
 								<h3 class="panel-title">My Day</h3>
 							</div>
 
-							<div class="panel-body progContainer">
-								<b></b>
-								<div class="progress vertProgLeft">
-									<div class="progress-bar" role="progressbar"  style="width: 80%;">
-										80%
-									</div>
-								</div>
-								<div class="progress vertProg">
-									<div class="progress-bar" role="progressbar" style="width: 60%;">
-										60%
-									</div>
-								</div>
-							</div>
+							<div id="prefDayPlot" style="width:400px;height:200px"></div>
 						</div>
 					</div>
 
 
-					<div role="tabpanel" class="tab-pane fade " id="week" >
+					<div role="tabpanel" class="tab-pane fade " id="history" >
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<h3 class="panel-title">My Week</h3>
+								<h3 class="panel-title">My History</h3>
 							</div>
 
-							<div class="panel-body progContainer">
-								<b></b>
-								<div class="progress vertProgLeft">
-									<div class="progress-bar" role="progressbar"  style="width: 80%;">
-										80%
-									</div>
-								</div>
-								<div class="progress vertProg">
-									<div class="progress-bar" role="progressbar" style="width: 60%;">
-										60%
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div role="tabpanel" class="tab-pane fade " id="month" >
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">My Month</h3>
+							<div id="prefHistoryPlot" style="width:400px;height:200px"></div>
+							<div id="prefHistoryChoices" class="container">
+								<input type="checkbox" name="showHistCalories" id="pref.showHistCalories" data-bind="checked: myPreferences.isShowHistCalories">
+								<label for="pref.isFoodTrucks">Calories</label>
+								<input type="checkbox" name="showHistProtein" id="pref.showHistProtein" data-bind="checked: myPreferences.isShowHistProtein">
+								<label for="pref.isSupermarkets">Protein</label>
+								<input type="checkbox" name="showHistFat" id="pref.showHistFat" data-bind="checked: myPreferences.isShowHistFat">
+								<label for="pref.isFarmersMarkets">Fat</label>
+								<input type="checkbox" name="showHistCarbs" id="pref.showHistCarbs" data-bind="checked: myPreferences.isShowHistCarbs">
+								<label for="pref.isFruitTrees">Carbs</label>
 							</div>
 
-							<div class="panel-body progContainer">
-								<b></b>
-								<div class="progress vertProgLeft">
-									<div class="progress-bar" role="progressbar"  style="width: 80%;">
-										80%
-									</div>
-								</div>
-								<div class="progress vertProg">
-									<div class="progress-bar" role="progressbar" style="width: 60%;">
-										60%
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -232,7 +197,9 @@
 	<script src="lib/bootstrap-3.3.2-dist/js/bootstrap.js"></script>
 	<script src="lib/knockout-3.3.0.debug.js"></script>
 	<script src="lib/polyfills.js"></script>
+	<script src="lib/flot/jquery.flot.js"></script>
 	<script src="data/generics.js"></script>
+	<script src="data/fatabase.js"></script>
 	<script src="data/locations.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMMQJPrM--XYTU3oG52NDbKLQ0oZCe-rg"></script>
 	<script src="preferences.js"></script>
