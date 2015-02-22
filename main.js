@@ -148,10 +148,22 @@ function MapModel() {
 			return 'images/restaurant.png'; // what else is there?
 		}
 
+		var userHasSeenLocationHint = false;
+
 		// notice when the map region size changes
 		pageModel.expanded.subscribe(function (expanded) {
 			var open = expanded === 'map';
 			this.map.setOptions({ zoomControl: open });
+
+			if (open && !userHasSeenLocationHint) {
+				var popup = new google.maps.InfoWindow({
+					content: "Drag this to change your location. Nearby foods will automatically update."
+				});
+				// Call to resize
+				popup.setContent(popup.getContent());
+				popup.open(this.map, this.currentUserMarker);
+				userHasSeenLocationHint = true;
+			}
 
 			google.maps.event.trigger(this.map, 'resize');
 			setTimeout(function () {
@@ -528,22 +540,12 @@ function trimDigits(num, amount) {
 
 function PageModel() {
 	this.preferences = new PreferencesViewModel();
-	this.userHasSeenLocationHint = false;
 	this.location = ko.observable();
 	this.expanded = ko.observable('hunger');
 	this.toggleExpanded = function (v) {
 		if (this.expanded() == v) {
 			this.expanded(null);
 		} else {
-			if (!this.userHasSeenLocationHint) {
-				var popup = new google.maps.InfoWindow({
-					content: "Drag this to change your location. Nearby foods will automatically update."
-				});
-				// Call to resize
-				popup.setContent(popup.getContent());
-				popup.open(this.map, this.map.currentUserMarker);
-				this.userHasSeenLocationHint = true;
-			}
 			this.expanded(v);
 		}
 	};
