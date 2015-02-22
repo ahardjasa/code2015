@@ -281,6 +281,9 @@ FoodItem.prototype.parseColumns = function (food, columns) {
 		}
 		var amount = food[i];
 		var amountLabel = getAttributeLabel(amount, columnUnit);
+		if (/^[<>]\d+(\.\d+)?$/.test(amount)) {
+			amount = parseFloat(amount.substr(1));
+		}
 
 		switch(columnName) {
 			case "food name":
@@ -523,10 +526,7 @@ function PageModel() {
 
 	this.totalCalories = ko.computed(function () {
 		return this.foodItems().reduce(function (total, item) {
-			if (typeof item.calories == 'number') {
-				total += item.calories;
-			}
-			return total;
+			return total + item.calories;
 		}, 0);
 	}, this);
 }
