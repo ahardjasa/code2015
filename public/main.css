@@ -28,6 +28,7 @@ html, body {
 .logo {
 	max-height: 200px;
 	border-bottom: solid #084a7b;
+	text-align: center;
 }
 
 .options-toggle a {
