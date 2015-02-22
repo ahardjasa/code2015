@@ -47,11 +47,10 @@ function getFoodData(link){
 
 		var food_data = filtered_food_table.map(function(array) {
 			return JSON.stringify(array)
-
 		});
 
 		//require('utils').dump(food_data);
-		fs.write("fatabase.txt", food_data, 'a');
+		fs.write("fatabase.txt", food_data.join("\n"), 'a');
 
 	})
 }

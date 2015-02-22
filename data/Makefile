@@ -1,6 +1,6 @@
 all: ../public/data/generics.js ../public/data/locations.js ../public/data/fatabase.js
 
-../public/data/fatabase.js: fatabase.csv fatabase_processor.py
+../public/data/fatabase.js: fatabase.txt fatabase_processor.py
 	echo 'var fatabase = ' > $@
 	./fatabase_processor.py >> $@
 	echo ';' >> $@
@@ -30,8 +30,8 @@ business_licences_csv.zip:
 business_licenses.csv: business_licences_csv.zip
 	unzip -D -o business_licences_csv.zip
 
-fatabase_restaurants.txt: fatabase.csv
-	awk -F, '{print $$3}' $< | grep -v 'Meal Name' | sort -u > $@
+#fatabase_restaurants.txt: fatabase.csv
+#	awk -F, '{print $$3}' $< | grep -v 'Meal Name' | sort -u > $@
 
 vancouver_fatabase_restaurants.json: business_licence_processor.py fatabase_restaurants.txt business_licenses.csv
 	./business_licence_processor.py | sed -e 's/$$/,/' > $@

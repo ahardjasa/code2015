@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import csv
 import json
 
 
@@ -13,21 +12,20 @@ def clean(text):
 
 
 def main():
-    with open('fatabase.csv') as ifh:
-        reader = csv.reader(ifh)
-
+    with open('fatabase.txt') as ifh:
         printed_cols = False
 
-        for i, row in enumerate(reader):
-            if row[1] == 'Restaurant':
+        for i, raw_row in enumerate(ifh):
+            row = json.loads(raw_row)
+            if row[0] == 'Restaurant':
                 if not printed_cols:
                     printed_cols = True
-                    print('{"cols": ' + json.dumps(row[1:]) + ',\n"rows": [')
+                    print('{"cols": ' + json.dumps(row) + ',\n"rows": [')
             else:
                 comma = ', '
                 if i == 1:
                     comma = '  '
-                print(comma + json.dumps([clean(c) for c in row[2:]]))
+                print(comma + json.dumps([clean(c) for c in row]))
         print(']}')
 
 if __name__ == '__main__':
