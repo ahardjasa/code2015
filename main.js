@@ -88,6 +88,8 @@ var restaurantService = new RestaurantService();
 function MapModel() {
 	this.state = 'new';
 	this.markers = [];
+	this.userMarkers = [];
+	this.userPopups = [];
 
 	this.init = function () {
 		var center = {lat: 49.2827, lng: -123.1207}; // defaulting to Vancouver
@@ -153,9 +155,32 @@ function MapModel() {
 		}.bind(this));
 	};
 
-	this.panToLocation = function(event) {
-		var points = new google.maps.LatLng(event.lat, event.lng);
+
+	this.panToLocation = function(from, name) {
+		var points = new google.maps.LatLng(from.lat, from.lng);
+		var popup = new google.maps.InfoWindow({
+			content: name
+		});
+		var marker = new google.maps.Marker({
+			position: points,
+			map: this.map,
+			title: name
+		});
+
 		this.map.panTo(points);
+
+		var previousMarker = this.userMarkers.pop();
+		if (previousMarker != null) {
+			previousMarker.setMap(null);
+		}
+		var previousPopup = this.userPopups.pop();
+		if (previousPopup != null) {
+			previousPopup.close();
+		}
+
+		this.userMarkers.push(marker);
+		this.userPopups.push(popup);
+		popup.open(this.map, marker);
 	}
 }
 
