@@ -31,14 +31,15 @@
 		<div id="hunger" class="row" data-bind="css: { expanded: expanded() === 'hunger' }">
 			<div class="col-md-12" align="center" data-bind="with: profile">
 				<h3>How hungry are you?</h3>
-				<div class="form-inline">
-					<label class="radio-inline"><input type="radio" value="1" data-bind="checked: portion"> 2 Pizza Slices</label>
-					<label class="radio-inline"><input type="radio" value="2" data-bind="checked: portion"> Half Pizza</label>
-					<label class="radio-inline"><input type="radio" value="3" data-bind="checked: portion"> Full Pizza</label>
-					<label class="radio-inline"><input type="radio" value="4" data-bind="checked: portion"> Several Calzones</label>
-					<label class="radio-inline"><input type="radio" value="5" data-bind="checked: portion"> 9000 CALORIES</label>
+
+				<div id="hungergames" class="btn-group" role="group" >
+					<button id="hunger0" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser, 'hunger0')">Dunno</button>
+					<button id="hunger1" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser, 'hunger1')">Full</button>
+					<button id="hunger2" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser,'hunger2')">Snack</button>
+					<button id="hunger3" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser,'hunger3')">Hungry</button>
+					<button id="hunger4" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser,'hunger4')">Starved</button>
+					<button id="hunger5" type="button" class="btn btn-default" data-bind="click: $root.preferences.myUser.setHunger.bind($root.preferences.myUser,'hunger5')">Famished</button>
 				</div>
-				<br>
 			</div>
 		</div>
 		<div id="prefs" class="row" data-bind="with: preferences, css: { expanded: $root.expanded() === 'prefs' }">
