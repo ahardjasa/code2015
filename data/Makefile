@@ -27,7 +27,7 @@ all: $(addsuffix .js,$(addprefix ../public/data/,$(OUTPUTS)))
 	./combined_nutrient_value_processor.py >> $@
 	echo ';' >> $@
 
-../public/data/locations.js: locations_processor.py fatabase.txt healthyfamiliesbc.csv meals_menus.csv foodtrucks.csv business_licences.csv surrey/restaurants.json
+../public/data/locations.js: locations_processor.py fatabase.txt healthyfamiliesbc.csv meals_menus.csv foodtrucks.csv business_licences.csv surrey/restaurants.json notfood.txt supermarkets.txt
 	(echo 'var locations = ['; \
 		sed -e 's/\r//' -e '1d;s/^/\[/' -e 's/$$/,"tree"\],/' vancouver_foodtrees.csv; \
 		./locations_processor.py | sed -e 's/$$/,/'; \
